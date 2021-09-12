@@ -33,6 +33,10 @@
     }
   }
 
+  .ace_gutter-cell {
+    cursor: pointer;
+  }
+
   .ace_gutter-cell.ace_breakpoint {
       background: rgb(240, 212, 227);
       border-left: 3px solid rgb(237, 83, 150);
