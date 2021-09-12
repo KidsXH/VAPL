@@ -1,0 +1,41 @@
+@import '../../styles/colors.scss';
+
+.editorMain {
+  margin: 0;
+}
+
+.ace-tm {
+  .ace_gutter {
+    background: $gutter-color;
+    color: $text-line-number-color;
+  }
+
+  .ace_gutter-active-line {
+    background: $gutter-color;
+    box-shadow: 0px 1px 6px $active-line-shadow-color;
+  }
+
+  .ace_marker-layer {
+    .ace_active-line {
+      background: $gutter-color;
+      box-shadow: 0px 4px 10px $active-line-shadow-color;
+    }
+  }  
+
+  .error_line {
+    background-color: #f2dede;
+    position: absolute;
+  }
+
+  .ace_line {
+    .highlight {
+      background-color: aquamarine;
+    }
+  }
+
+  .ace_gutter-cell.ace_breakpoint {
+      background: rgb(240, 212, 227);
+      border-left: 3px solid rgb(237, 83, 150);
+    }
+
+}

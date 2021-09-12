@@ -1,0 +1,18 @@
+@import '../../styles/colors.scss';
+
+#TimelinePanel {
+    display: grid;
+    grid-template-rows: 40px auto;
+    row-gap: 1px;
+    .mainContent {
+        display: grid;
+        grid-template-columns: 18% 64% auto;
+        column-gap: 1px;
+        .col-1 {
+            border-right: 1px solid $border-line-color;
+        }
+        .col-2 {
+            border-right: 1px solid $border-line-color;
+        }
+    }
+}

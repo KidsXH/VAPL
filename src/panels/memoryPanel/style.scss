@@ -1,0 +1,14 @@
+#MemoryPanel {
+  display: grid;
+  grid-template-rows: 40px 60px 50% auto;
+  row-gap: 1px;
+
+  .subtitle-1 {
+    display: grid;
+    grid-template-columns: 50% auto;
+  }
+
+  .subtitle-area {
+      padding: 10px 10px;
+  }
+}

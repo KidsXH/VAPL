@@ -1,0 +1,13 @@
+@import '../../styles/colors.scss';
+
+.panel-header {
+    text-align: left;
+    height: 2.5rem;
+    border-bottom: $border-line-color solid 1px;
+    .text-title {
+      padding: .4rem .8rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: $text-title-color;
+    }
+  }
