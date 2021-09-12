@@ -288,7 +288,7 @@ class Server {
       ret = this.Step(sourcecode);
     }
 
-    console.log(this.stateHistory);
+    // console.log(this.stateHistory);
 
     const step = this.count + 1;
     this.isExecuting = true;
