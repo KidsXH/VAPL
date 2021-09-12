@@ -27,8 +27,14 @@ export const slot = (
   return emitter.on(event, listener);
 };
 export const signal = (event: event, ...args: any[]): boolean => {
+  // console.log('Log | signal: ' + event + ' ' + args);
   return emitter.emit(event, ...args);
 };
-export const resetEmitter = () => {
-  emitter.removeAllListeners();
+export const remove = (event: event) => {
+  emitter.removeAllListeners(event);
+};
+
+export const showEvents = () => {
+  const eventNames = emitter.eventNames();
+  console.log('Eventnames: ' + eventNames);
 };

@@ -1,0 +1,13 @@
+.control-btn-group {
+  display: grid;
+  grid-template-columns: repeat(5, 40px);
+  column-gap: 1px;
+}
+.control-button {
+  cursor: pointer;
+}
+.control-button.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
+}
