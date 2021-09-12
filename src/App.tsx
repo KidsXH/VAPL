@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.scss';
 import EditorPanel from './panels/editorPanel/EditorPanel';
-import ConslePanel from './panels/conslePanel/ConslePanel';
+import ConsolePanel from './panels/consolePanel/ConsolePanel';
 import TimelinePanel from './panels/timelinePanel/TimelinePanel';
 import CallStackPanel from './panels/callStackPanel/CallStackPanel';
 import MemoryPanel from './panels/memoryPanel/MemoryPanel';
@@ -13,7 +13,7 @@ function App() {
       <div className='Row-2'>
         <div className='Col-1'>
           <EditorPanel />
-          <ConslePanel />
+          <ConsolePanel />
         </div>
         <div className='Col-2'>
           <TimelinePanel />
