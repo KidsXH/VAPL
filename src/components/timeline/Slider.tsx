@@ -3,7 +3,7 @@ import {
   StatementHighlight,
   VariableHighlight,
 } from '../../panels/timelinePanel/TimelinePanel';
-import {signal, slot} from '../emitter';
+import {signal} from '../emitter';
 
 interface Props {
   step: number;
@@ -11,8 +11,6 @@ interface Props {
   scale: any;
   width: number;
   height: number;
-  selectedColor: string;
-  unselectedColor: string;
   variableHighlights: VariableHighlight[];
   statementHighlights: StatementHighlight[];
 }
@@ -100,12 +98,10 @@ export default class Slider extends React.Component<Props, State> {
       scale,
       width,
       height,
-      selectedColor,
-      unselectedColor,
       variableHighlights,
       statementHighlights,
     } = this.props;
-    const selectionWidth = width - (step / max) * width;
+    const activeWidth = max ? (step / max) * width : 0;
 
     return (
       <svg
@@ -116,67 +112,29 @@ export default class Slider extends React.Component<Props, State> {
           overflow: 'visible',
         }}
         height={height}
-        width={width + 100}
+        width={width}
         onMouseDown={this.dragFromSVG}
         onMouseMove={this.mouseMove}
       >
-        <defs>
-          <marker
-            id='arrow'
-            markerUnits='strokeWidth'
-            markerWidth='12'
-            markerHeight='12'
-            viewBox='0 0 12 12'
-            refX='6'
-            refY='6'
-            orient='auto'
-          >
-            <path d='M2,2 L10,6 L2,10 L6,6 L2,2' style={{fill: '#000000'}} />
-          </marker>
-        </defs>
-        <rect height={4} fill={unselectedColor} x={0} y={48} width={width} />
         <rect
-          height={4}
-          fill={selectedColor}
-          x={scale(step)}
-          y={48}
-          width={selectionWidth}
+          className='timeline'
+          height={8}
+          x={0}
+          y={height / 2 - 4}
+          width={width}
+          rx='4'
+          ry='4'
         />
-        <g
-          tabIndex={0}
-          transform={`translate(${scale(step)}, 0)`}
-          key={`handle`}
-          style={{outline: 'none'}}
-        >
-          <circle
-            style={{
-              cursor: 'move',
-              MozUserSelect: 'none',
-              KhtmlUserSelect: 'none',
-              WebkitUserSelect: 'none',
-            }}
-            r={10}
-            cx={0}
-            cy={50.5}
-            fill='#ddd'
-            strokeWidth='1'
-          />
-          <circle
-            style={{
-              cursor: 'move',
-              MozUserSelect: 'none',
-              KhtmlUserSelect: 'none',
-              WebkitUserSelect: 'none',
-            }}
-            onMouseDown={this.dragStart.bind(this)}
-            r={9}
-            cx={0}
-            cy={50}
-            fill='white'
-            stroke='#ccc'
-            strokeWidth='1'
-          />
-        </g>
+        <rect
+          className='timeline active'
+          height={8}
+          x={0}
+          y={height / 2 - 4}
+          width={activeWidth}
+          rx='4'
+          ry='4'
+        />
+
         <g>
           {variableHighlights.map((m) => {
             return (
@@ -226,27 +184,10 @@ export default class Slider extends React.Component<Props, State> {
           })}
         </g>
         <g>
-          <line
-            x1={620}
-            x2={620}
-            y1={10}
-            y2={90}
-            stroke='black'
-            strokeWidth={2}
-            markerEnd='url(#arrow)'
-          ></line>
-          <line
-            x1={620}
-            x2={730}
-            y1={50}
-            y2={50}
-            stroke='black'
-            strokeWidth={2}
-          ></line>
-          <text x={630} y={40} fontSize='15'>
+          <text className='timeline-legend' x={width} y={height / 2 - 20} fontSize='15'>
             Variables
           </text>
-          <text x={630} y={75} fontSize='15'>
+          <text className='timeline-legend' x={width} y={height / 2 + 35} fontSize='15'>
             Statements
           </text>
         </g>

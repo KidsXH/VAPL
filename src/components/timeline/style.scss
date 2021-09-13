@@ -1,13 +1,30 @@
+@import '../../styles/colors.scss';
+
 .control-btn-group {
   display: grid;
   grid-template-columns: repeat(5, 40px);
   column-gap: 1px;
 }
+
 .control-button {
   cursor: pointer;
+  &.disabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
+  }
 }
-.control-button.disabled {
-  pointer-events: none;
-  cursor: default;
-  opacity: 0.6;
+
+.timeline {
+  cursor: pointer;
+  fill: $timeline-default-color;
+
+  &.active {
+    fill: $timeline-active-color;
+  }
+}
+
+.timeline-legend {
+  fill: $legend-color;
+  text-anchor: end;
 }

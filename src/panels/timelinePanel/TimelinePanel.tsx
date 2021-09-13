@@ -4,6 +4,7 @@ import PanelHeader from '../../components/panelHeader/PanelHeader';
 import StatementHighlightContent from '../../components/timeline/StatementHighlightContent';
 import VariableHighlightContent from '../../components/timeline/VariableHighlightContent';
 import './style.scss';
+import '../../styles/colors.scss'
 import * as d3 from 'd3';
 import {inArray} from 'jquery';
 import Slider from '../../components/timeline/Slider';
@@ -334,8 +335,8 @@ function TimelinePanel() {
               scale={linear().domain([0, max]).range([0, 600])}
               width={600}
               height={100}
-              selectedColor='#0074D9'
-              unselectedColor='#DDDDDD'
+              // selectedColor='$timeline-active-color'
+              // unselectedColor='$timeline-default-color'
               variableHighlights={variableHighlights}
               statementHighlights={statementHighlights}
             />
