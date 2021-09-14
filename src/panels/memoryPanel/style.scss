@@ -1,7 +1,28 @@
 #MemoryPanel {
-  display: grid;
-  grid-template-rows: 40px min-content 50% auto;
-  row-gap: 1px;
+
+  &.show-detail {
+    .detail-area {
+      height: 320px;
+      opacity: 1;
+      transition: 1s;
+    }
+    .main-area {
+      height: calc(100% - 480px);
+      transition: 1s;
+    }
+  }
+  &.hide-detail {
+    .main-area {
+      height: calc(100% - 160px);
+      transition: 1s;
+    }
+
+    .detail-area {
+      height: 0px;
+      opacity: 0;
+      transition: 1s;
+    }
+  }
 
   .subtitle-1 {
     display: grid;
@@ -9,6 +30,6 @@
   }
 
   .subtitle-area {
-      padding: 10px 10px;
+    padding: 10px 10px;
   }
 }

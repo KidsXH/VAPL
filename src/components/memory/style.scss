@@ -19,7 +19,6 @@
     }
   }
 
-
   .content-view {
     .title {
       color: $text-title-color;
@@ -27,6 +26,27 @@
     }
     .content {
       padding: 14px;
+    }
+  }
+}
+
+#MemoryDetail {
+  color: $text-color;
+  font-weight: 500;
+  margin-top: -10px;
+  padding: 0px 24px;
+  .detail-item {
+    display: grid;
+    grid-template-columns: 9rem auto;
+    border-bottom: 1px dashed $dash-line-color;
+    padding: 0.5rem 1rem;
+    .item-name {
+      text-align: left;
+    }
+    .item-value {
+      font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro,
+        monospace;
+      text-align: right;
     }
   }
 }

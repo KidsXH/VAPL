@@ -6,7 +6,7 @@ import './style.scss';
 
 function LogicalView() {
   const [memoryCells, setMemoryCells] = useState<MemoryCellProps[]>([
-    {varName: 'n', dataType: 'int', value: '10'},
+    {varName: 'n', dataType: 'int', value: '2100000000'},
     {varName: 'm', dataType: 'int', value: '15'},
   ]);
 
