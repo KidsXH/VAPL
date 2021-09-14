@@ -11,7 +11,7 @@ interface VariableHighlightContentProps {
 }
 
 function VariableHighlightContent(props: VariableHighlightContentProps) {
-  return <div>StatementsHighlightContent</div>;
+  return <div>Variables</div>;
 }
 
 export default VariableHighlightContent;

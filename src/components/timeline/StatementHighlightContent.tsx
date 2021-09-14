@@ -8,7 +8,7 @@ interface StatementHighlightContentProps {
 }
 
 function StatementHighlightContent(props: StatementHighlightContentProps) {
-  return <div>StatementsHighlightContent</div>;
+  return <div>Statements</div>;
 }
 
 export default StatementHighlightContent;
