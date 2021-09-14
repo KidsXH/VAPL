@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="30px" viewBox="0 0 38 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
+    <title>next</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard-/-02" transform="translate(-900.000000, -266.000000)">
+            <g id="Group-18" transform="translate(900.000000, 266.000000)">
+                <g id="next" transform="translate(18.900000, 15.000000) scale(-1, 1) translate(-18.900000, -15.000000) translate(0.400000, 0.000000)">
+                    <path d="M0,5.08909106 C0,2.27846368 2.27146299,0 5.07205983,0 L31.6831126,0 C34.4843339,0 36.7551724,2.27949919 36.7551724,5.08909106 L36.7551724,24.9109089 C36.7551724,27.7215363 34.4837094,30 31.6831126,30 L5.07205983,30 C2.27083854,30 0,27.7205008 0,24.9109089 L0,5.08909106 Z" id="bg" fill="#F5F4F7"></path>
+                    <g id="Group-3" transform="translate(12.251724, 9.375000)" stroke="#5A5A5A" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.541">
+                        <polyline id="next" transform="translate(2.901724, 5.625000) scale(-1, 1) translate(-2.901724, -5.625000) " points="5.80344828 0 0 5.625 5.80344828 11.25"></polyline>
+                        <polyline id="next" transform="translate(10.639655, 5.625000) scale(-1, 1) translate(-10.639655, -5.625000) " points="13.5413793 0 7.73793103 5.625 13.5413793 11.25"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

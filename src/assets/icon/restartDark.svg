@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="30px" viewBox="0 0 38 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
+    <title>reload</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard-/-02" transform="translate(-992.000000, -266.000000)">
+            <g id="Group-18" transform="translate(900.000000, 266.000000)">
+                <g id="reload" transform="translate(92.400000, 0.000000)">
+                    <path d="M0,5.08909106 C0,2.27846368 2.28323815,0 5.08285325,0 L32.3171468,0 C35.1243291,0 37.4,2.27949919 37.4,5.08909106 L37.4,24.9109089 C37.4,27.7215363 35.1167618,30 32.3171468,30 L5.08285325,30 C2.27567091,30 0,27.7205008 0,24.9109089 L0,5.08909106 Z" id="bg" fill="#F5F4F7"></path>
+                    <g transform="translate(7.873684, 5.625000)" stroke="#5A5A5A" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.541">
+                        <path d="M13.6275645,3.86761609 C12.5092546,3.07613685 11.116956,2.62375731 9.59915663,2.65532374 C5.81412048,2.73404303 3.25016205,5.46447875 3.17144277,9.1586177 C3.09272349,12.8527567 6.09728696,15.7836334 9.8823231,15.7049141 C13.6673593,15.6261948 16.7995519,12.5676889 16.8782712,8.87354996" id="r2" transform="translate(10.024101, 9.180119) rotate(-330.000000) translate(-10.024101, -9.180119) "></path>
+                        <polyline id="r1" points="12.4803363 8.12065972 17.7476852 8.12065972 17.7476852 3.10329861"></polyline>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

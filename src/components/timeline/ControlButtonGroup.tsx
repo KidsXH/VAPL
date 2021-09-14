@@ -4,10 +4,20 @@ import {DEBUG_STATE} from '../server';
 import {showEvents, signal} from '../emitter';
 import * as d3 from 'd3';
 
-import check from '../../assets/check.svg';
+import stepLight from '../../assets/icon/stepLight.svg';
+import stepDark from '../../assets/icon/stepDark.svg';
+import stepAllLight from '../../assets/icon/stepAllLight.svg';
+import stepAllDark from '../../assets/icon/stepAllDark.svg';
+import restartLight from '../../assets/icon/restartLight.svg';
+import restartDark from '../../assets/icon/restartDark.svg';
+
+import stepBackLight from '../../assets/icon/stepBackLight.svg';
+import stepBackDark from '../../assets/icon/stepBackDark.svg';
+import backAllLight from '../../assets/icon/backAllLight.svg';
+import backAllDark from '../../assets/icon/backAllDark.svg';
 import ControlButton from './ControButton';
 
-import './style.scss'
+import './style.scss';
 
 function ControlButtonGroup({debugState}: {debugState: DEBUG_STATE}) {
   const [start, setStart] = useState(false);
@@ -18,7 +28,6 @@ function ControlButtonGroup({debugState}: {debugState: DEBUG_STATE}) {
   const [stepAll, setStepAll] = useState(false);
 
   useEffect(() => {
-    
     switch (debugState) {
       case 'Stop':
         setStart(false);
@@ -70,7 +79,20 @@ function ControlButtonGroup({debugState}: {debugState: DEBUG_STATE}) {
   return (
     <div className='control-btn-group'>
       <ControlButton
-        iconHref={check}
+        iconHrefLight={backAllLight}
+        iconHrefDark={backAllDark}
+        onClick={() => signal('debug', 'BackAll')}
+        disabled={!backAll}
+      />
+      <ControlButton
+        iconHrefLight={stepBackLight}
+        iconHrefDark={stepBackDark}
+        onClick={() => signal('debug', 'StepBack')}
+        disabled={!stepBack}
+      />
+      <ControlButton
+        iconHrefLight={restartLight}
+        iconHrefDark={restartDark}
         onClick={() => {
           signal('debug', 'Start');
           const arrowListJson = sessionStorage.getItem('arrowList');
@@ -89,22 +111,14 @@ function ControlButtonGroup({debugState}: {debugState: DEBUG_STATE}) {
         disabled={!start}
       />
       <ControlButton
-        iconHref={check}
-        onClick={() => signal('debug', 'BackAll')}
-        disabled={!backAll}
-      />
-      <ControlButton
-        iconHref={check}
-        onClick={() => signal('debug', 'StepBack')}
-        disabled={!stepBack}
-      />
-      <ControlButton
-        iconHref={stop ? check : check}
+        iconHrefLight={stop ? stepLight : stepLight}
+        iconHrefDark={stop ? stepDark : stepDark}
         onClick={() => signal('debug', stop ? 'Step' : 'Start')}
         disabled={!step}
       />
       <ControlButton
-        iconHref={check}
+        iconHrefLight={stepAllLight}
+        iconHrefDark={stepAllDark}
         onClick={() => signal('debug', stop ? 'StepAll' : 'Exec')}
         disabled={!stepAll}
       />
