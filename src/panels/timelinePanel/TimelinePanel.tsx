@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import {scaleLinear as linear} from 'd3-scale';
+import React, { useEffect, useState } from 'react';
+import { scaleLinear as linear } from 'd3-scale';
 import PanelHeader from '../../components/panelHeader/PanelHeader';
 import StatementHighlightContent from '../../components/timeline/StatementHighlightContent';
 import VariableHighlightContent from '../../components/timeline/VariableHighlightContent';
 import './style.scss';
 import '../../styles/colors.scss';
 import * as d3 from 'd3';
-import {inArray} from 'jquery';
+import { inArray } from 'jquery';
 import Slider from '../../components/timeline/Slider';
 import ControlButtonGroup from '../../components/timeline/ControlButtonGroup';
-import {DEBUG_STATE} from '../../components/server';
-import {remove, slot} from '../../components/emitter';
+import { DEBUG_STATE } from '../../components/server';
+import { remove, slot } from '../../components/emitter';
 
 interface OptionItem {
   value: string;
   label: string;
-  children: {value: string; label: string}[];
+  children: { value: string; label: string }[];
 }
 
 export interface StatementHighlight {
@@ -137,7 +137,7 @@ function TimelinePanel() {
 
   const changeStatementColor = (lineNumber: number, color: string) => {
     for (let i = 0; i < statementHighlights.length; i++) {
-      if (statementHighlights[i].lineNumber == lineNumber) {
+      if (statementHighlights[i].lineNumber === lineNumber) {
         statementHighlights[i].color = color;
         break;
       }
@@ -319,44 +319,44 @@ function TimelinePanel() {
   };
 
   useEffect(() => {
-      setTimelineWidth(timelineArea.current.clientWidth);
+    setTimelineWidth(timelineArea.current.clientWidth);
   }, [timelineArea]);
 
   return (
-    <div id='TimelinePanel' className='panel'>
-      <PanelHeader title='Timeline' />
-      <div className='main-content'>
-        <div className='col-1'>
+    <div id="TimelinePanel" className="panel">
+      <PanelHeader title="Timeline" />
+      <div className="main-content">
+        <div className="col-1">
           <StatementHighlightContent
-            changeStatementColor={changeStatementColor}
-            statementHighlights={statementHighlights}
-            changeStatementVisible={changeStatementVisible}
+          // changeStatementColor={changeStatementColor}
+          // statementHighlights={statementHighlights}
+          // changeStatementVisible={changeStatementVisible}
           />
         </div>
-        <div className='col-2' ref={timelineArea}>
-          <div className='row-1'>
-              <Slider
-                step={step}
-                max={max}
-                scale={linear().domain([0, max]).range([0, timelineWidth])}
-                width={timelineWidth}
-                height={8}
-                variableHighlights={variableHighlights}
-                statementHighlights={statementHighlights}
-              />
+        <div className="col-2" ref={timelineArea}>
+          <div className="row-1">
+            <Slider
+              step={step}
+              max={max}
+              scale={linear().domain([0, max]).range([0, timelineWidth])}
+              width={timelineWidth}
+              height={8}
+              // variableHighlights={variableHighlights}
+              // statementHighlights={statementHighlights}
+            />
           </div>
-          <div className='row-2'>
+          <div className="row-2">
             <ControlButtonGroup debugState={debugState} />
           </div>
         </div>
-        <div className='col-3'>
+        <div className="col-3">
           <VariableHighlightContent
-            variableHighlights={variableHighlights}
-            options={options}
-            addVariableHighlight={addVariableHighlight}
-            changeVariableColor={changeVariableColor}
-            changeVariableVisible={changeVariableVisible}
-            removeVariableHighlight={removeVariableHighlight}
+          // variableHighlights={variableHighlights}
+          // options={options}
+          // addVariableHighlight={addVariableHighlight}
+          // changeVariableColor={changeVariableColor}
+          // changeVariableVisible={changeVariableVisible}
+          // removeVariableHighlight={removeVariableHighlight}
           />
         </div>
       </div>

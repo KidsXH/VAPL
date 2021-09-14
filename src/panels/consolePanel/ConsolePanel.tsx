@@ -5,10 +5,10 @@ import PanelHeader from '../../components/panelHeader/PanelHeader';
 
 function ConsolePanel() {
   return (
-    <div id='ConsolePanel' className='panel'>
-      <PanelHeader title='Console' />
-      <div className='editor-area'>
-        <Console lang='en' />
+    <div id="ConsolePanel" className="panel">
+      <PanelHeader title="Console" />
+      <div className="console-area">
+        <Console lang="en" />
       </div>
     </div>
   );

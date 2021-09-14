@@ -3,7 +3,7 @@ import {
   StatementHighlight,
   VariableHighlight,
 } from '../../panels/timelinePanel/TimelinePanel';
-import {signal} from '../emitter';
+import { signal } from '../emitter';
 
 interface Props {
   step: number;
@@ -11,8 +11,8 @@ interface Props {
   scale: any;
   width: number;
   height: number;
-  variableHighlights: VariableHighlight[];
-  statementHighlights: StatementHighlight[];
+  // variableHighlights: VariableHighlight[];
+  // statementHighlights: StatementHighlight[];
 }
 interface State {
   dragging: boolean;
@@ -43,7 +43,7 @@ export default class Slider extends React.Component<Props, State> {
           dragging: true,
         },
         () => {
-          this.setState({dragging: true});
+          this.setState({ dragging: true });
         }
       );
     }
@@ -56,7 +56,7 @@ export default class Slider extends React.Component<Props, State> {
         dragging: false,
       },
       () => {
-        this.setState({dragging: false});
+        this.setState({ dragging: false });
       }
     );
   };
@@ -74,7 +74,7 @@ export default class Slider extends React.Component<Props, State> {
           dragging: true,
         },
         () => {
-          this.setState({dragging: true});
+          this.setState({ dragging: true });
         }
       );
     }
@@ -98,15 +98,15 @@ export default class Slider extends React.Component<Props, State> {
       scale,
       width,
       height,
-      variableHighlights,
-      statementHighlights,
+      // variableHighlights,
+      // statementHighlights,
     } = this.props;
 
     const contenWidth = width > 250 ? width - 60 : width;
     const activeWidth = max ? (step / max) * contenWidth : 0;
 
     return (
-      <div >
+      <div>
         <svg
           style={{
             display: 'block',
@@ -120,22 +120,22 @@ export default class Slider extends React.Component<Props, State> {
           onMouseMove={this.mouseMove}
         >
           <rect
-            className='timeline'
+            className="timeline"
             height={8}
             x={0}
             y={height / 2 - 4}
             width={contenWidth}
-            rx='4'
-            ry='4'
+            rx="4"
+            ry="4"
           />
           <rect
-            className='timeline active'
+            className="timeline active"
             height={8}
             x={0}
             y={height / 2 - 4}
             width={activeWidth}
-            rx='4'
-            ry='4'
+            rx="4"
+            ry="4"
           />
 
           {/* <g>
@@ -188,18 +188,18 @@ export default class Slider extends React.Component<Props, State> {
         </g> */}
           <g>
             <text
-              className='timeline-legend'
+              className="timeline-legend"
               x={contenWidth}
               y={height / 2 - 20}
-              fontSize='15'
+              fontSize="15"
             >
               Variables
             </text>
             <text
-              className='timeline-legend'
+              className="timeline-legend"
               x={contenWidth}
               y={height / 2 + 35}
-              fontSize='15'
+              fontSize="15"
             >
               Statements
             </text>

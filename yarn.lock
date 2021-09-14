@@ -3073,6 +3073,11 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
+batch-processor@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/batch-processor/-/batch-processor-1.0.0.tgz#75c95c32b748e0850d10c2b168f6bdbe9891ace8"
+  integrity sha1-dclcMrdI4IUNEMKxaPa9vpiRrOg=
+
 batch@0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
@@ -4323,6 +4328,11 @@ d3-chord@3:
   dependencies:
     d3-path "1 - 3"
 
+d3-clone@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/d3-clone/-/d3-clone-1.0.9.tgz#4f5548bb9836087804aaff25381a9bd181bb3970"
+  integrity sha512-Wv4Mp5wK5WDRQZxSoxA6L+6Yck2GOUiHKYT44e0X8R3Y8z/Uu68gPN16VKc7sakahW7xjIQwxiaHv297jvtaAg==
+
 "d3-color@1 - 3", d3-color@3:
   version "3.0.1"
   resolved "https://registry.nlark.com/d3-color/download/d3-color-3.0.1.tgz?cache=0&sync_timestamp=1622917832534&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fd3-color%2Fdownload%2Fd3-color-3.0.1.tgz#03316e595955d1fcd39d9f3610ad41bb90194d0a"
@@ -4938,6 +4948,13 @@ electron-to-chromium@^1.3.564, electron-to-chromium@^1.3.649:
   version "1.3.671"
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.671.tgz#8feaed6eae42d279fa4611f58c42a5a1eb81b2a0"
   integrity sha512-RTD97QkdrJKaKwRv9h/wGAaoR2lGxNXEcBXS31vjitgTPwTWAbLdS7cEsBK68eEQy7p6YyT8D5BxBEYHu2SuwQ==
+
+element-resize-detector@^1.1.10:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/element-resize-detector/-/element-resize-detector-1.2.3.tgz#5078d9b99398fe4c589f8c8df94ff99e5d413ff3"
+  integrity sha512-+dhNzUgLpq9ol5tyhoG7YLoXL3ssjfFW+0gpszXPwRU6NjGr1fVHMEAF8fVzIiRJq57Nre0RFeIjJwI8Nh2NmQ==
+  dependencies:
+    batch-processor "1.0.0"
 
 elliptic@^6.5.3:
   version "6.5.4"
@@ -6607,7 +6624,7 @@ internal-slot@^1.0.3:
   resolved "https://registry.nlark.com/internmap/download/internmap-2.0.1.tgz?cache=0&sync_timestamp=1622917359701&other_urls=https%3A%2F%2Fregistry.nlark.com%2Finternmap%2Fdownload%2Finternmap-2.0.1.tgz#33d0fa016185397549fb1a14ea3dbe5a2949d1cd"
   integrity sha1-M9D6AWGFOXVJ+xoU6j2+WilJ0c0=
 
-invariant@^2.2.4:
+invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.nlark.com/invariant/download/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha1-YQ88ksk1nOHbYW5TgAjSP/NRWOY=
@@ -9898,7 +9915,7 @@ prop-types-extra@^1.0.1:
     react-is "^16.3.2"
     warning "^4.0.0"
 
-prop-types@^15.5.10, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -10102,6 +10119,15 @@ react-bootstrap@0.33.1:
     react-transition-group "^2.0.0"
     uncontrollable "^7.0.2"
     warning "^3.0.0"
+
+react-container-dimensions@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/react-container-dimensions/-/react-container-dimensions-1.4.1.tgz#73a8b497f09c6b55a18a79b18a57a8327138f343"
+  integrity sha512-f5WXYpsL0vAuT9hD6bSTqRYOJXFbU9JzjSZfscNT77PbdCUReLv2/aSvYBgkXyALtOBVdS/nwO5RVZgBxxWDnw==
+  dependencies:
+    element-resize-detector "^1.1.10"
+    invariant "^2.2.2"
+    prop-types "^15.5.8"
 
 react-dev-utils@^11.0.3:
   version "11.0.4"
@@ -12287,6 +12313,11 @@ vary@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
+
+vector2d@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/vector2d/-/vector2d-3.0.0.tgz#4376fd2f5f271b2be5aeeed8355003c6365dfdcf"
+  integrity sha512-ZhCKsHeBwWb8rLOFx0rYymMfujYMoZMCqhQlhxFfeTNKiwcBX7W0HvGECwjJYKodk51WwFhlNFSLnpISpM90Rw==
 
 vendors@^1.0.0:
   version "1.0.4"
