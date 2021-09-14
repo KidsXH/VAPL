@@ -1,7 +1,7 @@
 @import '../../styles/colors.scss';
 #LogicalView {
   display: grid;
-  grid-template-columns: 36% 32% auto;
+  grid-template-columns: 40% 28% auto;
   column-gap: 1px;
   height: 100%;
   #StackView,
@@ -13,17 +13,20 @@
     }
   }
 
+  #HeapView {
+    .content {
+      margin-left: -20px;
+    }
+  }
+
 
   .content-view {
     .title {
       color: $text-title-color;
-      padding: 10px 0;
+      padding: 10px;
     }
     .content {
       padding: 14px;
     }
-  }
-  #HeapView {
-    margin-left: -10px;
   }
 }
