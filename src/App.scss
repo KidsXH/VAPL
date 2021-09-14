@@ -8,7 +8,7 @@
 
 .App {
   display: grid;
-  grid-template-rows: 6% auto;
+  grid-template-rows: 64px auto;
   row-gap: 8px;
   text-align: center;
   background-color: $app-background-color;
