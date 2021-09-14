@@ -1,0 +1,30 @@
+@import '../../../styles/colors.scss';
+
+.memory-cell {
+  display: grid;
+  grid-template-columns: 20px auto;
+  color: $text-color;
+  font-size: 0.8rem;
+  margin-top: -1px;
+  .col-name {
+    display: grid;
+    align-items: center;
+    text-align: end;
+    padding-right: .25rem;
+  }
+  .col-value {
+    display: grid;
+    grid-template-columns: 10px auto;
+    border: 2px solid $cell-border-color;
+    .col-1 {
+        padding-bottom: .5rem;
+        padding-left: .15rem;
+        border: none;
+    }
+    .col-2 {
+        padding-top: .5rem;
+        padding-right: .15rem;
+        text-align: end;
+    }
+  }
+}

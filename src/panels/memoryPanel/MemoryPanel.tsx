@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import LogicalView from '../../components/memory/LogicalView';
+import PhysicalView from '../../components/memory/PhysicalView';
 import PanelHeader from '../../components/panelHeader/PanelHeader';
 import SubtitleBlock from '../../components/subtitleBlock/SubtitleBlock';
 import './style.scss';
@@ -30,7 +32,7 @@ function MemoryPanel() {
         </div>
       </div>
       <div>
-        {viewMode === 'logical' ? <div>Logical</div> : <div>Physical</div>}
+        {viewMode === 'logical' ? <LogicalView />: <PhysicalView />}
       </div>
       <div className='subtitle-area'>
         <SubtitleBlock

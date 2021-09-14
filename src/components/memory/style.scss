@@ -1,0 +1,29 @@
+@import '../../styles/colors.scss';
+#LogicalView {
+  display: grid;
+  grid-template-columns: 36% 32% auto;
+  column-gap: 1px;
+  height: 100%;
+  #StackView,
+  #HeapView {
+    display: grid;
+    grid-template-rows: min-content auto;
+    .content {
+      border-right: 1px dashed $dash-line-color;
+    }
+  }
+
+
+  .content-view {
+    .title {
+      color: $text-title-color;
+      padding: 10px 0;
+    }
+    .content {
+      padding: 14px;
+    }
+  }
+  #HeapView {
+    margin-left: -10px;
+  }
+}
