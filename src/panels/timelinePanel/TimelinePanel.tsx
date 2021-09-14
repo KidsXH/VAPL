@@ -4,7 +4,7 @@ import PanelHeader from '../../components/panelHeader/PanelHeader';
 import StatementHighlightContent from '../../components/timeline/StatementHighlightContent';
 import VariableHighlightContent from '../../components/timeline/VariableHighlightContent';
 import './style.scss';
-import '../../styles/colors.scss'
+import '../../styles/colors.scss';
 import * as d3 from 'd3';
 import {inArray} from 'jquery';
 import Slider from '../../components/timeline/Slider';
@@ -49,6 +49,8 @@ function TimelinePanel() {
   const [variableShowUp, setVariableShowUp] = useState<VariableHighlight[]>([]);
   const [debugStatus, setDebugStatus] = useState('');
   const [debugState, setDebugState] = useState<DEBUG_STATE>('Stop');
+  const timelineArea = React.createRef<any>();
+  const [timelineWidth, setTimelineWidth] = useState(0);
 
   useEffect(() => {
     slot('changeStep', (step: number) => {
@@ -316,6 +318,10 @@ function TimelinePanel() {
     setVariableShowUp(variableShowUp);
   };
 
+  useEffect(() => {
+      setTimelineWidth(timelineArea.current.clientWidth);
+  }, [timelineArea]);
+
   return (
     <div id='TimelinePanel' className='panel'>
       <PanelHeader title='Timeline' />
@@ -327,19 +333,17 @@ function TimelinePanel() {
             changeStatementVisible={changeStatementVisible}
           />
         </div>
-        <div className='col-2'>
+        <div className='col-2' ref={timelineArea}>
           <div className='row-1'>
-            <Slider
-              step={step}
-              max={max}
-              scale={linear().domain([0, max]).range([0, 600])}
-              width={600}
-              height={100}
-              // selectedColor='$timeline-active-color'
-              // unselectedColor='$timeline-default-color'
-              variableHighlights={variableHighlights}
-              statementHighlights={statementHighlights}
-            />
+              <Slider
+                step={step}
+                max={max}
+                scale={linear().domain([0, max]).range([0, timelineWidth])}
+                width={timelineWidth}
+                height={8}
+                variableHighlights={variableHighlights}
+                statementHighlights={statementHighlights}
+              />
           </div>
           <div className='row-2'>
             <ControlButtonGroup debugState={debugState} />

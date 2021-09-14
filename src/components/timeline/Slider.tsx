@@ -101,41 +101,44 @@ export default class Slider extends React.Component<Props, State> {
       variableHighlights,
       statementHighlights,
     } = this.props;
-    const activeWidth = max ? (step / max) * width : 0;
+
+    const contenWidth = width > 250 ? width - 60 : width;
+    const activeWidth = max ? (step / max) * contenWidth : 0;
 
     return (
-      <svg
-        style={{
-          display: 'block',
-          paddingBottom: '8px',
-          zIndex: 6,
-          overflow: 'visible',
-        }}
-        height={height}
-        width={width}
-        onMouseDown={this.dragFromSVG}
-        onMouseMove={this.mouseMove}
-      >
-        <rect
-          className='timeline'
-          height={8}
-          x={0}
-          y={height / 2 - 4}
-          width={width}
-          rx='4'
-          ry='4'
-        />
-        <rect
-          className='timeline active'
-          height={8}
-          x={0}
-          y={height / 2 - 4}
-          width={activeWidth}
-          rx='4'
-          ry='4'
-        />
+      <div >
+        <svg
+          style={{
+            display: 'block',
+            paddingBottom: '8px',
+            zIndex: 6,
+            overflow: 'visible',
+          }}
+          height={height}
+          width={contenWidth}
+          onMouseDown={this.dragFromSVG}
+          onMouseMove={this.mouseMove}
+        >
+          <rect
+            className='timeline'
+            height={8}
+            x={0}
+            y={height / 2 - 4}
+            width={contenWidth}
+            rx='4'
+            ry='4'
+          />
+          <rect
+            className='timeline active'
+            height={8}
+            x={0}
+            y={height / 2 - 4}
+            width={activeWidth}
+            rx='4'
+            ry='4'
+          />
 
-        <g>
+          {/* <g>
           {variableHighlights.map((m) => {
             return (
               <g key={m.funcName + '_' + m.name}>
@@ -182,16 +185,27 @@ export default class Slider extends React.Component<Props, State> {
               </g>
             );
           })}
-        </g>
-        <g>
-          <text className='timeline-legend' x={width} y={height / 2 - 20} fontSize='15'>
-            Variables
-          </text>
-          <text className='timeline-legend' x={width} y={height / 2 + 35} fontSize='15'>
-            Statements
-          </text>
-        </g>
-      </svg>
+        </g> */}
+          <g>
+            <text
+              className='timeline-legend'
+              x={contenWidth}
+              y={height / 2 - 20}
+              fontSize='15'
+            >
+              Variables
+            </text>
+            <text
+              className='timeline-legend'
+              x={contenWidth}
+              y={height / 2 + 35}
+              fontSize='15'
+            >
+              Statements
+            </text>
+          </g>
+        </svg>
+      </div>
     );
   }
 }
