@@ -64,7 +64,7 @@ export default class Console extends React.Component<Props, State> {
           readOnly: this.state.isReadOnly,
           showGutter: false,
         }}
-        style={{ height: '100%', width: '100%' }}
+        style={{ height: '100%', width: '100%', marginTop: '.25rem'}}
         className="console"
       />
     );
