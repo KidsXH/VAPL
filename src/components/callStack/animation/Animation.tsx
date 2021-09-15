@@ -56,8 +56,6 @@ export default class Animation extends React.Component<Props, State> {
     }
     for (let i = 0; i < keys.length; i++) {
       const key = keys[i];
-      console.log(key);
-
       this.showUp('block-' + key, 0);
       // this.variableChange(key, types[i], values[i], 0, 0);
     }
@@ -255,48 +253,6 @@ export default class Animation extends React.Component<Props, State> {
         .remove();
     }
   }
-
-  //   variableChange(key, type, value, source, delay) {
-  //     if (
-  //       !type.startsWith('char') &&
-  //       !type.startsWith('unsignedchar') &&
-  //       type.split('[').length === 1
-  //     ) {
-  //       const num = value;
-  //       d3.select('#' + key)
-  //         .selectAll('.value')
-  //         .transition()
-  //         .duration(2000)
-  //         .delay(delay)
-  //         .tween('number', function () {
-  //           let i = d3.interpolateRound(Number(source), num);
-  //           return function (t) {
-  //             this.textContent = i(t);
-  //           };
-  //         });
-  //     } else {
-  //       const y = Number(
-  //         d3
-  //           .select('#' + key)
-  //           .select('.value')
-  //           .attr('y')
-  //       );
-  //       const str = d3
-  //         .select('#' + key)
-  //         .select('.value')
-  //         .text();
-  //       d3.select('#' + key)
-  //         .selectAll('.value')
-  //         .attr('y', y - 30)
-  //         .style('fill-opacity', 1e-6)
-  //         .transition()
-  //         .delay(delay)
-  //         .duration(2000)
-  //         .text(str)
-  //         .attr('y', y)
-  //         .style('fill-opacity', 1);
-  //     }
-  //   }
 
   showUp(id: string, offsetY: string | number) {
     const block = d3.select('#svg').select('#' + id);

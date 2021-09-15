@@ -43,15 +43,49 @@ class CallStackPanel extends React.Component<Props, State> {
             width={this.props.width - 20}
             height={this.props.height * 0.75 - 28 - 39.2}
           >
+            <marker
+              id="end"
+              viewBox="-10 -10 20 20"
+              refX="0"
+              refY="0"
+              markerWidth="8"
+              markerHeight="8"
+              orient="auto"
+            >
+              <circle
+                cx={0}
+                cy={0}
+                style={{ stroke: '#483647', strokeWidth: 2, fill: 'white' }}
+                r={8}
+              ></circle>
+            </marker>
+            <marker
+              id="start"
+              viewBox="-10 -10 20 20"
+              refX="0"
+              refY="0"
+              markerWidth="8"
+              markerHeight="8"
+              orient="auto"
+            >
+              <circle
+                cx={0}
+                cy={0}
+                style={{ stroke: '#979797', strokeWidth: 2, fill: 'white' }}
+                r={8}
+              ></circle>
+            </marker>
             <CallStack
               blockDrawer={new BlockDrawer(this.state.execState)}
             ></CallStack>
+            <g id="clone"></g>
+            <g id="path"></g>
           </svg>
-          {/* <Animation
+          <Animation
             animationDrawer={
               new AnimationDrawer(this.state.execState, this.state.lastState)
             }
-          ></Animation> */}
+          ></Animation>
         </div>
       </div>
     );

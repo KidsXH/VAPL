@@ -34,8 +34,6 @@ export class AnimationDrawer {
 
   private parseExe() {
     const currentExpr = this.execState!.getCurrentExpr();
-    console.log(currentExpr);
-    console.log(this.execState!.getNextExpr());
     const currentClassName = currentExpr.constructor.name;
     let lastClassName = '';
     let lastExpr = undefined;

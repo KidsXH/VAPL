@@ -14,12 +14,18 @@ import 'ace-builds/src-min-noconflict/ext-language_tools';
 import * as d3 from 'd3';
 
 import './editor.scss';
-import {signal, slot, remove} from '../emitter';
-import {Request, CONTROL_EVENT, server, Response, DEBUG_STATE} from '../server';
+import { signal, slot, remove } from '../emitter';
+import {
+  Request,
+  CONTROL_EVENT,
+  server,
+  Response,
+  DEBUG_STATE,
+} from '../server';
 import translate from '../../locales/translate';
-import {ExecState} from 'unicoen.ts/dist/interpreter/Engine/ExecState';
-import {LangProps, ProgLangProps, Theme} from '../Props';
-import {SyntaxErrorData} from 'unicoen.ts/dist/interpreter/mapper/SyntaxErrorData';
+import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
+import { LangProps, ProgLangProps, Theme } from '../Props';
+import { SyntaxErrorData } from 'unicoen.ts/dist/interpreter/mapper/SyntaxErrorData';
 
 type Props = LangProps & ProgLangProps;
 interface State {
@@ -65,7 +71,7 @@ export default class Editor extends React.Component<Props, State> {
       showAlert: false,
       theme: 'light',
     };
-    const {lang, progLang} = props;
+    const { lang, progLang } = props;
     this.sourcecode = translate(lang, this.sourceCodeKey(progLang));
     this.sentSourcecode = '';
 
@@ -77,6 +83,11 @@ export default class Editor extends React.Component<Props, State> {
     const progLang = this.props.progLang;
     slot('debug', (controlEvent: CONTROL_EVENT, stdinText?: string) => {
       this.send(controlEvent, stdinText);
+      if (controlEvent === 'StepBack' || controlEvent === 'BackAll') {
+        sessionStorage.setItem('exec', 'step');
+      } else {
+        sessionStorage.setItem('exec', 'debug');
+      }
     });
     slot('jumpTo', (step: number) => {
       const request: Request = {
@@ -93,6 +104,7 @@ export default class Editor extends React.Component<Props, State> {
         .catch((e) => {
           alert('constructor: ' + e);
         });
+      sessionStorage.setItem('exec', 'step');
     });
     slot('EOF', (response: Response) => {
       this.recieve(response);
@@ -105,15 +117,15 @@ export default class Editor extends React.Component<Props, State> {
     });
     slot('zoom', (command: string) => {
       if (command === 'In') {
-        this.setState({fontSize: this.state.fontSize + 1});
+        this.setState({ fontSize: this.state.fontSize + 1 });
       } else if (command === 'Out') {
-        this.setState({fontSize: Math.max(this.state.fontSize - 1, 10)});
+        this.setState({ fontSize: Math.max(this.state.fontSize - 1, 10) });
       } else if (command === 'Reset') {
-        this.setState({fontSize: 14});
+        this.setState({ fontSize: 14 });
       }
     });
     slot('changeTheme', async (theme: Theme) => {
-      this.setState({theme});
+      this.setState({ theme });
     });
 
     // Enable breakpoint
@@ -209,7 +221,7 @@ export default class Editor extends React.Component<Props, State> {
       server
         .send(request)
         .then((response: Response) => {
-          const {errors} = response;
+          const { errors } = response;
           this.setSyntaxError(errors);
         })
         .catch((e) => {
@@ -225,9 +237,9 @@ export default class Editor extends React.Component<Props, State> {
       sourcecode !== this.sentSourcecode
     ) {
       this.preventedCommand = controlEvent;
-      this.setState({showAlert: true});
+      this.setState({ showAlert: true });
     } else {
-      this.setState({showAlert: false});
+      this.setState({ showAlert: false });
       server
         .send(request)
         .then((response: Response) => {
@@ -339,14 +351,14 @@ export default class Editor extends React.Component<Props, State> {
 
   renderEditor() {
     const mode = this.props.progLang;
-    const {fontSize, theme} = this.state;
+    const { fontSize, theme } = this.state;
     return (
       <AceEditor
         ref={this.editorRef}
         mode={mode}
-        theme='textmate'
+        theme="textmate"
         value={this.sourcecode}
-        name='sourcecode'
+        name="sourcecode"
         fontSize={fontSize}
         tabSize={2}
         editorProps={{
@@ -358,8 +370,8 @@ export default class Editor extends React.Component<Props, State> {
           showLineNumbers: true,
           readOnly: false,
         }}
-        style={{height: '100%', width: '100%'}}
-        className='editorMain'
+        style={{ height: '100%', width: '100%' }}
+        className="editorMain"
         onChange={(text: string) => {
           this.sourcecode = text;
           const delaySyntaxCheck = (code: string) => {
@@ -375,11 +387,11 @@ export default class Editor extends React.Component<Props, State> {
   }
 
   hideAlert() {
-    this.setState({showAlert: false});
+    this.setState({ showAlert: false });
   }
 
   renderAlert() {
-    const {lang} = this.props;
+    const { lang } = this.props;
     const warning = translate(lang, 'warning');
     const editInDebug = translate(lang, 'editInDebug');
     const continueDebug = translate(lang, 'continueDebug');
@@ -387,21 +399,21 @@ export default class Editor extends React.Component<Props, State> {
     const rememberCommand = translate(lang, 'rememberCommand');
     return (
       <Modal.Dialog
-        className='modal-container'
-        aria-labelledby='ModalHeader'
+        className="modal-container"
+        aria-labelledby="ModalHeader"
         // animation={true}
         tabIndex={-1}
-        role='dialog'
+        role="dialog"
       >
         <Modal.Header closeButton>
           <Modal.Title>{warning}</Modal.Title>
         </Modal.Header>
-        <Alert bsStyle='danger'>
+        <Alert bsStyle="danger">
           <p>{editInDebug}</p>
         </Alert>
         <Modal.Footer>
           <Button
-            bsStyle='danger'
+            bsStyle="danger"
             onClick={() => {
               this.isDebugging = false;
               if (this.checkbox !== null) {
@@ -424,7 +436,7 @@ export default class Editor extends React.Component<Props, State> {
             {restart}
           </Button>
           <Checkbox
-            validationState='warning'
+            validationState="warning"
             inputRef={(ref) => (this.checkbox = ref)}
           >
             {rememberCommand}

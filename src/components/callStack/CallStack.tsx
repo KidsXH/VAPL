@@ -36,6 +36,9 @@ export function renderArrow(sourceStackName: string, targetStackName: string) {
     .select(`#stack_${sourceStackName}`)
     .select('rect');
   let target = d3.select('#svg').select(`#block_${targetStackName}`);
+  if (target.empty()) {
+    return;
+  }
   const sourceX =
     Number(source.attr('x')) +
     Number(source.attr('width')) -
@@ -122,26 +125,18 @@ export default class CallStack extends React.Component<Props, State> {
           );
           clonedBlock.select('rect').style('stroke', 'black');
           clonedBlock.select('text').style('fill', 'black');
-          clonedBlock.selectAll('rect').attr('y', () => {
-            return (
-              Number(d3.select(this as any).attr('y')) +
-              blockStacks[i].getHeight() +
-              40
-            );
+          let offsetY = 0;
+          if (i > 1) {
+            offsetY = blockStacks[i].getHeight() + 40;
+          }
+          clonedBlock.selectAll('rect').attr('y', function (this: any) {
+            return Number(d3.select(this).attr('y')) + offsetY;
           });
-          clonedBlock.selectAll('text').attr('y', () => {
-            return (
-              Number(d3.select(this as any).attr('y')) +
-              blockStacks[i].getHeight() +
-              40
-            );
+          clonedBlock.selectAll('text').attr('y', function (this: any) {
+            return Number(d3.select(this).attr('y')) + offsetY;
           });
-          clonedBlock.selectAll('tspan').attr('y', () => {
-            return (
-              Number(d3.select(this as any).attr('y')) +
-              blockStacks[i].getHeight() +
-              40
-            );
+          clonedBlock.selectAll('tspan').attr('y', function (this: any) {
+            return Number(d3.select(this).attr('y')) + offsetY;
           });
           const block = d3.select(
             '#block_' + blockStacks[i].key.replace('.', '_')
