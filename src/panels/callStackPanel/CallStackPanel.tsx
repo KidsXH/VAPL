@@ -3,7 +3,7 @@ import PanelHeader from '../../components/panelHeader/PanelHeader';
 import CallStack from '../../components/callStack/CallStack';
 import Animation from '../../components/callStack/animation/Animation';
 import { AnimationDrawer } from '../../components/callStack/animation/AnimationDrawer';
-import { slot } from '../../components/emitter';
+import { slot, remove } from '../../components/emitter';
 import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
 import { BlockDrawer } from '../../components/callStack/blockDrawer/BlockDrawer';
 
@@ -31,6 +31,10 @@ class CallStackPanel extends React.Component<Props, State> {
     slot('draw', (execState: ExecState, lastState: ExecState) =>
       this.setState({ execState, lastState })
     );
+  }
+
+  componentWillUnmount() {
+    remove('draw');
   }
 
   render() {
