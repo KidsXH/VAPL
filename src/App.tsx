@@ -6,11 +6,14 @@ import TimelinePanel from './panels/timelinePanel/TimelinePanel';
 import CallStackPanel from './panels/callStackPanel/CallStackPanel';
 import MemoryPanel from './panels/memoryPanel/MemoryPanel';
 import ContainerDimensions from 'react-container-dimensions';
+import AppHeader from './components/appHeader/AppHeader';
 
 function App() {
   return (
     <div className="App">
-      <div className="Row-1"></div>
+      <div className="Row-1">
+        <AppHeader/>
+      </div>
       <div className="Row-2">
         <div className="Col-1">
           <EditorPanel />

@@ -8,16 +8,10 @@ interface SubtitleBlockProps {
 }
 
 function SubtitleBlock({title, isActive, handleClick}: SubtitleBlockProps) {
-  const onChange = () => {
-    if (!isActive) {
-      handleClick();
-    }
-  };
-
   return (
     <div
       className={classNames('subtitle-block', {'subtitle-active': isActive})}
-      onClick={onChange}
+      onClick={handleClick}
     >
       {title}
     </div>
