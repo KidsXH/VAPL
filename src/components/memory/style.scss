@@ -1,7 +1,7 @@
 @import '../../styles/colors.scss';
 #LogicalView {
   display: grid;
-  grid-template-columns: 40% 28% auto;
+  grid-template-columns: 50% auto;
   column-gap: 1px;
   height: 100%;
 
@@ -9,10 +9,15 @@
     .memory-block {
       padding-bottom: 1rem;
     }
+    padding: {
+      left: 0.5rem;
+      right: 0.5rem;
+    }
   }
 
-  #StackView,
-  #HeapView {
+  #StackView
+  // , #HeapView 
+  {
     display: grid;
     grid-template-rows: min-content auto;
     .content {
@@ -20,11 +25,11 @@
     }
   }
 
-  #HeapView {
-    .content {
-      margin-left: -20px;
-    }
-  }
+  // #HeapView {
+  //   .content {
+  //     margin-left: -20px;
+  //   }
+  // }
 
   .content-view {
     .title {
@@ -33,6 +38,13 @@
     }
     .content {
       padding: 14px;
+    }
+  }
+
+  #HeapView,
+  #GlobalStaticView {
+    .content {
+      padding-right: calc(50% - 2.75rem);
     }
   }
 }

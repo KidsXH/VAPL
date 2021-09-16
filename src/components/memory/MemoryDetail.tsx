@@ -5,7 +5,7 @@ import './style.scss';
 export interface MemoryInfo {
   funcName: string;
   varName: string;
-  address: number;
+  address: string;
   type: string;
   value: string;
   binaryCode0: string;
@@ -13,31 +13,35 @@ export interface MemoryInfo {
   binaryCode2: string;
 }
 
+const defaultMemoryInfo: MemoryInfo = {
+  funcName: 'X',
+  varName: 'X',
+  address: 'X',
+  type: 'X',
+  value: 'X',
+  binaryCode0: 'X',
+  binaryCode1: 'X',
+  binaryCode2: 'X',
+};
+
 interface MemoryDetailProps {
-  variable: Variable | undefined;
+  variable: Variable;
 }
 
 function MemoryDetail({ variable }: MemoryDetailProps) {
-  if (variable === undefined) {
-    return <div></div>;
-  }
-  const memoryInfo: MemoryInfo = {
-    funcName: variable.name,
-    varName: variable.name,
-    address: variable.address,
-    type: variable.type,
-    value: variable.getValue().toString(),
-    binaryCode0: signMagn(variable),
-    binaryCode1: oneComp(variable),
-    binaryCode2: twoComp(variable),
-  };
-
-  console.log(
-    'TwoComp: ' +
-      twoComp(variable.getValue()) +
-      ' ' +
-      variable.getValue().toString()
-  );
+  const memoryInfo: MemoryInfo = variable.address > 0
+    ? {
+        funcName: variable.name,
+        varName: variable.name,
+        address: '0x' + variable.address.toString(16),
+        type: variable.type,
+        value: variable.getValue().toString(),
+        binaryCode0: signMagn(variable),
+        binaryCode1: oneComp(variable),
+        binaryCode2: twoComp(variable),
+      }
+    : defaultMemoryInfo;
+console.log('DEBUG|'+variable.address);
   return (
     <div id="MemoryDetail">
       <div>
@@ -93,7 +97,7 @@ function twoComp(variable: Variable) {
     const twoC = '1' + d2b(parseInt(oneC, 2) + 1, 31);
     return twoC;
   }
-  return 'X'
+  return 'X';
 }
 
 function d2b(num: number, width: number) {

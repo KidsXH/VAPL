@@ -23,6 +23,8 @@ import './style.scss';
 //   // binaryCode2: '1111 1111 1111 1111 1111 1111 1111 1111',
 // };
 
+const defaultVar: Variable = new Variable('', '', '', -1, -1);
+
 interface MemoryPanelProps {
   execState: ExecState | undefined;
 }
@@ -30,7 +32,7 @@ interface MemoryPanelProps {
 function MemoryPanel({ execState }: MemoryPanelProps) {
   const [viewMode, setViewMode] = useState('logical');
   const [selectedVar, setSelectedVar] = useState<Variable>();
-  const [lastVar, setLastVar] = useState<Variable>();
+  const [lastVar, setLastVar] = useState<Variable>(defaultVar);
 
   const handleModeChange = (mode: 'logical' | 'physical') => {
     setViewMode(mode);
@@ -40,13 +42,13 @@ function MemoryPanel({ execState }: MemoryPanelProps) {
     if (newSelectedVar.address === selectedVar?.address) {
       hideDetail();
     } else {
-      setLastVar(selectedVar);
+      setLastVar(selectedVar ? selectedVar : defaultVar);
       setSelectedVar(newSelectedVar);
     }
   };
 
   const hideDetail = () => {
-    setLastVar(selectedVar);
+    setLastVar(selectedVar ? selectedVar : defaultVar);
     setSelectedVar(undefined);
   };
 
@@ -101,8 +103,8 @@ function MemoryPanel({ execState }: MemoryPanelProps) {
               if (lastVar !== undefined) {
                 setSelectedVar(lastVar);
               } else {
-                // setSelectedVar(example_memory);
-                alert('Click a memory cell to start');
+                setSelectedVar(defaultVar);
+                // alert('Click a memory cell to start');
               }
             }
           }}
