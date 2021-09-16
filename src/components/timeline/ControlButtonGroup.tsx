@@ -113,7 +113,7 @@ function ControlButtonGroup({debugState}: {debugState: DEBUG_STATE}) {
       <ControlButton
         iconHrefLight={stop ? stepLight : stepLight}
         iconHrefDark={stop ? stepDark : stepDark}
-        onClick={() => signal('debug', stop ? 'Step' : 'Start')}
+        onClick={() => {showEvents(); signal('debug', stop ? 'Step' : 'Start');}}
         disabled={!step}
       />
       <ControlButton

@@ -4,6 +4,13 @@
   grid-template-columns: 40% 28% auto;
   column-gap: 1px;
   height: 100%;
+
+  #StackView {
+    .memory-block {
+      padding-bottom: 1rem;
+    }
+  }
+
   #StackView,
   #HeapView {
     display: grid;
@@ -38,7 +45,7 @@
   .detail-item {
     display: grid;
     grid-template-columns: 9rem auto;
-    border-bottom: 1px dashed $dash-line-color;
+    border-bottom: 1px dotted $dash-line-color;
     padding: 0.5rem 1rem;
     .item-name {
       text-align: left;
@@ -46,7 +53,34 @@
     .item-value {
       font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro,
         monospace;
+      padding-top: 0.1rem;
       text-align: right;
+    }
+  }
+
+  .detail-item.binary-item {
+    grid-template-columns: none;
+    grid-template-rows: 1.6rem 1rem;
+    // grid-template-columns: 4rem auto;
+    .item-name {
+      text-align: left;
+    }
+    .binary-code {
+      // padding-top: .25rem;
+      text-align: right;
+
+      // font-size: 0.9rem;
+    }
+  }
+
+  .type-value-detail {
+    display: grid;
+    grid-template-columns: 50% auto;
+    .detail-item {
+      grid-template-columns: 5rem auto;
+    }
+    .dashed-border-right {
+      border-right: 1px dashed $dash-line-color;
     }
   }
 }

@@ -14,10 +14,9 @@ export interface MemoryInfo {
 
 interface MemoryDetailProps {
   memoryInfo: MemoryInfo | null;
-  handleClick: () => void;
 }
 
-function MemoryDetail({ memoryInfo, handleClick }: MemoryDetailProps) {
+function MemoryDetail({ memoryInfo }: MemoryDetailProps) {
   return (
     <div id="MemoryDetail">
       {memoryInfo === null ? (
@@ -27,7 +26,7 @@ function MemoryDetail({ memoryInfo, handleClick }: MemoryDetailProps) {
           <div className="detail-item"></div>
           <div className="detail-item">
             <div className="item-name">Function Name</div>
-            <div className="item-value function-name">
+            <div className="item-value">
               {memoryInfo.funcName}
             </div>
           </div>
@@ -39,25 +38,31 @@ function MemoryDetail({ memoryInfo, handleClick }: MemoryDetailProps) {
             <div className="item-name">Address</div>
             <div className="item-value">{memoryInfo.address}</div>
           </div>
-          <div className="detail-item">
-            <div className="item-name">Type</div>
-            <div className="item-value">{memoryInfo.type}</div>
+          <div className="type-value-detail">
+            <div className="detail-item dashed-border-right">
+              <div className="item-name">Type</div>
+              <div className="item-value">
+                {memoryInfo.type}
+              </div>
+            </div>
+            <div className="detail-item">
+              <div className="item-name">Value</div>
+              <div className="item-value">{memoryInfo.value}</div>
+            </div>
           </div>
-          <div className="detail-item">
-            <div className="item-name">Value</div>
-            <div className="item-value">{memoryInfo.value}</div>
-          </div>
-          <div className="detail-item">
+          <div className="detail-item binary-item">
             <div className="item-name">Sign-Magnitude</div>
-            <div className="item-value">{memoryInfo.binaryCode0}</div>
+            {/* <div className="item-name">Sign-Magn</div> */}
+            <div className="item-value binary-code">{memoryInfo.binaryCode0}</div>
           </div>
-          <div className="detail-item">
-            <div className="item-name">Ones' Complement</div>
-            <div className="item-value">{memoryInfo.binaryCode1}</div>
+          <div className="detail-item binary-item">
+            <div className="item-name">One's Complement</div>
+            {/* <div className="item-name">1's Comp</div> */}
+            <div className="item-value binary-code">{memoryInfo.binaryCode1}</div>
           </div>
-          <div className="detail-item">
+          <div className="detail-item binary-item">
             <div className="item-name">Two's Complement</div>
-            <div className="item-value">{memoryInfo.binaryCode2}</div>
+            <div className="item-value binary-code">{memoryInfo.binaryCode2}</div>
           </div>
         </div>
       )}

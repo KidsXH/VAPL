@@ -1,5 +1,6 @@
 import classNames from 'classnames';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
 import LogicalView from '../../components/memory/LogicalView';
 import MemoryDetail, { MemoryInfo } from '../../components/memory/MemoryDetail';
 import PhysicalView from '../../components/memory/PhysicalView';
@@ -14,17 +15,36 @@ const example_memory: MemoryInfo = {
   type: 'int',
   value: '-1',
   binaryCode0: '1000 0001',
-  binaryCode1: '1111 1110',
-  binaryCode2: '1111 1111',
+  binaryCode1: '1000 0001',
+  binaryCode2: '1000 0001',
+  // binaryCode0: '1000 0000 0000 0000 0000 0000 0000 0001',
+  // binaryCode1: '1111 1111 1111 1111 1111 1111 1111 1110',
+  // binaryCode2: '1111 1111 1111 1111 1111 1111 1111 1111',
 };
 
-function MemoryPanel() {
+interface MemoryPanelProps {
+  execState: ExecState | undefined;
+}
+
+function MemoryPanel({ execState }: MemoryPanelProps) {
   const [viewMode, setViewMode] = useState('logical');
   const [selectedMemory, setSelectedMemory] = useState<MemoryInfo | null>(null);
+  const [lastMemory, setLastMemory] = useState<MemoryInfo | null>(null);
 
-  const onModeChange = (mode: 'logical' | 'physical') => {
+  const handleModeChange = (mode: 'logical' | 'physical') => {
     setViewMode(mode);
   };
+
+  const handleSelectMemory = (newSelectedMemory: MemoryInfo) => {
+    setLastMemory(selectedMemory);
+    setSelectedMemory(newSelectedMemory);
+  };
+
+  const hideDetail = () => {
+    setLastMemory(selectedMemory);
+    setSelectedMemory(null);
+  };
+
 
   return (
     <div
@@ -40,31 +60,46 @@ function MemoryPanel() {
           <SubtitleBlock
             title="Logical View"
             isActive={viewMode === 'logical'}
-            handleClick={() => onModeChange('logical')}
+            handleClick={() => handleModeChange('logical')}
           />
         </div>
         <div className="subtitle-area">
           <SubtitleBlock
             title="Physical View"
             isActive={viewMode === 'physical'}
-            handleClick={() => onModeChange('physical')}
+            handleClick={() => handleModeChange('physical')}
           />
         </div>
       </div>
       <div className="main-area">
-        {viewMode === 'logical' ? <LogicalView /> : <PhysicalView />}
+        {viewMode === 'logical' ? (
+          <LogicalView execState={execState} />
+        ) : (
+          <PhysicalView execState={execState} />
+        )}
       </div>
       <div className="subtitle-area">
         <SubtitleBlock
           title="Memory Detail"
           isActive={selectedMemory !== null}
           handleClick={() => {
-            setSelectedMemory(selectedMemory !== null ? null : example_memory);
+            if (selectedMemory !== null) {
+              hideDetail();
+            } else {
+              if (lastMemory !== null) {
+                setSelectedMemory(lastMemory);
+              } else {
+                setSelectedMemory(example_memory);
+                // alert('Click a memory cell to start')
+              }
+            }
           }}
         />
       </div>
       <div className="detail-area">
-        <MemoryDetail memoryInfo={selectedMemory} handleClick={() => {}} />
+        <MemoryDetail
+          memoryInfo={selectedMemory ? selectedMemory : lastMemory}
+        />
       </div>
     </div>
   );

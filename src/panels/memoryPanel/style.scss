@@ -2,12 +2,12 @@
 
   &.show-detail {
     .detail-area {
-      height: 320px;
+      height: 340px;
       opacity: 1;
       transition: 1s;
     }
     .main-area {
-      height: calc(100% - 480px);
+      height: calc(100% - 500px);
       transition: 1s;
     }
   }

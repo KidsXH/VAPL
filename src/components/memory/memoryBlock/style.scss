@@ -64,9 +64,17 @@
     }
 
     .col-2 {
-      padding-top: 0.5rem;
+      padding-top: 0.8rem;
       padding-right: 0.15rem;
       text-align: end;
     }
   }
+  cursor: pointer;
+
+  // &:hover {
+  //   .col-value {
+  //     border: 2px solid black;
+  //   }
+  //   color: black;
+  // }
 }
