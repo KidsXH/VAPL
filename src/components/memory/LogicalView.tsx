@@ -71,7 +71,7 @@ function LogicalView({
             const stackName = p > 0 ? stack.name.substring(0, p) : stack.name;
             return (
               <MemoryBlock
-                key={stackName}
+                key={stack.name}
                 funcName={stackName}
                 variables={stack.getVariables()}
                 selectedVar={selectedVar}
