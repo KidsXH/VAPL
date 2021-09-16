@@ -12,20 +12,13 @@ import './style.scss';
 interface Props {
   height: number;
   width: number;
-}
-interface State {
   execState?: ExecState;
   lastState?: ExecState;
 }
+interface State {
+}
 
 class CallStackPanel extends React.Component<Props, State> {
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      execState: undefined,
-      lastState: undefined,
-    };
-  }
 
   componentDidMount() {
     slot('draw', (execState: ExecState, lastState: ExecState) =>
@@ -80,16 +73,16 @@ class CallStackPanel extends React.Component<Props, State> {
               ></circle>
             </marker>
             <CallStack
-              blockDrawer={new BlockDrawer(this.state.execState)}
+              blockDrawer={new BlockDrawer(this.props.execState)}
             ></CallStack>
             <g id="clone"></g>
             <g id="path"></g>
           </svg>
-          <Animation
+          {/* <Animation
             animationDrawer={
-              new AnimationDrawer(this.state.execState, this.state.lastState)
+              new AnimationDrawer(this.props.execState, this.props.lastState)
             }
-          ></Animation>
+          ></Animation> */}
         </div>
       </div>
     );

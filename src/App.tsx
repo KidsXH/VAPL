@@ -11,8 +11,8 @@ import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
 import { remove, slot } from './components/emitter';
 
 function App() {
-  const [execState, setExecState] = useState<ExecState | undefined>(undefined);
-  const [lastState, setLastState] = useState<ExecState | undefined>(undefined);
+  const [execState, setExecState] = useState<ExecState | undefined>();
+  const [lastState, setLastState] = useState<ExecState | undefined>();
 
   useEffect(() => {
     // console.log('execState: ' + execState);
