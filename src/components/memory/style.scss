@@ -77,7 +77,12 @@
     display: grid;
     grid-template-columns: 50% auto;
     .detail-item {
-      grid-template-columns: 5rem auto;
+      grid-template-columns: 4rem auto;
+      .item-value {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
     }
     .dashed-border-right {
       border-right: 1px dashed $dash-line-color;

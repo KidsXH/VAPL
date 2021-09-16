@@ -67,10 +67,19 @@
       padding-top: 0.8rem;
       padding-right: 0.15rem;
       text-align: end;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
   cursor: pointer;
 
+  &.active {
+    .col-value {
+      border: 2px solid black;
+    }
+    color: black;
+  }
   // &:hover {
   //   .col-value {
   //     border: 2px solid black;

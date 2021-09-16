@@ -10,13 +10,20 @@ import './style.scss';
 
 interface LogicalViewProps {
   execState: ExecState | undefined;
+  selectedVar: Variable | undefined;
+  handleClick: (variable: Variable) => void;
 }
 
-const example_var1 = new Variable('int', '', 2100000000, 10004, 2);
-const example_var2 = new Variable('char', 'a', 'x', 10004, 2);
-const example_var3 = new Variable('int', 'b', 10, 10004, 2);
+const example_var0 = new Variable('int', '', -1, 10008, 2);
+const example_var1 = new Variable('int', '', 2100000000, 10000, 2);
+const example_var2 = new Variable('int', 'a', -2, 10004, 2);
+const example_var3 = new Variable('int', 'b', 10, 10006, 2);
 
-function LogicalView({ execState }: LogicalViewProps) {
+function LogicalView({
+  execState,
+  selectedVar,
+  handleClick,
+}: LogicalViewProps) {
   const [allStacks, setAllStacks] = useState<Stack[]>([]);
   const [heap, setHeap] = useState<Variable[]>([]);
   const [global, setGlobal] = useState<Variable[]>([]);
@@ -66,6 +73,8 @@ function LogicalView({ execState }: LogicalViewProps) {
                 key={stackName}
                 funcName={stackName}
                 variables={stack.getVariables()}
+                selectedVar={selectedVar}
+                handleClick={handleClick}
               />
             );
           })}
@@ -75,14 +84,31 @@ function LogicalView({ execState }: LogicalViewProps) {
       <div id="HeapView" className="content-view">
         <div className="title">Heap</div>
         <div className="content">
-          <MemoryCell variable = {example_var1} />
+          <MemoryCell
+            variable={example_var1}
+            selectedVar={selectedVar}
+            handleClick={handleClick}
+          />
+          <MemoryCell
+            variable={example_var0}
+            selectedVar={selectedVar}
+            handleClick={handleClick}
+          />
         </div>
       </div>
       <div id="GlobalStaticView" className="content-view">
         <div className="title">Global / Static</div>
         <div className="content">
-          <MemoryCell variable={example_var2} />
-          <MemoryCell variable={example_var3} />
+          <MemoryCell
+            variable={example_var2}
+            selectedVar={selectedVar}
+            handleClick={handleClick}
+          />
+          <MemoryCell
+            variable={example_var3}
+            selectedVar={selectedVar}
+            handleClick={handleClick}
+          />
         </div>
       </div>
     </div>

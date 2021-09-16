@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
+import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
 import LogicalView from '../../components/memory/LogicalView';
 import MemoryDetail, { MemoryInfo } from '../../components/memory/MemoryDetail';
 import PhysicalView from '../../components/memory/PhysicalView';
@@ -8,19 +9,19 @@ import PanelHeader from '../../components/panelHeader/PanelHeader';
 import SubtitleBlock from '../../components/subtitleBlock/SubtitleBlock';
 import './style.scss';
 
-const example_memory: MemoryInfo = {
-  funcName: 'recursiveToThree',
-  varName: 'n',
-  address: '0xc35f',
-  type: 'int',
-  value: '-1',
-  binaryCode0: '1000 0001',
-  binaryCode1: '1000 0001',
-  binaryCode2: '1000 0001',
-  // binaryCode0: '1000 0000 0000 0000 0000 0000 0000 0001',
-  // binaryCode1: '1111 1111 1111 1111 1111 1111 1111 1110',
-  // binaryCode2: '1111 1111 1111 1111 1111 1111 1111 1111',
-};
+// const example_memory: MemoryInfo = {
+//   funcName: 'recursiveToThree',
+//   varName: 'n',
+//   address: '0xc35f',
+//   type: 'int',
+//   value: '-1',
+//   binaryCode0: '1000 0001',
+//   binaryCode1: '1000 0001',
+//   binaryCode2: '1000 0001',
+//   // binaryCode0: '1000 0000 0000 0000 0000 0000 0000 0001',
+//   // binaryCode1: '1111 1111 1111 1111 1111 1111 1111 1110',
+//   // binaryCode2: '1111 1111 1111 1111 1111 1111 1111 1111',
+// };
 
 interface MemoryPanelProps {
   execState: ExecState | undefined;
@@ -28,30 +29,33 @@ interface MemoryPanelProps {
 
 function MemoryPanel({ execState }: MemoryPanelProps) {
   const [viewMode, setViewMode] = useState('logical');
-  const [selectedMemory, setSelectedMemory] = useState<MemoryInfo | null>(null);
-  const [lastMemory, setLastMemory] = useState<MemoryInfo | null>(null);
+  const [selectedVar, setSelectedVar] = useState<Variable>();
+  const [lastVar, setLastVar] = useState<Variable>();
 
   const handleModeChange = (mode: 'logical' | 'physical') => {
     setViewMode(mode);
   };
 
-  const handleSelectMemory = (newSelectedMemory: MemoryInfo) => {
-    setLastMemory(selectedMemory);
-    setSelectedMemory(newSelectedMemory);
+  const handleSelectMemory = (newSelectedVar: Variable) => {
+    if (newSelectedVar.address === selectedVar?.address) {
+      hideDetail();
+    } else {
+      setLastVar(selectedVar);
+      setSelectedVar(newSelectedVar);
+    }
   };
 
   const hideDetail = () => {
-    setLastMemory(selectedMemory);
-    setSelectedMemory(null);
+    setLastVar(selectedVar);
+    setSelectedVar(undefined);
   };
-
 
   return (
     <div
       id="MemoryPanel"
       className={classNames('panel', {
-        'show-detail': selectedMemory !== null,
-        'hide-detail': selectedMemory === null,
+        'show-detail': selectedVar !== undefined,
+        'hide-detail': selectedVar === undefined,
       })}
     >
       <PanelHeader title="Memory" />
@@ -73,33 +77,39 @@ function MemoryPanel({ execState }: MemoryPanelProps) {
       </div>
       <div className="main-area">
         {viewMode === 'logical' ? (
-          <LogicalView execState={execState} />
+          <LogicalView
+            execState={execState}
+            selectedVar={selectedVar}
+            handleClick={handleSelectMemory}
+          />
         ) : (
-          <PhysicalView execState={execState} />
+          <PhysicalView
+            execState={execState}
+            selectedVar={selectedVar}
+            handleClick={handleSelectMemory}
+          />
         )}
       </div>
       <div className="subtitle-area">
         <SubtitleBlock
           title="Memory Detail"
-          isActive={selectedMemory !== null}
+          isActive={selectedVar !== undefined}
           handleClick={() => {
-            if (selectedMemory !== null) {
+            if (selectedVar !== undefined) {
               hideDetail();
             } else {
-              if (lastMemory !== null) {
-                setSelectedMemory(lastMemory);
+              if (lastVar !== undefined) {
+                setSelectedVar(lastVar);
               } else {
-                setSelectedMemory(example_memory);
-                // alert('Click a memory cell to start')
+                // setSelectedVar(example_memory);
+                alert('Click a memory cell to start');
               }
             }
           }}
         />
       </div>
       <div className="detail-area">
-        <MemoryDetail
-          memoryInfo={selectedMemory ? selectedMemory : lastMemory}
-        />
+        <MemoryDetail variable={selectedVar ? selectedVar : lastVar} />
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
 import './style.scss';
 
 export interface MemoryInfo {
   funcName: string;
   varName: string;
-  address: string;
+  address: number;
   type: string;
   value: string;
   binaryCode0: string;
@@ -13,61 +14,118 @@ export interface MemoryInfo {
 }
 
 interface MemoryDetailProps {
-  memoryInfo: MemoryInfo | null;
+  variable: Variable | undefined;
 }
 
-function MemoryDetail({ memoryInfo }: MemoryDetailProps) {
+function MemoryDetail({ variable }: MemoryDetailProps) {
+  if (variable === undefined) {
+    return <div></div>;
+  }
+  const memoryInfo: MemoryInfo = {
+    funcName: variable.name,
+    varName: variable.name,
+    address: variable.address,
+    type: variable.type,
+    value: variable.getValue().toString(),
+    binaryCode0: signMagn(variable),
+    binaryCode1: oneComp(variable),
+    binaryCode2: twoComp(variable),
+  };
+
+  console.log(
+    'TwoComp: ' +
+      twoComp(variable.getValue()) +
+      ' ' +
+      variable.getValue().toString()
+  );
   return (
     <div id="MemoryDetail">
-      {memoryInfo === null ? (
-        <div></div>
-      ) : (
-        <div>
-          <div className="detail-item"></div>
-          <div className="detail-item">
-            <div className="item-name">Function Name</div>
-            <div className="item-value">
-              {memoryInfo.funcName}
-            </div>
+      <div>
+        <div className="detail-item"></div>
+        <div className="detail-item">
+          <div className="item-name">Function Name</div>
+          <div className="item-value">{memoryInfo.funcName}</div>
+        </div>
+        <div className="detail-item">
+          <div className="item-name">Variable Name</div>
+          <div className="item-value variable-name">{memoryInfo.varName}</div>
+        </div>
+        <div className="detail-item">
+          <div className="item-name">Address</div>
+          <div className="item-value">{memoryInfo.address}</div>
+        </div>
+        <div className="type-value-detail">
+          <div className="detail-item dashed-border-right">
+            <div className="item-name">Type</div>
+            <div className="item-value">{memoryInfo.type}</div>
           </div>
           <div className="detail-item">
-            <div className="item-name">Variable Name</div>
-            <div className="item-value variable-name">{memoryInfo.varName}</div>
-          </div>
-          <div className="detail-item">
-            <div className="item-name">Address</div>
-            <div className="item-value">{memoryInfo.address}</div>
-          </div>
-          <div className="type-value-detail">
-            <div className="detail-item dashed-border-right">
-              <div className="item-name">Type</div>
-              <div className="item-value">
-                {memoryInfo.type}
-              </div>
-            </div>
-            <div className="detail-item">
-              <div className="item-name">Value</div>
-              <div className="item-value">{memoryInfo.value}</div>
-            </div>
-          </div>
-          <div className="detail-item binary-item">
-            <div className="item-name">Sign-Magnitude</div>
-            {/* <div className="item-name">Sign-Magn</div> */}
-            <div className="item-value binary-code">{memoryInfo.binaryCode0}</div>
-          </div>
-          <div className="detail-item binary-item">
-            <div className="item-name">One's Complement</div>
-            {/* <div className="item-name">1's Comp</div> */}
-            <div className="item-value binary-code">{memoryInfo.binaryCode1}</div>
-          </div>
-          <div className="detail-item binary-item">
-            <div className="item-name">Two's Complement</div>
-            <div className="item-value binary-code">{memoryInfo.binaryCode2}</div>
+            <div className="item-name">Value</div>
+            <div className="item-value">{memoryInfo.value}</div>
           </div>
         </div>
-      )}
+        <div className="detail-item binary-item">
+          <div className="item-name">Sign-Magnitude</div>
+          {/* <div className="item-name">Sign-Magn</div> */}
+          <div className="item-value binary-code">{memoryInfo.binaryCode0}</div>
+        </div>
+        <div className="detail-item binary-item">
+          <div className="item-name">One's Complement</div>
+          {/* <div className="item-name">1's Comp</div> */}
+          <div className="item-value binary-code">{memoryInfo.binaryCode1}</div>
+        </div>
+        <div className="detail-item binary-item">
+          <div className="item-name">Two's Complement</div>
+          <div className="item-value binary-code">{memoryInfo.binaryCode2}</div>
+        </div>
+      </div>
     </div>
   );
 }
 
 export default MemoryDetail;
+
+function twoComp(variable: Variable) {
+  if (variable.type === 'int') {
+    const num = variable.getValue();
+    if (num >= 0) return signMagn(variable);
+    const oneC = oneComp(variable);
+    const twoC = '1' + d2b(parseInt(oneC, 2) + 1, 31);
+    return twoC;
+  }
+  return 'X'
+}
+
+function d2b(num: number, width: number) {
+  return (Array(width).join('0') + num.toString(2))
+    .slice(-width)
+    .replace('-', '0');
+}
+
+function signMagn(variable: Variable) {
+  if (variable.type === 'int') {
+    const num = variable.getValue();
+    const binary = d2b(num, 31);
+    return (num >= 0 ? '0' : '1') + binary;
+  }
+  return 'X';
+}
+
+function oneComp(variable: Variable) {
+  if (variable.type === 'int') {
+    const num = variable.getValue();
+
+    if (num >= 0) {
+      return signMagn(variable);
+    }
+
+    const binary = d2b(num, 31);
+    console.log('DEBUG| -1=' + binary);
+    const reg = /1|0/g;
+    const oneC = binary.replace(reg, (x: string) => {
+      return x === '0' ? '1' : '0';
+    });
+    return '1' + oneC;
+  }
+  return 'X';
+}

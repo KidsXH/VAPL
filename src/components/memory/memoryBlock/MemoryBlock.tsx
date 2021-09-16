@@ -6,10 +6,17 @@ import './style.scss';
 interface MemoryBlockProps {
   funcName: string;
   variables: Variable[];
+  selectedVar: Variable | undefined;
+  handleClick: (variable: Variable) => void;
   // memoryCells: {varName: string; dataType: string; value: string}[];
 }
 
-function MemoryBlock({ funcName, variables }: MemoryBlockProps) {
+function MemoryBlock({
+  funcName,
+  variables,
+  selectedVar,
+  handleClick,
+}: MemoryBlockProps) {
   return (
     <div className="memory-block">
       <div className="highlight-bar"></div>
@@ -20,9 +27,19 @@ function MemoryBlock({ funcName, variables }: MemoryBlockProps) {
             const value = variable.getValue();
 
             return value instanceof Array ? (
-              <MemoryCell key={variable.name} variable={variable} />
+              <MemoryCell
+                key={variable.name}
+                variable={variable}
+                selectedVar={selectedVar}
+                handleClick={handleClick}
+              />
             ) : (
-              <MemoryCell key={variable.name} variable={variable} />
+              <MemoryCell
+                key={variable.name}
+                variable={variable}
+                selectedVar={selectedVar}
+                handleClick={handleClick}
+              />
             );
           })}
         </div>
