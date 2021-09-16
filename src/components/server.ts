@@ -300,17 +300,16 @@ class Server {
     return res;
   }
 
-  private binOp(uniBinOp: UniBinOp) {
+  private binOp(uniBinOp: UniBinOp) :string|false {
     const operator = uniBinOp.operator;
     const right: UniBinOp | UniExpr | UniMethodCall = uniBinOp.right;
-
     if (right instanceof UniMethodCall) {
       if (right.methodName.name !== 'malloc') {
         return false;
       }
     }
     else if (right instanceof UniBinOp) {
-      this.binOp(right);
+      return this.binOp(right);
     }
 
     if (operator !== '=') {
@@ -320,7 +319,7 @@ class Server {
         return false;
       }
       else if (left instanceof UniBinOp) {
-        this.binOp(left);
+        return this.binOp(left);
       }
     }
     let left = uniBinOp.left;
