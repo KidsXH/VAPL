@@ -65,7 +65,7 @@ export class BlockDrawer {
     stacks.forEach((stack, i) => {
       if (stack.name !== 'GLOBAL') {
         const blockStack = new BlockStack(stack);
-        blockStack.setColor('black');
+        blockStack.setColor('#979797');
         this.blockStacks.push(blockStack);
       }
     });

@@ -123,8 +123,8 @@ export default class CallStack extends React.Component<Props, State> {
           ).appendClone(
             d3.select('#block_' + blockStacks[i].key.replace('.', '_'))
           );
-          clonedBlock.select('rect').style('stroke', 'black');
-          clonedBlock.select('text').style('fill', 'black');
+          clonedBlock.select('rect').style('stroke', '#979797');
+          clonedBlock.select('text').style('fill', '#979797');
           let offsetY = 0;
           if (i > 1) {
             offsetY = blockStacks[i].getHeight() + 40;
@@ -179,7 +179,7 @@ export default class CallStack extends React.Component<Props, State> {
 
   componentDidUpdate() {
     // d3.select('#svg').selectAll('.block').call(d3.drag().on('drag', dragged));
-    d3.select('#svg').selectAll('path').remove();
+    d3.select('#svg').select('#path').selectAll('path').remove();
 
     const { blockDrawer } = this.props;
     const blockArrows = blockDrawer.getBlockArrows();
@@ -216,11 +216,11 @@ export default class CallStack extends React.Component<Props, State> {
     // });
     const activeStack = sessionStorage.getItem('activeStack');
     const blocks = d3.select('#svg').selectAll('.block');
-    blocks.select('rect').style('stroke', 'black');
-    blocks.select('text').style('fill', 'black');
-    const block = d3.select('#svg').select('#block_' + activeStack);
-    block.select('rect').style('stroke', '#0074D9');
-    block.select('text').style('fill', '#0074D9');
+    blocks.select('rect').style('stroke', '#979797');
+    blocks.select('text').style('fill', '#979797');
+    // const block = d3.select('#svg').select('#block_' + activeStack);
+    // block.select('rect').style('stroke', '#0074D9');
+    // block.select('text').style('fill', '#0074D9');
   }
 
   renderBlocks() {

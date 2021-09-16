@@ -4,7 +4,6 @@ import {signal} from './emitter';
 import {Interpreter} from 'unicoen.ts/dist/interpreter/Interpreter';
 import {inArray} from 'jquery';
 import {UniBinOp} from 'unicoen.ts/dist/node/UniBinOp';
-import {UniNode} from 'unicoen.ts/dist/node/UniNode';
 import {UniExpr, UniMethodCall, UniIdent, UniUnaryOp} from 'unicoen.ts';
 
 export type CONTROL_EVENT =

@@ -47,6 +47,41 @@ export function wrapWord(
 
 export default class Block extends React.Component<Props, State> {
   componentDidUpdate() {
+    d3.select('#svg').selectAll('.block-left').selectAll('path').remove();
+    d3.select('#svg')
+      .selectAll('.block-left')
+      .append('path')
+      .attr('d', function (this: any) {
+        const block_node = d3
+          .select(this.parentNode.parentNode)
+          .node()
+          .getBBox();
+        const x = block_node.x;
+        const y = block_node.y;
+        const height = block_node.height;
+        return (
+          'M ' +
+          x +
+          ' ' +
+          (y + 10) +
+          ' L ' +
+          x +
+          ' ' +
+          (y + height - 10) +
+          ' A 10 10 0 0 0 ' +
+          (x + 10) +
+          ' ' +
+          (y + height) +
+          ' L ' +
+          (x + 10) +
+          ' ' +
+          y +
+          ' A 10 10 0 0 0 ' +
+          x +
+          ' ' +
+          (y + 10)
+        );
+      });
     wrapWord(d3.selectAll('.value'), BlockCell.WIDTH - 10, 'value');
   }
 
@@ -62,8 +97,9 @@ export default class Block extends React.Component<Props, State> {
           rx={10}
           ry={10}
           fill="white"
-          style={{ stroke: blockStack.getColor(), strokeWidth: '1.5px' }}
+          style={{ stroke: '#979797', strokeWidth: '1.5px' }}
         ></rect>
+        <g className="block-left"></g>
         {/* <path
           d={
             'M ' +
@@ -87,8 +123,10 @@ export default class Block extends React.Component<Props, State> {
             ' ' +
             (blockStack.y() + 10)
           }
-          style={{ stroke: '#483647' }}
-        ></path> */}
+          fill="black"
+          stroke="black"
+          strokeWidth={2}
+        /> */}
         <text
           x={blockStack.x() + 15}
           y={blockStack.y() + BlockCell.FONT_SIZE + 7}
