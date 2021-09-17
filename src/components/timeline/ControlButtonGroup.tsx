@@ -33,7 +33,7 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
   const onKeyDown = (e: any) => {
     switch (e.keyCode) {
       case 39: {
-        showEvents();
+        // showEvents();
         signal('debug', stop ? 'Step' : 'Start');
         break;
       }
