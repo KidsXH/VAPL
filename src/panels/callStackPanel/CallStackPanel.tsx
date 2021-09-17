@@ -15,11 +15,9 @@ interface Props {
   execState?: ExecState;
   lastState?: ExecState;
 }
-interface State {
-}
+interface State {}
 
 class CallStackPanel extends React.Component<Props, State> {
-
   componentDidMount() {
     slot('draw', (execState: ExecState, lastState: ExecState) =>
       this.setState({ execState, lastState })
@@ -78,11 +76,11 @@ class CallStackPanel extends React.Component<Props, State> {
             <g id="clone"></g>
             <g id="path"></g>
           </svg>
-          {/* <Animation
+          <Animation
             animationDrawer={
               new AnimationDrawer(this.props.execState, this.props.lastState)
             }
-          ></Animation> */}
+          ></Animation>
         </div>
       </div>
     );
