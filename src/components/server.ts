@@ -48,7 +48,8 @@ export class Response {
     public stepCount?: number,
     public linesShowUp?: any,
     public allVariables?: any,
-    public variableShowUp?: any
+    public variableShowUp?: any,
+    public outputChange?: boolean
   ) {}
 }
 
@@ -299,6 +300,7 @@ class Server {
     res.linesShowUp = linesShowUp;
     res.allVariables = allVariables;
     res.variableShowUp = variableShowUp;
+    res.outputChange = this.isOutputChange(this.count);
     return res;
   }
 
@@ -424,6 +426,7 @@ class Server {
         step: this.count,
         errors: [],
         files: this.files,
+        outputChange: this.isOutputChange(this.count)
       };
       return ret;
     }
@@ -464,6 +467,7 @@ class Server {
         step: this.count,
         errors: [],
         files: this.files,
+        outputChange: this.isOutputChange(this.count)
       };
       return ret;
     }
@@ -477,6 +481,7 @@ class Server {
       step: this.count,
       errors: [],
       files: this.files,
+      outputChange: this.isOutputChange(this.count)
     };
     return ret;
   }
@@ -580,6 +585,12 @@ class Server {
 
   private getLastHistory() {
     return this.stateHistory[this.stateHistory.length - 1];
+  }
+
+  private isOutputChange(step: number) {
+    if (step === 0)
+      return false;
+    return this.outputsHistory[step].length > this.outputsHistory[step - 1].length;
   }
 }
 
