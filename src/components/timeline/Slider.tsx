@@ -1,8 +1,4 @@
 import * as React from 'react';
-import {
-  StatementHighlight,
-  VariableHighlight,
-} from '../../panels/timelinePanel/TimelinePanel';
 import { signal } from '../emitter';
 
 interface Props {

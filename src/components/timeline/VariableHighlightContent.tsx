@@ -1,6 +1,4 @@
 import React from 'react';
-import { VariableHighlight } from '../../panels/timelinePanel/TimelinePanel';
-
 interface VariableHighlightContentProps {
   // variableHighlights: VariableHighlight[];
   // options: any;

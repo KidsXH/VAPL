@@ -12,6 +12,7 @@ import ControlButtonGroup from '../../components/timeline/ControlButtonGroup';
 import { DEBUG_STATE } from '../../components/server';
 import { remove, slot } from '../../components/emitter';
 import { unstable_batchedUpdates } from 'react-dom';
+import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
 
 interface OptionItem {
   value: string;
@@ -27,27 +28,32 @@ export interface StatementHighlight {
   depth: number[];
 }
 
-export interface VariableHighlight {
+export interface VariableWithSteps {
   color: string;
   funcName: string;
   name: string;
   visible: boolean;
   steps: number[];
+  variable: Variable;
 }
 
-function TimelinePanel() {
+interface TimelinePanelProps {
+  variableShowUps: VariableWithSteps[];
+  updVariableShowUps: (variableShowUps: VariableWithSteps[]) => void;
+}
+
+function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelProps) {
   const [max, setMax] = useState(0);
   const [marks, setMarks] = useState({});
   const [step, setStep] = useState(0);
   const [variableHighlights, setVariableHighlights] = useState<
-    VariableHighlight[]
+    VariableWithSteps[]
   >([]);
   const [statementHighlights, setStatementHighlights] = useState<
     StatementHighlight[]
   >([]);
   const [options, setOptions] = useState<OptionItem[]>([]);
   const [linesShowUp, setLinesShowUp] = useState<StatementHighlight[]>([]);
-  const [variableShowUp, setVariableShowUp] = useState<VariableHighlight[]>([]);
   const [debugStatus, setDebugStatus] = useState('');
   const [debugState, setDebugState] = useState<DEBUG_STATE>('Stop');
   const timelineArea = React.createRef<any>();
@@ -112,9 +118,10 @@ function TimelinePanel() {
           setVariableHighlights([]);
           setStatementHighlights([]);
           setLinesShowUp(linesShowUp);
-          setVariableShowUp(variableShowUp);
+          updVariableShowUps(variableShowUp);
           setOptions(options);
         });
+        updVariableShowUps(variableShowUp);
       }
     );
     slot('changeState', (debugState: DEBUG_STATE, step: number) => {
@@ -174,13 +181,13 @@ function TimelinePanel() {
       .formatRgb();
     // console.log('addVariableHighlight: ', color);
     let temp = null;
-    for (let i = 0; i < variableShowUp.length; i++) {
+    for (let i = 0; i < variableShowUps.length; i++) {
       if (
-        variableShowUp[i].funcName === funcName &&
-        variableShowUp[i].name === varName
+        variableShowUps[i].funcName === funcName &&
+        variableShowUps[i].name === varName
       ) {
-        variableShowUp[i].color = color;
-        temp = variableShowUp[i];
+        variableShowUps[i].color = color;
+        temp = variableShowUps[i];
         break;
       }
     }
@@ -191,7 +198,7 @@ function TimelinePanel() {
     if (inArray(temp, variableHighlights) < 0) {
       variableHighlights.push(temp);
       setVariableHighlights(variableHighlights);
-      setVariableShowUp(variableShowUp);
+      updVariableShowUps(variableShowUps);
     }
     const memoryCells = d3
       .select('#memory')
@@ -206,12 +213,12 @@ function TimelinePanel() {
   };
 
   const removeVariableHighlight = (funcName: string, varName: string) => {
-    for (let i = 0; i < variableShowUp.length; i++) {
+    for (let i = 0; i < variableShowUps.length; i++) {
       if (
-        variableShowUp[i].funcName === funcName &&
-        variableShowUp[i].name === varName
+        variableShowUps[i].funcName === funcName &&
+        variableShowUps[i].name === varName
       ) {
-        variableShowUp[i].visible = true;
+        variableShowUps[i].visible = true;
         break;
       }
     }
@@ -238,7 +245,7 @@ function TimelinePanel() {
     blockCells.selectAll('text').attr('fill', 'black');
 
     setVariableHighlights(variableHighlights);
-    setVariableShowUp(variableShowUp);
+    updVariableShowUps(variableShowUps);
   };
 
   const changeVariableColor = (
@@ -247,12 +254,12 @@ function TimelinePanel() {
     color: string
   ) => {
     let i = 0;
-    for (; i < variableShowUp.length; i++) {
+    for (; i < variableShowUps.length; i++) {
       if (
-        variableShowUp[i].funcName === funcName &&
-        variableShowUp[i].name === varName
+        variableShowUps[i].funcName === funcName &&
+        variableShowUps[i].name === varName
       ) {
-        variableShowUp[i].color = color;
+        variableShowUps[i].color = color;
         break;
       }
     }
@@ -277,16 +284,16 @@ function TimelinePanel() {
     blockCells.selectAll('text').attr('fill', color);
 
     setVariableHighlights(variableHighlights);
-    setVariableShowUp(variableShowUp);
+    updVariableShowUps(variableShowUps);
   };
 
   const changeVariableVisible = (funcName: string, varName: string) => {
-    for (let i = 0; i < variableShowUp.length; i++) {
+    for (let i = 0; i < variableShowUps.length; i++) {
       if (
-        variableShowUp[i].funcName === funcName &&
-        variableShowUp[i]['name'] === varName
+        variableShowUps[i].funcName === funcName &&
+        variableShowUps[i]['name'] === varName
       ) {
-        if (variableShowUp[i]['visible']) {
+        if (variableShowUps[i]['visible']) {
           const memoryCells = d3
             .select('#memory')
             .selectAll(`.memory-${funcName}-${varName}`);
@@ -303,23 +310,23 @@ function TimelinePanel() {
             .selectAll(`.memory-${funcName}-${varName}`);
           memoryCells
             .select('rect')
-            .style('stroke', variableShowUp[i]['color']);
+            .style('stroke', variableShowUps[i]['color']);
           memoryCells
             .selectAll('text')
-            .attr('fill', variableShowUp[i]['color']);
+            .attr('fill', variableShowUps[i]['color']);
           const blockCells = d3
             .select('#svg')
             .selectAll(`.block-${funcName}-${varName}`);
-          blockCells.select('rect').style('stroke', variableShowUp[i]['color']);
-          blockCells.selectAll('text').attr('fill', variableShowUp[i]['color']);
+          blockCells.select('rect').style('stroke', variableShowUps[i]['color']);
+          blockCells.selectAll('text').attr('fill', variableShowUps[i]['color']);
         }
-        variableShowUp[i]['visible'] = !variableShowUp[i]['visible'];
+        variableShowUps[i]['visible'] = !variableShowUps[i]['visible'];
         break;
       }
     }
 
     setVariableHighlights(variableHighlights);
-    setVariableShowUp(variableShowUp);
+    updVariableShowUps(variableShowUps);
   };
 
   useEffect(() => {

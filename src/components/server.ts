@@ -5,6 +5,7 @@ import {Interpreter} from 'unicoen.ts/dist/interpreter/Interpreter';
 import {inArray} from 'jquery';
 import {UniBinOp} from 'unicoen.ts/dist/node/UniBinOp';
 import {UniExpr, UniMethodCall, UniIdent, UniUnaryOp} from 'unicoen.ts';
+import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
 
 export type CONTROL_EVENT =
   | 'Exec'
@@ -179,11 +180,12 @@ class Server {
     }[] = [];
     const allVariables: {[key: string]: any} = {};
     const variableShowUp: {
-      function: string;
+      funcName: string;
       name: string;
       steps: number[];
       color: string;
       visible: boolean;
+      variable: Variable;
     }[] = [];
     for (let i = 1; i <= lineCount; i++) {
       linesShowUp.push({
@@ -228,11 +230,12 @@ class Server {
           ) {
             allVariables[stackName][variable.name] = variableShowUp.length;
             variableShowUp.push({
-              function: stackName,
+              funcName: stackName,
               name: variable.name,
               steps: [this.count],
               color: '',
               visible: true,
+              variable: variable
             });
           }
         });
