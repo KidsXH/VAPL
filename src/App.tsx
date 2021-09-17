@@ -9,31 +9,20 @@ import ContainerDimensions from 'react-container-dimensions';
 import AppHeader from './components/appHeader/AppHeader';
 import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
 import { remove, slot } from './components/emitter';
-
-interface S {
-  execState: ExecState | undefined;
-  lastState: ExecState | undefined;
-}
+import { unstable_batchedUpdates } from 'react-dom';
 
 function App() {
-  // const [execState, setExecState] = useState<ExecState | undefined>();
-  // const [lastState, setLastState] = useState<ExecState | undefined>();
-
-  const [states, setStates] = useState<S>({
-    execState: undefined,
-    lastState: undefined,
-  });
+  const [execState, setExecState] = useState<ExecState | undefined>();
+  const [lastState, setLastState] = useState<ExecState | undefined>();
 
   useEffect(() => {
-    // console.log('execState: ' + execState);
     slot(
       'draw',
       (execState: ExecState | undefined, lastState: ExecState | undefined) => {
-        // alert('draw');
-        // console.log('DEBUG| draw');
-        // setExecState(execState);
-        // setLastState(lastState);
-        setStates({ execState, lastState });
+        unstable_batchedUpdates(() => {
+          setExecState(execState);
+          setLastState(lastState);
+        });
       }
     );
     return () => {
@@ -59,15 +48,15 @@ function App() {
                 <CallStackPanel
                   width={width}
                   height={height}
-                  execState={states.execState}
-                  lastState={states.lastState}
+                  execState={execState}
+                  lastState={lastState}
                 />
               </React.Fragment>
             )}
           </ContainerDimensions>
         </div>
         <div className="Col-3">
-          <MemoryPanel execState={states.execState} />
+          <MemoryPanel execState={execState} />
         </div>
       </div>
     </div>
