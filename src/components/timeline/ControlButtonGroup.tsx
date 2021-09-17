@@ -61,11 +61,11 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
   useEffect(() => {
     switch (debugState) {
       case 'Stop':
-        setStart(false);
+        setStart(true);
         setStop(false);
         setBackAll(false);
         setStepBack(false);
-        setStep(true);
+        setStep(false);
         setStepAll(false);
         break;
       case 'First':
@@ -127,8 +127,8 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
         disabled={!stepBack}
       />
       <ControlButton
-        iconHrefLight={restartLight}
-        iconHrefDark={restartDark}
+        iconHrefLight={stop ? restartLight : startLight}
+        iconHrefDark={stop ? restartDark : startDark}
         onClick={() => {
           signal('debug', 'Start');
           const arrowListJson = sessionStorage.getItem('arrowList');
@@ -147,10 +147,10 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
         disabled={!start}
       />
       <ControlButton
-        iconHrefLight={stop ? stepLight : startLight}
-        iconHrefDark={stop ? stepDark : startDark}
+        iconHrefLight={stepLight}
+        iconHrefDark={stepDark}
         onClick={() => {
-          showEvents();
+          // showEvents();
           signal('debug', stop ? 'Step' : 'Start');
         }}
         disabled={!step}

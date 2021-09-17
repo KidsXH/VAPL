@@ -104,7 +104,7 @@ export default class Slider extends React.Component<Props, State> {
     const contentWidth = width;
     const activeWidth = max ? (step / max) * contentWidth : 0;
 
-    console.log(contentWidth, activeWidth, step, max);
+    // console.log(contentWidth, activeWidth, step, max);
 
     return (
       <div>
