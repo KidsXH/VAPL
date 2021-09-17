@@ -254,8 +254,7 @@ export default class CallStack extends React.Component<Props, State> {
     //     cells.selectAll('text').attr('fill', variablesMap[key]['color']);
     //   }
     // });
-
-    // const activeStack = sessionStorage.getItem('activeStack');
+    const activeStack = sessionStorage.getItem('activeStack');
     const blocks = d3.select('#svg').selectAll('.block');
     blocks.select('rect').style('stroke', '#979797');
     blocks.select('text').style('fill', '#979797');
@@ -286,6 +285,7 @@ export default class CallStack extends React.Component<Props, State> {
         );
       }
     });
+    // list 顺序 main 为什么在第一个
     return list;
   }
 
@@ -325,12 +325,12 @@ export default class CallStack extends React.Component<Props, State> {
         <g
           key={`stack_${blockStack.getName()}`}
           id={`stack_${blockStack.getName()}`}
-          // onClick={() => {
-          //   const res = inArray(blockStack.getName(), blockArrows);
-          //   if (res < 0) {
-          //     this.drawOrRemoveBlock(blockStack.getName());
-          //   }
-          // }}
+          onClick={() => {
+            const res = inArray(blockStack.getName(), blockArrows);
+            if (res < 0) {
+              this.drawOrRemoveBlock(blockStack.getName());
+            }
+          }}
         >
           <rect
             x={x}
@@ -343,7 +343,13 @@ export default class CallStack extends React.Component<Props, State> {
             strokeWidth={2}
             transform-origin={x + ' ' + y}
           ></rect>
-          <text x={x + 10} y={y + 20} fontSize="15">
+          <text
+            x={x + 10}
+            y={y + 20}
+            fontSize="15"
+            className="function-name"
+            fill={'rgb(139, 139, 139)' }
+          >
             {blockStack.getName().split('_')[0]}
           </text>
         </g>

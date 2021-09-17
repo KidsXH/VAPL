@@ -13,7 +13,10 @@ function PhysicalView({
   selectedVar,
   handleClick,
 }: PhysicalViewProps) {
-  return <div className="physical-view"></div>;
+  // const a = allVariables ;
+  return execState ? <div className="physical-view">
+
+  </div> : <div></div>;
 }
 
 export default PhysicalView;

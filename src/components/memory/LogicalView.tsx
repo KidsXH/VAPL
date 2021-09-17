@@ -30,39 +30,38 @@ function LogicalView({
   const [global, setGlobal] = useState<Variable[]>([]);
 
   useEffect(() => {
-    if (execState === undefined) {
-      return;
+    if (execState !== undefined) {
+      const stacks = execState.getStacks();
+      const curStacks: Stack[] = [];
+      const curHeap: Variable[] = [];
+      const curGlobal: Variable[] = [];
+
+      // console.log('DEBUG| Stacks: ' + stacks);
+
+      stacks.forEach((stack) => {
+        if (stack.name !== 'GLOBAL') {
+          curStacks.push(stack);
+        } else {
+          const variables = stack.getVariables();
+          variables.forEach((variable) => {
+            if (variable.address >= 50000) {
+              curGlobal.push(variable);
+            } else if (variable.address >= 20000) {
+              curHeap.push(variable);
+            }
+          });
+        }
+      });
+
+      setAllStacks(curStacks);
+      setHeap(curHeap);
+      setGlobal(curGlobal);
     }
-
-    const stacks = execState.getStacks();
-    const curStacks: Stack[] = [];
-    const curHeap: Variable[] = [];
-    const curGlobal: Variable[] = [];
-
-    // console.log('DEBUG| Stacks: ' + stacks);
-
-    stacks.forEach((stack) => {
-      if (stack.name !== 'GLOBAL') {
-        curStacks.push(stack);
-      } else {
-        const variables = stack.getVariables();
-        variables.forEach((variable) => {
-          if (variable.address >= 50000) {
-            curGlobal.push(variable);
-          } else if (variable.address >= 20000) {
-            curHeap.push(variable);
-          }
-        });
-      }
-    });
-
-    setAllStacks(curStacks);
-    setHeap(curHeap);
-    setGlobal(curGlobal);
   }, [execState]);
 
   return (
     <div id="LogicalView">
+      <div className='left-content'>
       <div id="StackView" className="content-view">
         <div className="title"> Stack</div>
         <div className="content">
@@ -81,8 +80,8 @@ function LogicalView({
           })}
           {/* <MemoryBlock funcName="functionX" memoryCells={memoryCells} /> */}
         </div>
-      </div>
-      <div>
+      </div></div>
+      <div className='right-content'>
         <div id="HeapView" className="content-view">
           <div className="title">Heap</div>
           <div className="content">
@@ -101,6 +100,7 @@ function LogicalView({
         <div id="GlobalStaticView" className="content-view">
           <div className="title">Global / Static</div>
           <div className="content">
+            {/* <div style={{border: '1px solid black', height: '2rem'}}></div> */}
             {/* <MemoryCell
               variable={example_var2}
               selectedVar={selectedVar}

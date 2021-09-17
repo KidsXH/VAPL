@@ -8,7 +8,13 @@ interface StatementHighlightContentProps {
 }
 
 function StatementHighlightContent(props: StatementHighlightContentProps) {
-  return <div>Statements</div>;
+  return <div>
+    
+    <div id='StatementHighlightContent'>
+      <div className='title'>Hightlight Statements</div>
+      <div></div>
+    </div>
+    </div>;
 }
 
 export default StatementHighlightContent;

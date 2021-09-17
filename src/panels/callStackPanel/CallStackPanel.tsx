@@ -15,24 +15,24 @@ interface Props {
   execState?: ExecState;
   lastState?: ExecState;
 }
-interface State {}
+interface State {
+}
 
 class CallStackPanel extends React.Component<Props, State> {
-  componentDidMount() {
-    slot('draw', (execState: ExecState, lastState: ExecState) =>
-      this.setState({ execState, lastState })
-    );
-  }
-
-  componentWillUnmount() {
-    remove('draw');
-  }
 
   render() {
+    // console.log('render1');
+    const blockDrawer = new BlockDrawer(this.props.execState);
+    const animationDrawer = new AnimationDrawer(
+      this.props.execState,
+      this.props.lastState
+    );
+    // console.log('render2');
     return (
       <div id="CallStackPanel" className="panel">
         <PanelHeader title="Call Stack" />
         <div className="callStack-area">
+          {/* {console.log('DEBUG|'+this.props.execState)} */}
           <svg
             id="svg"
             width={this.props.width - 20}
@@ -70,9 +70,7 @@ class CallStackPanel extends React.Component<Props, State> {
                 r={8}
               ></circle>
             </marker>
-            <CallStack
-              blockDrawer={new BlockDrawer(this.props.execState)}
-            ></CallStack>
+            <CallStack blockDrawer={blockDrawer}></CallStack>
             <g id="clone"></g>
             <g id="path"></g>
           </svg>
