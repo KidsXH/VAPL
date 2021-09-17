@@ -128,11 +128,10 @@ export default class Block extends React.Component<Props, State> {
           strokeWidth={2}
         /> */}
         <text
-          x={blockStack.x() + 20}
+          x={blockStack.x() + 15}
           y={blockStack.y() + BlockCell.FONT_SIZE + 7}
           fontSize={BlockCell.FONT_SIZE + 2}
           fill={blockStack.getColor()}
-          className="function-name"
         >
           {blockStack.key.split('.')[0]}
         </text>
@@ -169,7 +168,6 @@ export default class Block extends React.Component<Props, State> {
               fontSize={BlockCell.FONT_SIZE}
               fontWeight="blod"
               fill={blockStack.getColor()}
-              className="variable-name"
             >
               {blockCell.getName()}
             </text>
