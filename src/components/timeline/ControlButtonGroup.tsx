@@ -29,6 +29,35 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
   const [stepBack, setStepBack] = useState(false);
   const [step, setStep] = useState(true);
   const [stepAll, setStepAll] = useState(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const onKeyDown = (e: any) => {
+    console.log(e.keyCode);
+    switch (e.keyCode) {
+      case 39: {
+        showEvents();
+        signal('debug', stop ? 'Step' : 'Start');
+        break;
+      }
+      case 37: {
+        signal('debug', 'StepBack');
+        break;
+      }
+    }
+    if (e.ctrlKey && e.keyCode === 13) {
+      signal('debug', 'Start');
+      const arrowListJson = sessionStorage.getItem('arrowList');
+      let arrowList = arrowListJson === null ? {} : JSON.parse(arrowListJson);
+      if (!arrowList) {
+        arrowList = {};
+      }
+      Object.keys(arrowList).forEach((name) => {
+        d3.select('#svg')
+          .select(`#block_${name}`)
+          .attr('transform', 'matrix(1,0,0,1,0,0)');
+      });
+      sessionStorage.clear();
+    }
+  };
 
   useEffect(() => {
     switch (debugState) {
@@ -77,7 +106,11 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
       default:
         break;
     }
-  }, [debugState]);
+    window.addEventListener('keyup', onKeyDown);
+    return () => {
+      window.removeEventListener('keyup', onKeyDown);
+    };
+  }, [debugState, onKeyDown]);
 
   return (
     <div className="control-btn-group">
