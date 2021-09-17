@@ -102,20 +102,23 @@ export default class Slider extends React.Component<Props, State> {
       // statementHighlights,
     } = this.props;
 
-    const contenWidth = width > 250 ? width - 60 : width;
-    const activeWidth = max ? (step / max) * contenWidth : 0;
+    // const contenWidth = width > 250 ? width - 60 : width;
+    const contentWidth = width;
+    const activeWidth = max ? (step / max) * contentWidth : 0;
+
+    console.log(contentWidth, activeWidth, step, max);
 
     return (
       <div>
         <svg
           style={{
             display: 'block',
-            paddingBottom: '8px',
+            // paddingBottom: '8px',
             zIndex: 6,
             overflow: 'visible',
           }}
           height={height}
-          width={contenWidth}
+          width={contentWidth}
           onMouseDown={this.dragFromSVG}
           onMouseMove={this.mouseMove}
         >
@@ -124,7 +127,7 @@ export default class Slider extends React.Component<Props, State> {
             height={8}
             x={0}
             y={height / 2 - 4}
-            width={contenWidth}
+            width={contentWidth}
             rx="4"
             ry="4"
           />
@@ -189,7 +192,7 @@ export default class Slider extends React.Component<Props, State> {
           <g>
             <text
               className="timeline-legend"
-              x={contenWidth}
+              x={contentWidth}
               y={height / 2 - 20}
               fontSize="15"
             >
@@ -197,7 +200,7 @@ export default class Slider extends React.Component<Props, State> {
             </text>
             <text
               className="timeline-legend"
-              x={contenWidth}
+              x={contentWidth}
               y={height / 2 + 35}
               fontSize="15"
             >
