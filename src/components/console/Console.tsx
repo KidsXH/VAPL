@@ -5,6 +5,7 @@ import AceEditor from 'react-ace';
 import 'ace-builds/src-min-noconflict/mode-text';
 import 'ace-builds/src-min-noconflict/theme-textmate';
 import 'ace-builds/src-min-noconflict/theme-monokai';
+import * as d3 from 'd3';
 
 import './console.scss';
 import { slot, signal, remove } from '../emitter';
@@ -15,18 +16,19 @@ type Props = LangProps;
 interface State {
   output: string;
   isReadOnly: boolean;
+  outputChange: boolean;
 }
 
 export default class Console extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { output: '', isReadOnly: true };
+    this.state = { output: '', isReadOnly: true, outputChange: false };
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-    slot('changeOutput', (output: string) => {
-      this.setState({ output });
+    slot('changeOutput', (output: string, outputChange: boolean) => {
+      this.setState({ output, outputChange });
     });
     slot('changeState', async (debugState: DEBUG_STATE) => {
       if (debugState === 'stdin') {
@@ -47,6 +49,39 @@ export default class Console extends React.Component<Props, State> {
       signal('debug', 'Step', sendText);
     }
   }
+
+  componentDidUpdate() {
+    if (this.state.outputChange) {
+      d3.select('#ConsolePanel')
+        .transition()
+        .duration(1000)
+        .tween('number', function () {
+          let i = d3.interpolateNumber(8, 16);
+          let j = d3.interpolateRgb('#ffffff', '#4A8CE3');
+          return function (t) {
+            d3.select('#ConsolePanel').style(
+              'box-shadow',
+              `0px 0px ${i(t)}px ${j(t)}`
+            );
+          };
+        });
+      d3.select('#ConsolePanel')
+        .transition()
+        .delay(1000)
+        .duration(1000)
+        .tween('number', function () {
+          let i = d3.interpolateNumber(16, 8);
+          let j = d3.interpolateRgb('#4A8CE3', '#ffffff');
+          return function (t) {
+            d3.select('#ConsolePanel').style(
+              'box-shadow',
+              `0px 0px ${i(t)}px ${j(t)}`
+            );
+          };
+        });
+    }
+  }
+
   render() {
     return (
       <AceEditor
@@ -64,7 +99,7 @@ export default class Console extends React.Component<Props, State> {
           readOnly: this.state.isReadOnly,
           showGutter: false,
         }}
-        style={{ height: '100%', width: '100%', marginTop: '.25rem'}}
+        style={{ height: '100%', width: '100%', marginTop: '.25rem' }}
         className="console"
       />
     );

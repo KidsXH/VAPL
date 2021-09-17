@@ -31,7 +31,6 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
   const [stepAll, setStepAll] = useState(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const onKeyDown = (e: any) => {
-    console.log(e.keyCode);
     switch (e.keyCode) {
       case 39: {
         showEvents();
