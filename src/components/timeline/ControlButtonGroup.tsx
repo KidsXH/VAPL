@@ -84,7 +84,8 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
       <ControlButton
         iconHrefLight={backAllLight}
         iconHrefDark={backAllDark}
-        onClick={() => signal('debug', 'BackAll')}
+        // onClick={() => signal('debug', 'BackAll')}
+        onClick={() => {}}
         disabled={!backAll}
       />
       <ControlButton
