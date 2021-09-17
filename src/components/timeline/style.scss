@@ -8,6 +8,7 @@
 
 .control-button {
   cursor: pointer;
+  user-select: none;
   &.disabled {
     pointer-events: none;
     cursor: default;
