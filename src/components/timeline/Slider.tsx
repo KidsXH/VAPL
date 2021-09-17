@@ -62,6 +62,7 @@ export default class Slider extends React.Component<Props, State> {
   };
 
   dragFromSVG = (e: React.MouseEvent) => {
+    if (this.props.max === 0) return;
     if (!this.state.dragging) {
       let step = this.props.scale.invert(e.nativeEvent.offsetX);
       step = Math.min(step, this.props.max);
@@ -81,6 +82,7 @@ export default class Slider extends React.Component<Props, State> {
   };
 
   mouseMove = (e: React.MouseEvent) => {
+    if (this.props.max === 0) return;
     if (this.state.dragging) {
       let step = this.props.scale.invert(e.nativeEvent.offsetX);
       step = Math.min(step, this.props.max);
