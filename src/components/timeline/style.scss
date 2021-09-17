@@ -28,3 +28,11 @@
   fill: $legend-color;
   text-anchor: end;
 }
+
+#VariableHighlightContent, #StatementHighlightContent {
+  .title {
+    padding: .5rem;
+    color: $text-title-color;
+    border-bottom: 1px solid $border-line-color;
+  }
+}

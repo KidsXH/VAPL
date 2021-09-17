@@ -16,15 +16,23 @@
   }
 
   #StackView
-  // , #HeapView 
+  // , #HeapView
   {
     display: grid;
     grid-template-rows: min-content auto;
     .content {
-      border-right: 1px dashed $dash-line-color;
     }
   }
 
+  .left-content {
+    padding-left: 0.5rem;
+    border-right: 1px dashed $dash-line-color;
+  }
+  .right-content {
+    padding-right: 0.5rem;
+    display: grid;
+    grid-template-rows: 50% auto;
+  }
   // #HeapView {
   //   .content {
   //     margin-left: -20px;
@@ -41,10 +49,19 @@
     }
   }
 
+  #HeapView {
+    .content {
+    }
+  }
+
   #HeapView,
   #GlobalStaticView {
-    .content {
-      padding-right: calc(50% - 2.75rem);
+    padding-left: 0.5rem;
+  }
+
+  #GlobalStaticView {
+    .title {
+      border-top: 1px dashed $dash-line-color;
     }
   }
 }

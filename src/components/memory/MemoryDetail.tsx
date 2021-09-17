@@ -31,7 +31,7 @@ interface MemoryDetailProps {
 function MemoryDetail({ variable }: MemoryDetailProps) {
   const memoryInfo: MemoryInfo = variable.address > 0
     ? {
-        funcName: variable.name,
+        funcName: 'main',
         varName: variable.name,
         address: '0x' + variable.address.toString(16),
         type: variable.type,
@@ -41,7 +41,7 @@ function MemoryDetail({ variable }: MemoryDetailProps) {
         binaryCode2: twoComp(variable),
       }
     : defaultMemoryInfo;
-console.log('DEBUG|'+variable.address);
+// console.log('DEBUG|'+variable.address);
   return (
     <div id="MemoryDetail">
       <div>
@@ -124,7 +124,6 @@ function oneComp(variable: Variable) {
     }
 
     const binary = d2b(num, 31);
-    console.log('DEBUG| -1=' + binary);
     const reg = /1|0/g;
     const oneC = binary.replace(reg, (x: string) => {
       return x === '0' ? '1' : '0';

@@ -303,7 +303,13 @@ export default class CallStack extends React.Component<Props, State> {
             strokeWidth={2}
             transform-origin={x + ' ' + y}
           ></rect>
-          <text x={x + 10} y={y + 20} fontSize="15">
+          <text
+            x={x + 10}
+            y={y + 20}
+            fontSize="15"
+            className="function-name"
+            fill={'rgb(139, 139, 139)' }
+          >
             {blockStack.getName().split('_')[0]}
           </text>
         </g>

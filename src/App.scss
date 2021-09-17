@@ -57,4 +57,11 @@
   .function-name {
     font-weight: 600;
   }
+
+  .variable-name,
+  .function-name,
+  .variable-value {
+    font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro,
+      monospace;
+  }
 }

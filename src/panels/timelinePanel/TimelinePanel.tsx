@@ -11,6 +11,7 @@ import Slider from '../../components/timeline/Slider';
 import ControlButtonGroup from '../../components/timeline/ControlButtonGroup';
 import { DEBUG_STATE } from '../../components/server';
 import { remove, slot } from '../../components/emitter';
+import { unstable_batchedUpdates } from 'react-dom';
 
 interface OptionItem {
   value: string;
@@ -106,13 +107,14 @@ function TimelinePanel() {
           options.push(temp);
         });
         // console.log(variableShowUp);
-
-        setMax(stepCount);
-        setVariableHighlights([]);
-        setStatementHighlights([]);
-        setLinesShowUp(linesShowUp);
-        setVariableShowUp(variableShowUp);
-        setOptions(options);
+        unstable_batchedUpdates(() => {
+          setMax(stepCount);
+          setVariableHighlights([]);
+          setStatementHighlights([]);
+          setLinesShowUp(linesShowUp);
+          setVariableShowUp(variableShowUp);
+          setOptions(options);
+        });
       }
     );
     slot('changeState', (debugState: DEBUG_STATE, step: number) => {
@@ -122,8 +124,10 @@ function TimelinePanel() {
       } else {
         debugStatus = debugState;
       }
-      setDebugStatus(debugStatus);
-      setDebugState(debugState);
+      unstable_batchedUpdates(() => {
+        setDebugStatus(debugStatus);
+        setDebugState(debugState);
+      });
     });
 
     return () => {
@@ -319,7 +323,7 @@ function TimelinePanel() {
   };
 
   useEffect(() => {
-    setTimelineWidth(timelineArea.current.clientWidth);
+    setTimelineWidth(timelineArea.current.clientWidth - 60);
   }, [timelineArea]);
 
   return (
