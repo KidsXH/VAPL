@@ -178,6 +178,41 @@ export default class CallStack extends React.Component<Props, State> {
   }
 
   componentDidUpdate() {
+    d3.select('#svg').selectAll('.block-left').selectAll('path').remove();
+    d3.select('#svg')
+      .selectAll('.block-left')
+      .append('path')
+      .attr('d', function (this: any) {
+        const block_node = d3
+          .select(this.parentNode.parentNode)
+          .node()
+          .getBBox();
+        const x = block_node.x;
+        const y = block_node.y;
+        const height = block_node.height;
+        return (
+          'M ' +
+          x +
+          ' ' +
+          (y + 10) +
+          ' L ' +
+          x +
+          ' ' +
+          (y + height - 10) +
+          ' A 10 10 0 0 0 ' +
+          (x + 10) +
+          ' ' +
+          (y + height) +
+          ' L ' +
+          (x + 10) +
+          ' ' +
+          y +
+          ' A 10 10 0 0 0 ' +
+          x +
+          ' ' +
+          (y + 10)
+        );
+      });
     // d3.select('#svg').selectAll('.block').call(d3.drag().on('drag', dragged));
     d3.select('#svg').select('#path').selectAll('path').remove();
 
