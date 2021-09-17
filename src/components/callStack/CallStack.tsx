@@ -48,7 +48,12 @@ export function renderArrow(sourceStackName: string, targetStackName: string) {
   const transform = target.attr('transform').replace(')', '').split(',');
   target = target.select('rect');
   const targetX = Number(target.attr('x')) + Number(transform[4]);
-  const targetY = Number(target.attr('y')) + Number(transform[5]) + 30;
+  const height = d3
+    .select(target as any)
+    .node()
+    .node()
+    .getBBox().height;
+  const targetY = Number(target.attr('y')) + Number(transform[5]) + height / 2;
   let temp = sourceX - targetX;
   temp = Math.max(temp, -temp);
   d3.select('#svg')
