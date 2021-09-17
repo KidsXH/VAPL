@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
-import {DEBUG_STATE} from '../server';
-import {showEvents, signal} from '../emitter';
+import { DEBUG_STATE } from '../server';
+import { showEvents, signal } from '../emitter';
 import * as d3 from 'd3';
 
 import stepLight from '../../assets/icon/stepLight.svg';
@@ -15,11 +15,14 @@ import stepBackLight from '../../assets/icon/stepBackLight.svg';
 import stepBackDark from '../../assets/icon/stepBackDark.svg';
 import backAllLight from '../../assets/icon/backAllLight.svg';
 import backAllDark from '../../assets/icon/backAllDark.svg';
+
+import startLight from '../../assets/icon/kaishi2.svg';
+import startDark from '../../assets/icon/kaishi1.svg';
 import ControlButton from './ControButton';
 
 import './style.scss';
 
-function ControlButtonGroup({debugState}: {debugState: DEBUG_STATE}) {
+function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
   const [start, setStart] = useState(false);
   const [stop, setStop] = useState(false);
   const [backAll, setBackAll] = useState(false);
@@ -77,7 +80,7 @@ function ControlButtonGroup({debugState}: {debugState: DEBUG_STATE}) {
   }, [debugState]);
 
   return (
-    <div className='control-btn-group'>
+    <div className="control-btn-group">
       <ControlButton
         iconHrefLight={backAllLight}
         iconHrefDark={backAllDark}
@@ -111,9 +114,12 @@ function ControlButtonGroup({debugState}: {debugState: DEBUG_STATE}) {
         disabled={!start}
       />
       <ControlButton
-        iconHrefLight={stop ? stepLight : stepLight}
-        iconHrefDark={stop ? stepDark : stepDark}
-        onClick={() => {showEvents(); signal('debug', stop ? 'Step' : 'Start');}}
+        iconHrefLight={stop ? stepLight : startLight}
+        iconHrefDark={stop ? stepDark : startDark}
+        onClick={() => {
+          showEvents();
+          signal('debug', stop ? 'Step' : 'Start');
+        }}
         disabled={!step}
       />
       <ControlButton
