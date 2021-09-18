@@ -1,10 +1,10 @@
-import {SyntaxErrorData} from 'unicoen.ts/dist/interpreter/mapper/SyntaxErrorData';
-import {ExecState} from 'unicoen.ts/dist/interpreter/Engine/ExecState';
-import {signal} from './emitter';
-import {Interpreter} from 'unicoen.ts/dist/interpreter/Interpreter';
-import {inArray} from 'jquery';
-import {UniBinOp} from 'unicoen.ts/dist/node/UniBinOp';
-import {UniExpr, UniMethodCall, UniIdent, UniUnaryOp} from 'unicoen.ts';
+import { SyntaxErrorData } from 'unicoen.ts/dist/interpreter/mapper/SyntaxErrorData';
+import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
+import { signal } from './emitter';
+import { Interpreter } from 'unicoen.ts/dist/interpreter/Interpreter';
+import { inArray } from 'jquery';
+import { UniBinOp } from 'unicoen.ts/dist/node/UniBinOp';
+import { UniExpr, UniMethodCall, UniIdent, UniUnaryOp } from 'unicoen.ts';
 import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
 
 export type CONTROL_EVENT =
@@ -179,7 +179,7 @@ class Server {
       depth: number[];
       visible: boolean;
     }[] = [];
-    const allVariables: {[key: string]: any} = {};
+    const allVariables: { [key: string]: any } = {};
     const variableShowUp: {
       funcName: string;
       name: string;
@@ -236,7 +236,7 @@ class Server {
               steps: [this.count],
               color: '',
               visible: true,
-              variable: variable
+              variable: variable,
             });
           }
         });
@@ -256,7 +256,7 @@ class Server {
       if (this.count > 0) {
         lastExpr = this.stateHistory[this.count - 1].getNextExpr();
         const nextClassName = lastExpr.constructor.name;
-        if ((lastExpr instanceof UniBinOp) && currentClassName !== 'UniBinOp') {
+        if (lastExpr instanceof UniBinOp && currentClassName !== 'UniBinOp') {
           const res = this.binOp(lastExpr);
           if (res) {
             const stack = stacks[stacks.length - 1];
@@ -275,7 +275,7 @@ class Server {
           ]['steps'].push(this.count);
         } else if (
           nextClassName === 'UniReturn' &&
-          (currentExpr instanceof UniBinOp)
+          currentExpr instanceof UniBinOp
         ) {
           const res = this.returnBinOp(currentExpr);
           if (res) {
@@ -304,15 +304,14 @@ class Server {
     return res;
   }
 
-  private binOp(uniBinOp: UniBinOp) :string|false {
+  private binOp(uniBinOp: UniBinOp): string | false {
     const operator = uniBinOp.operator;
     const right: UniBinOp | UniExpr | UniMethodCall = uniBinOp.right;
     if (right instanceof UniMethodCall) {
       if (right.methodName.name !== 'malloc') {
         return false;
       }
-    }
-    else if (right instanceof UniBinOp) {
+    } else if (right instanceof UniBinOp) {
       return this.binOp(right);
     }
 
@@ -321,8 +320,7 @@ class Server {
 
       if (left instanceof UniMethodCall) {
         return false;
-      }
-      else if (left instanceof UniBinOp) {
+      } else if (left instanceof UniBinOp) {
         return this.binOp(left);
       }
     }
@@ -426,7 +424,7 @@ class Server {
         step: this.count,
         errors: [],
         files: this.files,
-        outputChange: this.isOutputChange(this.count)
+        outputChange: this.isOutputChange(this.count),
       };
       return ret;
     }
@@ -467,7 +465,7 @@ class Server {
         step: this.count,
         errors: [],
         files: this.files,
-        outputChange: this.isOutputChange(this.count)
+        outputChange: this.isOutputChange(this.count),
       };
       return ret;
     }
@@ -481,7 +479,7 @@ class Server {
       step: this.count,
       errors: [],
       files: this.files,
-      outputChange: this.isOutputChange(this.count)
+      outputChange: this.isOutputChange(this.count),
     };
     return ret;
   }
@@ -499,7 +497,7 @@ class Server {
       } else if (typeof lineNumOfBreakpoint !== 'undefined') {
         if (typeof ret.execState !== 'undefined') {
           const nextExpr = ret.execState.getNextExpr();
-          const {codeRange} = nextExpr;
+          const { codeRange } = nextExpr;
           if (codeRange) {
             if (lineNumOfBreakpoint.includes(codeRange.begin.y - 1)) {
               signal('Breakpoint', ret);
@@ -588,9 +586,10 @@ class Server {
   }
 
   private isOutputChange(step: number) {
-    if (step === 0)
-      return false;
-    return this.outputsHistory[step].length > this.outputsHistory[step - 1].length;
+    if (step === 0) return false;
+    return (
+      this.outputsHistory[step].length > this.outputsHistory[step - 1].length
+    );
   }
 }
 

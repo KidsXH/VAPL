@@ -26,8 +26,15 @@ import translate from '../../locales/translate';
 import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
 import { LangProps, ProgLangProps, Theme } from '../Props';
 import { SyntaxErrorData } from 'unicoen.ts/dist/interpreter/mapper/SyntaxErrorData';
+import { connect } from 'react-redux'
+import { addHighlightStatement, removeHighlightStatement } from '../../store';
+import {getColor} from '../../store/index'
+import { message } from 'antd';
 
-type Props = LangProps & ProgLangProps;
+type Props = LangProps & ProgLangProps & {
+  addHighlightStatement: Function,
+  removeHighlightStatement: Function
+};
 interface State {
   fontSize: number;
   showAlert: boolean;
@@ -52,7 +59,7 @@ interface GutterMousedownEvent extends React.MouseEvent {
   stop: () => void;
 }
 
-export default class Editor extends React.Component<Props, State> {
+class Editor extends React.Component<Props, State> {
   private sentSourcecode: string;
   private preventedCommand: CONTROL_EVENT = 'Stop';
   private controlEvent: CONTROL_EVENT = 'Stop';
@@ -134,6 +141,7 @@ export default class Editor extends React.Component<Props, State> {
       // console.log(e);
     });
     editor.on('guttermousedown', (e: GutterMousedownEvent) => {
+      //  mousedown
       const AceRange = this.ace.acequire('ace/range').Range;
       const target: GutterMousedownEventTarget = e.domEvent.currentTarget;
       if (
@@ -158,24 +166,41 @@ export default class Editor extends React.Component<Props, State> {
         this.lineNumOfBreakpoint = this.lineNumOfBreakpoint.filter(
           (n) => n !== row
         );
+
+        const line = d3.selectAll('.ace_gutter-cell').filter((d, i) => i === row)
+        .style('background', '#f3f7f9')
+        .style('border-left', 'none')
+
+        console.log(row)
+        this.props.removeHighlightStatement(row);
       } else {
-        session.setBreakpoint(row, 'ace_breakpoint');
-        this.lineNumOfBreakpoint.push(row);
-        //const line = d3.selectAll('.ace_line').filter((d, i) => i === row);
-        //line.classed('highlight' + row, true);
-        //signal('statementHighlight', row);
+        const color = getColor();
+        if(color === 'DISABLE') {
+          message.warning('请先取消一个断点')
+        } else {
+          session.setBreakpoint(row, 'ace_breakpoint');
+          this.lineNumOfBreakpoint.push(row);
+          const line = d3.selectAll('.ace_gutter-cell').filter((d, i) => i === row)
+            .style('background', color+'33')
+            .style('border-left', '3px solid ' + color)
+          // line.classed('highlight' + row, true);
+          //signal('statementHighlight', row);
+          // console.log(row)
+          this.props.addHighlightStatement(row, color)
+        }
+
       }
       e.stop();
     });
   }
 
-  componentDidUpdate() {
-    d3.selectAll('.ace_line')
-      // .filter((d, i) => inArray(i, this.lineNumOfBreakpoint) >= 0)
-      .attr('class', (d, i) => {
-        return `ace_line highlight${i}`;
-      });
-  }
+  // componentDidUpdate() {
+    // d3.selectAll('.ace_line')
+    //   // .filter((d, i) => inArray(i, this.lineNumOfBreakpoint) >= 0)
+    //   .attr('class', (d, i) => {
+    //     return `ace_line highlight${i}`;
+    //   });
+  // }
 
   componentWillUnmount() {
     remove('debug');
@@ -447,3 +472,10 @@ export default class Editor extends React.Component<Props, State> {
     );
   }
 }
+
+const mapDispatchToProps = {
+  addHighlightStatement: addHighlightStatement,
+  removeHighlightStatement: removeHighlightStatement
+}
+
+export default (connect(null, mapDispatchToProps) as any)(Editor)

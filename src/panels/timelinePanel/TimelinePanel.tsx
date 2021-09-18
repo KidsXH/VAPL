@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { scaleLinear as linear } from 'd3-scale';
 import PanelHeader from '../../components/panelHeader/PanelHeader';
 import StatementHighlightContent from '../../components/timeline/StatementHighlightContent';
@@ -14,6 +14,8 @@ import { remove, slot } from '../../components/emitter';
 import { unstable_batchedUpdates } from 'react-dom';
 import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
 
+import { useSelector } from 'react-redux'
+import '../../components/timeline/timeline.scss';
 interface OptionItem {
   value: string;
   label: string;
@@ -58,6 +60,9 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
   const [debugState, setDebugState] = useState<DEBUG_STATE>('Stop');
   const timelineArea = React.createRef<any>();
   const [timelineWidth, setTimelineWidth] = useState(0);
+
+  const statements = useSelector((state) => (state as any).statements);
+  const variables = useSelector((state) => (state as any).variables);
 
   useEffect(() => {
     slot('changeStep', (step: number) => {
@@ -112,7 +117,7 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
           });
           options.push(temp);
         });
-        // console.log(variableShowUp);
+        console.log(options, 'options');
         unstable_batchedUpdates(() => {
           setMax(stepCount);
           setVariableHighlights([]);
@@ -333,12 +338,50 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
     setTimelineWidth(timelineArea.current.clientWidth - 60);
   }, [timelineArea]);
 
+  useEffect(() => {
+    if(linesShowUp.length) {
+      setStatementHighlights(
+        Object.keys(statements).map(d => ({
+          ...linesShowUp[d as any],
+          color: statements[d],
+        }))
+      )
+    }
+  }, [linesShowUp, statements])
+
+  const maxDepth = useMemo(() => {
+    let max = 0;
+    Object.values(linesShowUp).forEach(({depth}) => {
+      max = Math.max(max, ...depth)
+    })
+
+    return max;
+  }, [linesShowUp])
+
+  useEffect(() => {
+    if(variableShowUps.length) {
+      console.log(variableShowUps, 'varib', variables)
+     
+      const highlights = variableShowUps.filter(({funcName, name}) => {
+        return variables[funcName+'-'+name]
+      }).map(d => {
+        return ({
+          ...d,
+          color: variables[d.funcName+'-'+d.name]
+        })
+      })
+
+      setVariableHighlights(highlights)
+    }
+  }, [variableShowUps, variables])
+
   return (
     <div id="TimelinePanel" className="panel">
       <PanelHeader title="Timeline" />
       <div className="main-content">
         <div className="col-1">
           <StatementHighlightContent
+            statements={statements}
           // changeStatementColor={changeStatementColor}
           // statementHighlights={statementHighlights}
           // changeStatementVisible={changeStatementVisible}
@@ -352,8 +395,9 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
               scale={linear().domain([0, max]).range([0, timelineWidth])}
               width={timelineWidth}
               height={8}
-              // variableHighlights={variableHighlights}
-              // statementHighlights={statementHighlights}
+              maxDepth={maxDepth}
+              variableHighlights={variableHighlights}
+              statementHighlights={statementHighlights}
             />
           </div>
           <div className="row-2">
@@ -362,8 +406,8 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
         </div>
         <div className="col-3">
           <VariableHighlightContent
-          // variableHighlights={variableHighlights}
-          // options={options}
+            variableHighlights={variableHighlights}
+            options={options}
           // addVariableHighlight={addVariableHighlight}
           // changeVariableColor={changeVariableColor}
           // changeVariableVisible={changeVariableVisible}

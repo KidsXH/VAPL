@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { signal } from '../emitter';
+import * as d3 from 'd3';
+import { VariableWithSteps, StatementHighlight } from '../../panels/timelinePanel/TimelinePanel';
 
 interface Props {
   step: number;
@@ -7,8 +9,9 @@ interface Props {
   scale: any;
   width: number;
   height: number;
-  // variableHighlights: VariableHighlight[];
-  // statementHighlights: StatementHighlight[];
+  variableHighlights: VariableWithSteps[];
+  statementHighlights: StatementHighlight[];
+  maxDepth: number;
 }
 interface State {
   dragging: boolean;
@@ -29,6 +32,17 @@ export default class Slider extends React.Component<Props, State> {
     this.state = {
       dragging: false,
     };
+  }
+
+  rectScale = () => {
+    const {maxDepth} = this.props;
+    const range = 40;
+
+    if(maxDepth > 20) {
+      return d3.scaleLog().range([0, range]).domain([1e-15, maxDepth])
+    } else {
+      return d3.scaleLinear().range([0, range]).domain([0, maxDepth])
+    }
   }
 
   dragStart = (e: any) => {
@@ -96,8 +110,8 @@ export default class Slider extends React.Component<Props, State> {
       scale,
       width,
       height,
-      // variableHighlights,
-      // statementHighlights,
+      variableHighlights,
+      statementHighlights,
     } = this.props;
 
     // const contenWidth = width > 250 ? width - 60 : width;
@@ -139,7 +153,7 @@ export default class Slider extends React.Component<Props, State> {
             ry="4"
           />
 
-          {/* <g>
+           <g>
           {variableHighlights.map((m) => {
             return (
               <g key={m.funcName + '_' + m.name}>
@@ -149,7 +163,7 @@ export default class Slider extends React.Component<Props, State> {
                       <rect
                         height={30}
                         x={scale(_step) - 1.5}
-                        y={18}
+                        y={-30}
                         width={3}
                         fill={m['color']}
                       />
@@ -166,17 +180,11 @@ export default class Slider extends React.Component<Props, State> {
               <g key={m.lineNumber}>
                 {m['steps'].map((_step, i) => {
                   if (m['visible']) {
-                    let h = 5;
-                    if (m['depth'][i] < 5) {
-                      h = m['depth'][i] * 7 + h;
-                    } else {
-                      h = 40;
-                    }
                     return (
                       <rect
-                        height={h}
+                        height={this.rectScale()(m['depth'][i])}
                         x={scale(_step) - 1.5}
-                        y={52}
+                        y={height/2 + 5}
                         width={3}
                         fill={m['color']}
                       ></rect>
@@ -186,7 +194,7 @@ export default class Slider extends React.Component<Props, State> {
               </g>
             );
           })}
-        </g> */}
+         </g> 
           <g>
             <text
               className="timeline-legend"

@@ -30,7 +30,7 @@ function App() {
     );
     return () => {
       remove('draw');
-    };
+    }
   }, []);
 
   const updVariableShowUps = (variableShowUps: VariableWithSteps[]) => {
