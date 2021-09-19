@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="13px" height="17px" viewBox="0 0 13 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="24px" height="14px" viewBox="0 0 24 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
-    <title>Hangouts</title>
+    <title>Menu Button</title>
     <desc>Created with Sketch.</desc>
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Dashboard-/-02" transform="translate(-1877.000000, -24.000000)" fill="#FFFFFF">
+        <g id="Dashboard-/-02" transform="translate(-1827.000000, -26.000000)" fill="#FEFFFF">
             <g id="Top-Navigation">
-                <path d="M1889.57741,30.9889494 C1889.59229,31.1089993 1889.6,31.2299483 1889.6,31.3517038 C1889.6,34.831921 1883.3,40.95 1883.3,40.95 L1883.3,36.7529816 C1879.82061,36.7529816 1877,33.9317081 1877,30.4514908 C1877,26.9712735 1879.82061,24.15 1883.3,24.15 C1886.77939,24.15 1889.6,26.9712735 1889.6,30.4514908 C1889.6,30.6325282 1889.59237,30.8117825 1889.57741,30.9889494 Z" id="Hangouts"></path>
+                <g id="Container">
+                    <g id="Menu-Button" transform="translate(1827.000000, 26.000000)">
+                        <rect id="Rectangle-17" x="0" y="0.285714286" width="24" height="2.28571429"></rect>
+                        <rect id="Rectangle-18" x="0" y="6" width="24" height="2.28571429"></rect>
+                        <rect id="Rectangle-19" x="0" y="11.7142857" width="24" height="2.28571429"></rect>
+                    </g>
+                </g>
             </g>
         </g>
     </g>

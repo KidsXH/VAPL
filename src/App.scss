@@ -5,6 +5,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial,
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   // font-family: Helvetica, Arial, sans-serif;
+  overflow: visible;
 }
 
 .App {
@@ -13,6 +14,7 @@
   row-gap: 8px;
   text-align: center;
   background-color: $app-background-color;
+  min-width: 1920px;
   height: 100vh;
   overflow: hidden;
   position: relative;

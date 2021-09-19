@@ -1,6 +1,7 @@
 import React from 'react';
 import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
 import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
+import './style.scss';
 
 interface PhysicalViewProps {
   execState: ExecState | undefined;
@@ -14,9 +15,7 @@ function PhysicalView({
   handleClick,
 }: PhysicalViewProps) {
   // const a = allVariables ;
-  return execState ? <div className="physical-view">
-
-  </div> : <div></div>;
+  return <div id="PhysicalView">Coming Soon...</div>;
 }
 
 export default PhysicalView;
