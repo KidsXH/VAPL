@@ -126,7 +126,8 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
       <ControlButton
         iconHrefLight={stepAllLight}
         iconHrefDark={stepAllDark}
-        onClick={() => signal('debug', stop ? 'StepAll' : 'Exec')}
+        // onClick={() => signal('debug', stop ? 'StepAll' : 'Exec')}
+        onClick={() => {}}
         disabled={!stepAll}
       />
     </div>
