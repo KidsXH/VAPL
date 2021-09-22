@@ -67,3 +67,12 @@
       monospace;
   }
 }
+
+.info-popover {
+  .ant-popover-content {
+    margin-top: 8px;
+  }
+  .ant-popover-arrow {
+    opacity: 0;
+  }
+}
