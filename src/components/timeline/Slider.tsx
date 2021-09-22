@@ -157,10 +157,11 @@ export default class Slider extends React.Component<Props, State> {
           {variableHighlights.map((m) => {
             return (
               <g key={m.funcName + '_' + m.name}>
-                {m['steps'].map((_step) => {
+                {m['steps'].map((_step, i) => {
                   if (m['visible']) {
                     return (
                       <rect
+                        key={i}
                         height={30}
                         x={scale(_step) - 1.5}
                         y={-30}
@@ -169,6 +170,7 @@ export default class Slider extends React.Component<Props, State> {
                       />
                     );
                   }
+                  return null
                 })}
               </g>
             );
@@ -184,12 +186,13 @@ export default class Slider extends React.Component<Props, State> {
                       <rect
                         height={this.rectScale()(m['depth'][i])}
                         x={scale(_step) - 1.5}
-                        y={height/2 + 5}
+                        y={height/2 + 4}
                         width={3}
                         fill={m['color']}
                       ></rect>
                     );
                   }
+                  return null
                 })}
               </g>
             );

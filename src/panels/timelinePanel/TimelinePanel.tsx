@@ -166,14 +166,17 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
   };
 
   const changeStatementVisible = (lineNumber: number) => {
-    const len = statementHighlights.length;
-    for (let i = 0; i < len; i++) {
-      if (statementHighlights[i].lineNumber === lineNumber) {
-        statementHighlights[i].visible = !statementHighlights[i].visible;
-        break;
-      }
-    }
-    setStatementHighlights(statementHighlights);
+    const lines = [...linesShowUp];
+    lines[lineNumber] = {...linesShowUp[lineNumber], visible: !linesShowUp[lineNumber].visible}
+    setLinesShowUp(lines);
+    // const len = statementHighlights.length;
+    // for (let i = 0; i < len; i++) {
+    //   if (statementHighlights[i].lineNumber === lineNumber) {
+    //     statementHighlights[i].visible = !statementHighlights[i].visible;
+    //     break;
+    //   }
+    // }
+    // setStatementHighlights(statementHighlights);
   };
 
   const addVariableHighlight = (funcName: string, varName: string) => {
@@ -382,9 +385,10 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
         <div className="col-1">
           <StatementHighlightContent
             statements={statements}
-          // changeStatementColor={changeStatementColor}
-          // statementHighlights={statementHighlights}
-          // changeStatementVisible={changeStatementVisible}
+            linesShowUp={linesShowUp}
+            // changeStatementColor={changeStatementColor}
+            // statementHighlights={statementHighlights}
+            changeStatementVisible={changeStatementVisible}
           />
         </div>
         <div className="col-2" ref={timelineArea}>
@@ -404,7 +408,7 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
             <ControlButtonGroup debugState={debugState} />
           </div>
         </div>
-        <div className="col-3">
+        {/* <div className="col-3">
           <VariableHighlightContent
             variableHighlights={variableHighlights}
             options={options}
@@ -413,7 +417,7 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
           // changeVariableVisible={changeVariableVisible}
           // removeVariableHighlight={removeVariableHighlight}
           />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -3,19 +3,21 @@ import { StatementHighlight } from '../../panels/timelinePanel/TimelinePanel';
 
 interface StatementHighlightContentProps {
   // changeStatementColor: (lineNumber: number, color: string) => void;
-  // statementHighlights: StatementHighlight[];
-  // changeStatementVisible: (lineNumber: number) => void;
+  linesShowUp: StatementHighlight[];
+  changeStatementVisible: (lineNumber: number) => void;
   statements: {[key: string]: string},
 }
 
-function StatementHighlightContent({statements}: StatementHighlightContentProps) {
+function StatementHighlightContent({statements, linesShowUp, changeStatementVisible}: StatementHighlightContentProps) {
   return <div className="highlight-statements">
     <p className="header">Highlight Statements</p>
     <div className="content">
       <div>
       {
         Object.keys(statements).map((d, i) => (
-          <div key={i} className="item">
+          <div key={i} className={["item", linesShowUp[+d].visible ? '': 'disable'].join(' ')} 
+            onClick={() => changeStatementVisible(+d)}
+          >
             <span style={{background: statements[d]}}></span>
             <p>Line number: {+d+1}</p>
           </div>
