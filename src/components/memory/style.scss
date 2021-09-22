@@ -15,23 +15,18 @@
     }
   }
 
-  #StackView
-  // , #HeapView
-  {
-    display: grid;
-    grid-template-rows: min-content auto;
-    .content {
-    }
-  }
-
   .left-content {
     padding-left: 0.5rem;
     border-right: 1px dashed $dash-line-color;
+    display: grid;
+    grid-template-rows: 100%;
+    overflow: hidden;
   }
   .right-content {
     padding-right: 0.5rem;
     display: grid;
-    grid-template-rows: 50% auto;
+    grid-template-rows: 50% 50%;
+    overflow: hidden;
   }
   // #HeapView {
   //   .content {
@@ -47,16 +42,12 @@
     }
     .content {
       padding: 8px;
+      height: calc(100% - 50px);
       overflow: scroll;
 
       &::-webkit-scrollbar {
         display: none;
       }
-    }
-  }
-
-  #HeapView {
-    .content {
     }
   }
 

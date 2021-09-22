@@ -1,5 +1,5 @@
 #MemoryPanel {
-
+  overflow: hidden;
   &.show-detail {
     .detail-area {
       height: 350px;

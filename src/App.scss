@@ -30,6 +30,7 @@
     display: grid;
     grid-template-columns: 22% 55% auto;
     column-gap: 8px;
+    overflow: hidden;
     .Col-1 {
       display: grid;
       grid-template-rows: 75% auto;
@@ -45,6 +46,7 @@
     .Col-3 {
       display: grid;
       grid-template-rows: auto;
+      overflow: hidden;
     }
   }
 

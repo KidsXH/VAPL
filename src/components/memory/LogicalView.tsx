@@ -64,22 +64,25 @@ function LogicalView({
       <div className="left-content">
         <div id="StackView" className="content-view">
           <div className="title"> Stack</div>
-          <div className="content">
-            {allStacks.map((stack) => {
-              const p = stack.name.indexOf('.');
-              const stackName = p > 0 ? stack.name.substring(0, p) : stack.name;
-              return (
-                <MemoryBlock
-                  key={stack.name}
-                  funcName={stackName}
-                  variables={stack.getVariables()}
-                  selectedVar={selectedVar}
-                  handleClick={handleClick}
-                />
-              );
-            })}
-            {/* <MemoryBlock funcName="functionX" memoryCells={memoryCells} /> */}
-          </div>
+          <>
+            <div className="content">
+              {allStacks.map((stack) => {
+                const p = stack.name.indexOf('.');
+                const stackName =
+                  p > 0 ? stack.name.substring(0, p) : stack.name;
+                return (
+                  <MemoryBlock
+                    key={stack.name}
+                    funcName={stackName}
+                    variables={stack.getVariables()}
+                    selectedVar={selectedVar}
+                    handleClick={handleClick}
+                  />
+                );
+              })}
+              {/* <MemoryBlock funcName="functionX" memoryCells={memoryCells} /> */}
+            </div>
+          </>
         </div>
       </div>
       <div className="right-content">
@@ -95,47 +98,23 @@ function LogicalView({
                 />
               );
             })}
-            {/* <MemoryCell
-              variable={example_var1}
-              selectedVar={selectedVar}
-              handleClick={handleClick}
-            />
-            <MemoryCell
-              variable={example_var0}
-              selectedVar={selectedVar}
-              handleClick={handleClick}
-            /> */}
           </div>
         </div>
         <div id="GlobalStaticView" className="content-view">
           <div className="title">Global / Static</div>
-          <div className="content">
-            {global.map((v: Variable) => {
-              return (
-                <MemoryCell
-                  variable={formatGSVariable(v)}
-                  selectedVar={selectedVar}
-                  handleClick={handleClick}
-                />
-              );
-            })}
-            {/* <div style={{border: '1px solid black', height: '2rem'}}></div> */}
-            {/* <MemoryCell
-              variable={example_var2}
-              selectedVar={selectedVar}
-              handleClick={handleClick}
-            />
-            <MemoryCell
-              variable={example_var3}
-              selectedVar={selectedVar}
-              handleClick={handleClick}
-            />
-            <MemoryCell
-              variable={example_var4}
-              selectedVar={selectedVar}
-              handleClick={handleClick}
-            /> */}
-          </div>
+          <>
+            <div className="content">
+              {global.map((v: Variable) => {
+                return (
+                  <MemoryCell
+                    variable={formatGSVariable(v)}
+                    selectedVar={selectedVar}
+                    handleClick={handleClick}
+                  />
+                );
+              })}
+            </div>
+          </>
         </div>
       </div>
     </div>
