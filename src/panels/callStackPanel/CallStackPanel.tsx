@@ -28,6 +28,7 @@ class CallStackPanel extends React.Component<Props, State> {
     const lastState = this.props.lastState;
     if (lastState && execState && variableShowUps) {
       variableShowUps.forEach((variableWithSteps) => {
+        if (variableWithSteps.name.indexOf(':') > 0) return;
         if (variableChanged(variableWithSteps, lastState, execState)) {
           // console.log(
           //   'CHANGE|' +

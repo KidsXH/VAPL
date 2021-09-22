@@ -47,6 +47,11 @@
     }
     .content {
       padding: 8px;
+      overflow: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 

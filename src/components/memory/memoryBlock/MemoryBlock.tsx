@@ -29,14 +29,14 @@ function MemoryBlock({
             return value instanceof Array ? (
               <MemoryCell
                 key={variable.name}
-                variable={variable}
+                variable={Object.assign(variable, { parentName: funcName })}
                 selectedVar={selectedVar}
                 handleClick={handleClick}
               />
             ) : (
               <MemoryCell
                 key={variable.name}
-                variable={variable}
+                variable={Object.assign(variable, { parentName: funcName })}
                 selectedVar={selectedVar}
                 handleClick={handleClick}
               />

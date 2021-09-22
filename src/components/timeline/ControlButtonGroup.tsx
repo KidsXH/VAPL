@@ -82,13 +82,13 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
 
   return (
     <div className="control-btn-group">
-      <ControlButton
+      {/* <ControlButton
         iconHrefLight={backAllLight}
         iconHrefDark={backAllDark}
         // onClick={() => signal('debug', 'BackAll')}
         onClick={() => {}}
         disabled={!backAll}
-      />
+      /> */}
       <ControlButton
         iconHrefLight={stepBackLight}
         iconHrefDark={stepBackDark}
@@ -111,7 +111,9 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
               .select(`#block_${name}`)
               .attr('transform', 'matrix(1,0,0,1,0,0)');
           });
+          const sourceCode = sessionStorage.getItem('sourceCode');
           sessionStorage.clear();
+          if (sourceCode) sessionStorage.setItem('sourceCode', sourceCode);
         }}
         disabled={!start}
       />
@@ -123,13 +125,13 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
         }}
         disabled={!step}
       />
-      <ControlButton
+      {/* <ControlButton
         iconHrefLight={stepAllLight}
         iconHrefDark={stepAllDark}
         // onClick={() => signal('debug', stop ? 'StepAll' : 'Exec')}
         onClick={() => {}}
         disabled={!stepAll}
-      />
+      /> */}
     </div>
   );
 }

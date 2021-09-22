@@ -61,30 +61,40 @@ function LogicalView({
 
   return (
     <div id="LogicalView">
-      <div className='left-content'>
-      <div id="StackView" className="content-view">
-        <div className="title"> Stack</div>
-        <div className="content">
-          {allStacks.map((stack) => {
-            const p = stack.name.indexOf('.');
-            const stackName = p > 0 ? stack.name.substring(0, p) : stack.name;
-            return (
-              <MemoryBlock
-                key={stack.name}
-                funcName={stackName}
-                variables={stack.getVariables()}
-                selectedVar={selectedVar}
-                handleClick={handleClick}
-              />
-            );
-          })}
-          {/* <MemoryBlock funcName="functionX" memoryCells={memoryCells} /> */}
+      <div className="left-content">
+        <div id="StackView" className="content-view">
+          <div className="title"> Stack</div>
+          <div className="content">
+            {allStacks.map((stack) => {
+              const p = stack.name.indexOf('.');
+              const stackName = p > 0 ? stack.name.substring(0, p) : stack.name;
+              return (
+                <MemoryBlock
+                  key={stack.name}
+                  funcName={stackName}
+                  variables={stack.getVariables()}
+                  selectedVar={selectedVar}
+                  handleClick={handleClick}
+                />
+              );
+            })}
+            {/* <MemoryBlock funcName="functionX" memoryCells={memoryCells} /> */}
+          </div>
         </div>
-      </div></div>
-      <div className='right-content'>
+      </div>
+      <div className="right-content">
         <div id="HeapView" className="content-view">
           <div className="title">Heap</div>
           <div className="content">
+            {heap.map((variable: Variable) => {
+              return (
+                <MemoryCell
+                  variable={formatHeapVariable(variable)}
+                  selectedVar={selectedVar}
+                  handleClick={handleClick}
+                />
+              );
+            })}
             {/* <MemoryCell
               variable={example_var1}
               selectedVar={selectedVar}
@@ -100,6 +110,15 @@ function LogicalView({
         <div id="GlobalStaticView" className="content-view">
           <div className="title">Global / Static</div>
           <div className="content">
+            {global.map((v: Variable) => {
+              return (
+                <MemoryCell
+                  variable={formatGSVariable(v)}
+                  selectedVar={selectedVar}
+                  handleClick={handleClick}
+                />
+              );
+            })}
             {/* <div style={{border: '1px solid black', height: '2rem'}}></div> */}
             {/* <MemoryCell
               variable={example_var2}
@@ -124,3 +143,11 @@ function LogicalView({
 }
 
 export default LogicalView;
+
+const formatHeapVariable = (variable: Variable) => {
+  return Object.assign(variable, { name: '', parentName: '"Heap"' });
+};
+
+const formatGSVariable = (variable: Variable) => {
+  return Object.assign(variable, { parentName: '"Global / Static"' });
+};
