@@ -27,13 +27,14 @@ import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
 import { LangProps, ProgLangProps, Theme } from '../Props';
 import { SyntaxErrorData } from 'unicoen.ts/dist/interpreter/mapper/SyntaxErrorData';
 import { connect } from 'react-redux'
-import { addHighlightStatement, removeHighlightStatement } from '../../store';
+import { addHighlightStatement, removeHighlightStatement, removeMultipleHighlight,  } from '../../store';
 import {getColor} from '../../store/index'
 import { message } from 'antd';
 
 type Props = LangProps & ProgLangProps & {
   addHighlightStatement: Function,
-  removeHighlightStatement: Function
+  removeHighlightStatement: Function,
+  removeMultipleHighlight: Function
 };
 interface State {
   fontSize: number;
@@ -71,6 +72,8 @@ class Editor extends React.Component<Props, State> {
   private checkbox: HTMLInputElement | null = null;
   private noAlert = false;
   private highlightIds: number[] = [];
+  private lineCnt: number = 0;
+
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -308,8 +311,11 @@ class Editor extends React.Component<Props, State> {
       signal('draw', execState, lastState);
       signal('files', files);
       this.setHighlightOnCode(debugState, execState);
+
+      this.lineCnt = linesShowUp.length;
     } catch (e) {
-      alert('recieve: ' + e);
+      // alert('recieve: ' + e);
+      console.log(e)
     }
   }
 
@@ -405,6 +411,7 @@ class Editor extends React.Component<Props, State> {
               signal('debug', 'SyntaxCheck');
             }
           };
+          this.props.removeMultipleHighlight(this.lineCnt);
           setTimeout(() => delaySyntaxCheck(text), 1000);
         }}
         onBeforeLoad={(ace) => (this.ace = ace)}
@@ -475,7 +482,8 @@ class Editor extends React.Component<Props, State> {
 
 const mapDispatchToProps = {
   addHighlightStatement: addHighlightStatement,
-  removeHighlightStatement: removeHighlightStatement
+  removeHighlightStatement: removeHighlightStatement,
+  removeMultipleHighlight: removeMultipleHighlight,
 }
 
 export default (connect(null, mapDispatchToProps) as any)(Editor)

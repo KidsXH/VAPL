@@ -2,6 +2,7 @@ const ADD_ITEM = 'ADD_ITEM';
 const REMOVE_ITEM = 'REMOVE_ITEM';
 const ADD_VAR = 'ADD_VAR';
 const REMOVE_VAR = 'REMOVE_VAR';
+const REMOVE_ITEMS = 'REMOVE_ITEMS';
 
 const initState = {
   // line numbers of the highlight statments: color
@@ -44,6 +45,13 @@ export const removeHighlightStatement = (lineNumber) => {
   }
 }
 
+export const removeMultipleHighlight = (lineCnt) => {
+  return {
+    type: REMOVE_ITEMS,
+    data: lineCnt
+  }
+}
+
 export const addVariable = (variable) => {
   return {
     type: ADD_VAR,
@@ -57,9 +65,20 @@ const reducer = (state = initState, action) => {
       return { ...state, statements: { ...state.statements, ...action.data } }
     case REMOVE_ITEM:
       const { [action.data]: old, ...rest } = state.statements;
-      console.log(old)
+      // console.log(old)
       existColor.delete(old);
       return { ...state, statements: rest }
+    case REMOVE_ITEMS:
+      console.log(action.data)
+      const statements = {};
+      Object.keys(state.statements).forEach(id => {
+        if ((+id) >= action.data) {
+          existColor.delete(state.statements[id])
+        } else {
+          statements[id] = state.statements[id];
+        }
+      })
+      return { ...state, statements }
     case ADD_VAR:
       return {
         ...state, variables: {
