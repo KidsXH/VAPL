@@ -26,15 +26,16 @@ import translate from '../../locales/translate';
 import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
 import { LangProps, ProgLangProps, Theme } from '../Props';
 import { SyntaxErrorData } from 'unicoen.ts/dist/interpreter/mapper/SyntaxErrorData';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 import { addHighlightStatement, removeHighlightStatement } from '../../store';
-import {getColor} from '../../store/index'
+import { getColor } from '../../store/index';
 import { message } from 'antd';
 
-type Props = LangProps & ProgLangProps & {
-  addHighlightStatement: Function,
-  removeHighlightStatement: Function
-};
+type Props = LangProps &
+  ProgLangProps & {
+    addHighlightStatement: Function;
+    removeHighlightStatement: Function;
+  };
 interface State {
   fontSize: number;
   showAlert: boolean;
@@ -79,7 +80,14 @@ class Editor extends React.Component<Props, State> {
       theme: 'light',
     };
     const { lang, progLang } = props;
-    this.sourcecode = translate(lang, this.sourceCodeKey(progLang));
+
+    const sourceCode = sessionStorage.getItem('sourceCode');
+
+    if (sourceCode) {
+      this.sourcecode = sourceCode;
+    } else {
+      this.sourcecode = translate(lang, this.sourceCodeKey(progLang));
+    }
     this.sentSourcecode = '';
 
     this.hideAlert = this.hideAlert.bind(this);
@@ -167,39 +175,42 @@ class Editor extends React.Component<Props, State> {
           (n) => n !== row
         );
 
-        const line = d3.selectAll('.ace_gutter-cell').filter((d, i) => i === row)
-        .style('background', '#f3f7f9')
-        .style('border-left', 'none')
+        const line = d3
+          .selectAll('.ace_gutter-cell')
+          .filter((d, i) => i === row)
+          .style('background', '#f3f7f9')
+          .style('border-left', 'none');
 
-        console.log(row)
+        console.log(row);
         this.props.removeHighlightStatement(row);
       } else {
         const color = getColor();
-        if(color === 'DISABLE') {
-          message.warning('请先取消一个断点')
+        if (color === 'DISABLE') {
+          message.warning('请先取消一个断点');
         } else {
           session.setBreakpoint(row, 'ace_breakpoint');
           this.lineNumOfBreakpoint.push(row);
-          const line = d3.selectAll('.ace_gutter-cell').filter((d, i) => i === row)
-            .style('background', color+'33')
-            .style('border-left', '3px solid ' + color)
+          const line = d3
+            .selectAll('.ace_gutter-cell')
+            .filter((d, i) => i === row)
+            .style('background', color + '33')
+            .style('border-left', '3px solid ' + color);
           // line.classed('highlight' + row, true);
           //signal('statementHighlight', row);
           // console.log(row)
-          this.props.addHighlightStatement(row, color)
+          this.props.addHighlightStatement(row, color);
         }
-
       }
       e.stop();
     });
   }
 
   // componentDidUpdate() {
-    // d3.selectAll('.ace_line')
-    //   // .filter((d, i) => inArray(i, this.lineNumOfBreakpoint) >= 0)
-    //   .attr('class', (d, i) => {
-    //     return `ace_line highlight${i}`;
-    //   });
+  // d3.selectAll('.ace_line')
+  //   // .filter((d, i) => inArray(i, this.lineNumOfBreakpoint) >= 0)
+  //   .attr('class', (d, i) => {
+  //     return `ace_line highlight${i}`;
+  //   });
   // }
 
   componentWillUnmount() {
@@ -399,7 +410,10 @@ class Editor extends React.Component<Props, State> {
         style={{ height: '100%', width: '100%' }}
         className="editorMain"
         onChange={(text: string) => {
+          sessionStorage.setItem('sourceCode', text);
+
           this.sourcecode = text;
+
           const delaySyntaxCheck = (code: string) => {
             if (code === this.sourcecode) {
               signal('debug', 'SyntaxCheck');
@@ -475,7 +489,7 @@ class Editor extends React.Component<Props, State> {
 
 const mapDispatchToProps = {
   addHighlightStatement: addHighlightStatement,
-  removeHighlightStatement: removeHighlightStatement
-}
+  removeHighlightStatement: removeHighlightStatement,
+};
 
-export default (connect(null, mapDispatchToProps) as any)(Editor)
+export default (connect(null, mapDispatchToProps) as any)(Editor);

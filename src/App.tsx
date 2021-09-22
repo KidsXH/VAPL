@@ -69,7 +69,9 @@ function App() {
           .select(`#block_${name}`)
           .attr('transform', 'matrix(1,0,0,1,0,0)');
       });
+      const sourceCode = sessionStorage.getItem('sourceCode');
       sessionStorage.clear();
+      if (sourceCode) sessionStorage.setItem('sourceCode', sourceCode);
     }
   };
 
