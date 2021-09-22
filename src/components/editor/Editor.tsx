@@ -72,6 +72,7 @@ class Editor extends React.Component<Props, State> {
   private checkbox: HTMLInputElement | null = null;
   private noAlert = false;
   private highlightIds: number[] = [];
+  // 拿不到这个值，只能先用\n判断了
   private lineCnt: number = 0;
 
   constructor(props: Props) {
@@ -321,8 +322,7 @@ class Editor extends React.Component<Props, State> {
       signal('draw', execState, lastState);
       signal('files', files);
       this.setHighlightOnCode(debugState, execState);
-
-      this.lineCnt = linesShowUp.length;
+      // this.lineCnt = linesShowUp.length;
     } catch (e) {
       // alert('recieve: ' + e);
       console.log(e)
@@ -424,7 +424,11 @@ class Editor extends React.Component<Props, State> {
               signal('debug', 'SyntaxCheck');
             }
           };
-          this.props.removeMultipleHighlight(this.lineCnt);
+          const cnt = text.split('\n').length;
+          if(cnt < this.lineCnt) {
+            this.props.removeMultipleHighlight(cnt);
+          }
+          this.lineCnt = cnt;
           setTimeout(() => delaySyntaxCheck(text), 1000);
         }}
         onBeforeLoad={(ace) => (this.ace = ace)}
