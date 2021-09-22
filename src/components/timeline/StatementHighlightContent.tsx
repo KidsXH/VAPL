@@ -15,7 +15,7 @@ function StatementHighlightContent({statements, linesShowUp, changeStatementVisi
       <div>
       {
         Object.keys(statements).map((d, i) => (
-          <div key={i} className={["item", linesShowUp[+d].visible ? '': 'disable'].join(' ')} 
+          <div key={i} className={["item", linesShowUp[+d] && !linesShowUp[+d].visible ? 'disable': ''].join(' ')} 
             onClick={() => changeStatementVisible(+d)}
           >
             <span style={{background: statements[d]}}></span>

@@ -7,7 +7,7 @@
   .main-content {
     display: grid;
     // grid-template-columns: 23% auto 21%;
-    grid-template-columns: 23% auto;
+    grid-template-columns: auto 23%;
     column-gap: 1px;
     .col-1 {
       border-right: 1px solid $border-line-color;

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { scaleLinear as linear } from 'd3-scale';
 import PanelHeader from '../../components/panelHeader/PanelHeader';
 import StatementHighlightContent from '../../components/timeline/StatementHighlightContent';
@@ -165,7 +165,9 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
     setStatementHighlights(statementHighlights);
   };
 
-  const changeStatementVisible = (lineNumber: number) => {
+  const changeStatementVisible = useCallback( (lineNumber: number) => {
+    if(!linesShowUp[lineNumber]) return;
+    
     const lines = [...linesShowUp];
     lines[lineNumber] = {...linesShowUp[lineNumber], visible: !linesShowUp[lineNumber].visible}
     setLinesShowUp(lines);
@@ -177,7 +179,7 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
     //   }
     // }
     // setStatementHighlights(statementHighlights);
-  };
+  }, [linesShowUp])
 
   const addVariableHighlight = (funcName: string, varName: string) => {
     const color = d3
@@ -382,15 +384,6 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
     <div id="TimelinePanel" className="panel">
       <PanelHeader title="Timeline" />
       <div className="main-content">
-        <div className="col-1">
-          <StatementHighlightContent
-            statements={statements}
-            linesShowUp={linesShowUp}
-            // changeStatementColor={changeStatementColor}
-            // statementHighlights={statementHighlights}
-            changeStatementVisible={changeStatementVisible}
-          />
-        </div>
         <div className="col-2" ref={timelineArea}>
           <div className="row-1">
             <Slider
@@ -407,6 +400,15 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
           <div className="row-2">
             <ControlButtonGroup debugState={debugState} />
           </div>
+        </div>
+        <div className="col-1">
+          <StatementHighlightContent
+            statements={statements}
+            linesShowUp={linesShowUp}
+            // changeStatementColor={changeStatementColor}
+            // statementHighlights={statementHighlights}
+            changeStatementVisible={changeStatementVisible}
+          />
         </div>
         {/* <div className="col-3">
           <VariableHighlightContent
