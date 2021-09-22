@@ -27,8 +27,8 @@ function MemoryDetail({ variable }: MemoryDetailProps) {
   const memoryInfo: MemoryInfo =
     variable.address > 0
       ? {
-          funcName: 'main',
-          varName: variable.name,
+          funcName: variable.parentName ? variable.parentName : '',
+          varName: variable.name ? variable.name : '-',
           address: '0x' + variable.address.toString(16),
           type: variable.type,
           value: variable.getValue().toString(),
