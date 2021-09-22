@@ -3,20 +3,13 @@ import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
 import './style.scss';
 import classNames from 'classnames';
 import IntegerBinaryCode from './IntegerBinaryCode';
+import FloatBinaryCode from './FloatBinaryCode';
 
 interface BinaryCodeSvgProps {
   variable: Variable;
 }
 
-const FloatBinaryCode = ({ variable }: BinaryCodeSvgProps) => {
-  return (
-    <svg id="FloatBinaryCode" height="100%" width="100%">
-      <text y={16} fill="#8b8b8b">
-        Binary Code
-      </text>
-    </svg>
-  );
-};
+
 
 const DefaultBinayCode = () => {
   return (
