@@ -53,32 +53,32 @@ export default class Console extends React.Component<Props, State> {
   componentDidUpdate() {
     if (this.state.outputChange) {
       d3.select('#ConsolePanel')
+        // .selectAll('.panel-header')
         .transition()
         .duration(1000)
         .tween('number', function () {
           let i = d3.interpolateNumber(8, 16);
           let j = d3.interpolateRgb('#ffffff', '#4A8CE3');
           return function (t) {
-            d3.select('#ConsolePanel').style(
-              'box-shadow',
-              `0px 0px ${i(t)}px ${j(t)}`
-            );
+            d3.select('#ConsolePanel')
+              // .selectAll('.panel-header')
+              .style('box-shadow', `0px 0px ${i(t)}px ${j(t)}`);
           };
         });
-      d3.select('#ConsolePanel')
-        .transition()
-        .delay(1000)
-        .duration(1000)
-        .tween('number', function () {
-          let i = d3.interpolateNumber(16, 8);
-          let j = d3.interpolateRgb('#4A8CE3', '#ffffff');
-          return function (t) {
-            d3.select('#ConsolePanel').style(
-              'box-shadow',
-              `0px 0px ${i(t)}px ${j(t)}`
-            );
-          };
-        });
+      // d3.select('#ConsolePanel')
+      //   // .selectAll('.panel-header')
+      //   .transition()
+      //   .delay(1000)
+      //   .duration(1000)
+      //   .tween('number', function () {
+      //     let i = d3.interpolateNumber(16, 8);
+      //     let j = d3.interpolateRgb('#4A8CE3', '#ffffff');
+      //     return function (t) {
+      //       d3.select('#ConsolePanel')
+      //         // .selectAll('.panel-header')
+      //         .style('box-shadow', `0px 0px ${i(t)}px ${j(t)}`);
+      //     };
+      //   });
     }
   }
 

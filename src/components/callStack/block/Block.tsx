@@ -65,33 +65,6 @@ export default class Block extends React.Component<Props, State> {
           style={{ stroke: '#979797', strokeWidth: '1.5px' }}
         ></rect>
         <g className="block-left"></g>
-        {/* <path
-          d={
-            'M ' +
-            blockStack.x() +
-            ' ' +
-            (blockStack.y() + 10) +
-            ' L ' +
-            blockStack.x() +
-            ' ' +
-            (blockStack.y() + blockStack.getHeight() - 10) +
-            ' A 10 10 0 0 0 ' +
-            (blockStack.x() + 10) +
-            ' ' +
-            (blockStack.y() + blockStack.getHeight()) +
-            ' L ' +
-            (blockStack.x() + 10) +
-            ' ' +
-            blockStack.y() +
-            ' A 10 10 0 0 0 ' +
-            blockStack.x() +
-            ' ' +
-            (blockStack.y() + 10)
-          }
-          fill="black"
-          stroke="black"
-          strokeWidth={2}
-        /> */}
         <text
           x={blockStack.x() + 15}
           y={blockStack.y() + BlockCell.FONT_SIZE + 7}
@@ -100,6 +73,16 @@ export default class Block extends React.Component<Props, State> {
           className="function-name"
         >
           {blockStack.key.split('.')[0]}
+        </text>
+        <text
+          x={blockStack.x() + blockStack.getWidth() - 15}
+          y={blockStack.y() + 20}
+          fontSize="15"
+          textAnchor="end"
+          className="function-name"
+          fill={'rgb(74, 140, 227)'}
+        >
+          {`(${blockStack.getIndex()})`}
         </text>
       </React.Fragment>
     );

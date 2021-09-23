@@ -220,6 +220,11 @@ export default class Animation extends React.Component<Props, State> {
               `matrix(1,0,0,1,0,${i(t)})`
             );
             renderArrow(cloned, '_cloned');
+            if (t === 1) {
+              d3.select('#svg')
+                .select('#arrow_' + cloned)
+                .remove();
+            }
           };
         });
       svgblock1
@@ -245,12 +250,6 @@ export default class Animation extends React.Component<Props, State> {
           };
         });
       d3.select('#block__cloned').transition().delay(2000).remove();
-      // 删不掉 很奇怪
-      d3.select('#svg')
-        .select('#arrow_' + cloned)
-        .transition()
-        .delay(2000)
-        .remove();
     }
   }
 
