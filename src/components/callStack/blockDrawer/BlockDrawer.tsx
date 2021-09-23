@@ -67,6 +67,7 @@ export class BlockDrawer {
         const blockStack = new BlockStack(stack);
         blockStack.setColor('#979797');
         this.blockStacks.push(blockStack);
+        blockStack.setIndex(i);
       }
     });
   }
@@ -84,7 +85,7 @@ export class BlockDrawer {
       y += height + offsetY;
     });
 
-    this.blockStacks.slice(0, -2).forEach((blockStack, index) => {
+    this.blockStacks.slice(0, -2).forEach((blockStack) => {
       this.calcStackPos(0, 0, blockStack);
     });
   }
@@ -172,6 +173,7 @@ export class BlockStack {
   private width = 0;
   private height = 0;
   private color: string | undefined;
+  private index = 0;
 
   constructor(stack: Stack) {
     this.stack = stack;
@@ -193,6 +195,10 @@ export class BlockStack {
 
   public setColor(color: string) {
     this.color = color;
+  }
+
+  public setIndex(index: number) {
+    this.index = index;
   }
 
   private makeBlockTable(): BlockTable {
@@ -238,6 +244,10 @@ export class BlockStack {
 
   public getColor() {
     return this.color;
+  }
+
+  public getIndex() {
+    return this.index;
   }
 }
 

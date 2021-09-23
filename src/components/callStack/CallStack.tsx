@@ -179,10 +179,30 @@ export default class CallStack extends React.Component<Props, State> {
           .attr('transform', 'matrix(1,0,0,1,0,0)');
       }
     });
+
     sessionStorage.setItem('arrowList', JSON.stringify(arrowList));
   }
 
   componentDidUpdate() {
+    // 计算点击生成的block位置
+    const arrowListJson = sessionStorage.getItem('arrowList');
+    let arrowList = JSON.parse(arrowListJson!);
+    if (!arrowList) {
+      arrowList = {};
+    }
+    const x = 750;
+    let y = 5;
+    const offsetY = 40;
+    this.props.blockDrawer.getBlockStacks().forEach((stack: BlockStack) => {
+      if (inArray(stack.getName(), Object.keys(arrowList)) >= 0) {
+        d3.select('#svg')
+          .select('#block_' + stack.getName())
+          .attr('transform', `matrix(1,0,0,1,${x},${y})`);
+        y += stack.getHeight() + offsetY;
+      }
+    });
+
+    // 绘制block左部黑色边框
     d3.select('#svg').selectAll('.block-left').selectAll('path').remove();
     d3.select('#svg')
       .selectAll('.block-left')
@@ -218,6 +238,7 @@ export default class CallStack extends React.Component<Props, State> {
           (y + 10)
         );
       });
+
     // d3.select('#svg').selectAll('.block').call(d3.drag().on('drag', dragged));
     d3.select('#svg').select('#path').selectAll('path').remove();
 
@@ -228,16 +249,16 @@ export default class CallStack extends React.Component<Props, State> {
         renderArrow(stackName, stackName);
       }
     });
-    const arrowListJson = sessionStorage.getItem('arrowList');
-    let arrowList = JSON.parse(arrowListJson!);
-    if (!arrowList) {
-      arrowList = {};
-    }
-    Object.keys(arrowList).forEach((stackName) => {
-      if (!d3.select('#svg').select(`#block_${stackName}`).empty()) {
-        renderArrow(stackName, stackName);
-      }
-    });
+    // const arrowListJson = sessionStorage.getItem('arrowList');
+    // let arrowList = JSON.parse(arrowListJson!);
+    // if (!arrowList) {
+    //   arrowList = {};
+    // }
+    // Object.keys(arrowList).forEach((stackName) => {
+    //   if (!d3.select('#svg').select(`#block_${stackName}`).empty()) {
+    //     renderArrow(stackName, stackName);
+    //   }
+    // });
     // const variablesMapJson = sessionStorage.getItem('variablesMap');
     // let variablesMap = JSON.parse(variablesMapJson!);
     // if (!variablesMap) {
@@ -254,13 +275,9 @@ export default class CallStack extends React.Component<Props, State> {
     //     cells.selectAll('text').attr('fill', variablesMap[key]['color']);
     //   }
     // });
-    const activeStack = sessionStorage.getItem('activeStack');
     const blocks = d3.select('#svg').selectAll('.block');
     blocks.select('rect').style('stroke', '#979797');
     blocks.select('text').style('fill', '#979797');
-    // const block = d3.select('#svg').select('#block_' + activeStack);
-    // block.select('rect').style('stroke', '#0074D9');
-    // block.select('text').style('fill', '#0074D9');
   }
 
   renderBlocks() {
@@ -285,7 +302,6 @@ export default class CallStack extends React.Component<Props, State> {
         );
       }
     });
-    // list 顺序 main 为什么在第一个
     return list;
   }
 
@@ -348,9 +364,19 @@ export default class CallStack extends React.Component<Props, State> {
             y={y + 20}
             fontSize="15"
             className="function-name"
-            fill={'rgb(139, 139, 139)' }
+            fill={'rgb(139, 139, 139)'}
           >
             {blockStack.getName().split('_')[0]}
+          </text>
+          <text
+            x={x + width - 15}
+            y={y + 20}
+            fontSize="15"
+            textAnchor="end"
+            className="function-name"
+            fill={'rgb(74, 140, 227)'}
+          >
+            {`(${blockStack.getIndex()})`}
           </text>
         </g>
       );

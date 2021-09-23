@@ -29,97 +29,94 @@ However, the highlight of the code may be out of place.`,
   continueDebug: 'Continue',
   restart: 'Restart',
   rememberCommand: 'Remember this choice',
-//   sourceCodeCcpp: String.raw`#include<stdio.h>
-// int recursiveToThree(int n){
-//   printf("%d th\n", n + 1);
-//   if(n < 3){
-//       int r = recursiveToThree(n + 1);
-//       n = r;
-//   }
-//   return n;
-// }
-
-// static int a = 1;
-// int b = 2;
-
-// int main(){
-//   int n = 0;//variable declaration
-
-//   n = recursiveToThree(0);//recursive function
-
-//   int arr[5] = {1, 2, 3};//array variable
-
-//   int* ptr = &arr[2];//pointer variable
-//   *ptr = 5;
-
-//   //dynamic memory allocation
-//   int* d_arry = malloc(sizeof(int) * 3);
-
-//   //two-dimensional dynamic array
-//   int* pd_arr[2];
-//   pd_arr[0] = malloc(sizeof(int) * 2);
-//   pd_arr[1] = malloc(sizeof(int) * 2);
-
-//   printf("Hello,world!\n");//standard output
-
-//   free(pd_arr[0]);//memory leak
-
-//   return 0;
-// }`
-sourceCodeCcpp: String.raw`#include<stdio.h>
-
-/*print Fahrenheit-Celsius table
-    for fahr = 0, 20, ..., 300 */
-
-int main() {
-  int fahr, celsius;
-  int lower, upper, step;
-  lower = 0;
-  upper = 300;
-  step = 20;
-  
-  fahr = lower;
-  while (fahr <= upper) {
-    celsius = 5 * (fahr-32) / 9;
-    printf("%d\t%d\n", fahr, celsius);
-    fahr = fahr + step;
+  sourceCodeCcpp: String.raw`#include<stdio.h>
+int recursiveToThree(int n){
+  printf("%d th\n", n + 1);
+  if(n < 3){
+      int r = recursiveToThree(n + 1);
+      n = r;
   }
+  return n;
 }
-`
-,
-  sourceCodeJava: String.raw`import java.util.*;
-public class Main {
-  public static void main(String[] args) {
-    Scanner sc = new Scanner(System.in);
-    while (true) {
-      int n = sc.nextInt();
-      int r = sc.nextInt();
-      if (n == 0) {
-        break;
-      }
-      int[] a = new int[n];
-      int[] b = new int[n];
-      for (int i = 0; i < n; i++) {
-        a[i] = n - i;
-      }
-      for (int i = 0; i < r; i++) {
-        int p = sc.nextInt();
-        int c = sc.nextInt();
-        p--;
-        for (int j = 0; j < c; j++) {
-          b[j] = a[p + j];
-        }
-        for (int j = 0; j < p; j++) {
-          b[c + j] = a[j];
-        }
-        for (int j = 0; j < p + c; j++) {
-          a[j] = b[j];
-        }
-      }
-      System.out.println(a[0]);
-    }
-  }
+
+static int a = 1;
+int b = 2;
+
+int main(){
+  int n = 0;//variable declaration
+
+  n = recursiveToThree(0);//recursive function
+
+  int arr[5] = {1, 2, 3};//array variable
+
+  int* ptr = &arr[2];//pointer variable
+  *ptr = 5;
+
+  //dynamic memory allocation
+  int* d_arry = malloc(sizeof(int) * 3);
+
+  //two-dimensional dynamic array
+  int* pd_arr[2];
+  pd_arr[0] = malloc(sizeof(int) * 2);
+  pd_arr[1] = malloc(sizeof(int) * 2);
+
+  printf("Hello,world!\n");//standard output
+
+  free(pd_arr[0]);//memory leak
+
+  return 0;
 }`,
+// sourceCodeCcpp: String.raw`#include<stdio.h>
+
+// int main() {
+//   int fahr, celsius;
+//   int lower, upper, step;
+//   lower = 0;
+//   upper = 300;
+//   step = 20;
+  
+//   fahr = lower;
+//   while (fahr <= upper) {
+//     celsius = 5 * (fahr-32) / 9;
+//     printf("%d\t%d\n", fahr, celsius);
+//     fahr = fahr + step;
+//   }
+// }
+// `
+// ,
+//   sourceCodeJava: String.raw`import java.util.*;
+// public class Main {
+//   public static void main(String[] args) {
+//     Scanner sc = new Scanner(System.in);
+//     while (true) {
+//       int n = sc.nextInt();
+//       int r = sc.nextInt();
+//       if (n == 0) {
+//         break;
+//       }
+//       int[] a = new int[n];
+//       int[] b = new int[n];
+//       for (int i = 0; i < n; i++) {
+//         a[i] = n - i;
+//       }
+//       for (int i = 0; i < r; i++) {
+//         int p = sc.nextInt();
+//         int c = sc.nextInt();
+//         p--;
+//         for (int j = 0; j < c; j++) {
+//           b[j] = a[p + j];
+//         }
+//         for (int j = 0; j < p; j++) {
+//           b[c + j] = a[j];
+//         }
+//         for (int j = 0; j < p + c; j++) {
+//           a[j] = b[j];
+//         }
+//       }
+//       System.out.println(a[0]);
+//     }
+//   }
+// }`,
   sourceCodePython: String.raw`while True:
   n, r = map(int, input().split())
   if n == 0:
