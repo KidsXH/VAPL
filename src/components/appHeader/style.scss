@@ -1,7 +1,7 @@
 #AppHeader {
   display: grid;
   grid-template-columns: 400px auto;
-  padding-left: 20px;
+  padding: 0 20px;
   .menu {
     display: grid;
     grid-template-columns: auto 64px 64px;
@@ -11,6 +11,7 @@
 
     .menu-item > svg {
       cursor: pointer;
+      user-select: none;
     }
   }
 }

@@ -1,13 +1,13 @@
 #MemoryPanel {
-
+  overflow: hidden;
   &.show-detail {
     .detail-area {
-      height: 340px;
+      height: 350px;
       opacity: 1;
       transition: 1s;
     }
     .main-area {
-      height: calc(100% - 500px);
+      height: calc(100% - 510px);
       transition: 1s;
     }
   }

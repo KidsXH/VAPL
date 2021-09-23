@@ -15,23 +15,18 @@
     }
   }
 
-  #StackView
-  // , #HeapView
-  {
-    display: grid;
-    grid-template-rows: min-content auto;
-    .content {
-    }
-  }
-
   .left-content {
     padding-left: 0.5rem;
     border-right: 1px dashed $dash-line-color;
+    display: grid;
+    grid-template-rows: 100%;
+    overflow: hidden;
   }
   .right-content {
     padding-right: 0.5rem;
     display: grid;
-    grid-template-rows: 50% auto;
+    grid-template-rows: 50% 50%;
+    overflow: hidden;
   }
   // #HeapView {
   //   .content {
@@ -43,14 +38,16 @@
     .title {
       color: $text-title-color;
       padding: 10px;
+      font-weight: 500;
     }
     .content {
-      padding: 14px;
-    }
-  }
+      padding: 8px;
+      height: calc(100% - 50px);
+      overflow: scroll;
 
-  #HeapView {
-    .content {
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 
@@ -117,4 +114,15 @@
       border-right: 1px dashed $dash-line-color;
     }
   }
+
+  #BinaryCodeSvg {
+    border-bottom: 1px dotted $dash-line-color;
+    padding: 0.5rem 1rem 0 1rem;
+    height: 175px;
+  }
+}
+
+#PhysicalView {
+  padding-top: 2rem;
+  color: $text-color;
 }

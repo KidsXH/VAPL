@@ -58,7 +58,7 @@
   .col-value {
     display: grid;
     grid-template-columns: 10px auto;
-    border: 2px solid $cell-border-color;
+    border: 1px solid $cell-border-color;
     max-width: 5.5rem;
 
     .col-1 {
@@ -84,7 +84,7 @@
 
   &.active {
     .col-value {
-      border: 2px solid black;
+      border: 1px solid black;
     }
     color: black;
   }

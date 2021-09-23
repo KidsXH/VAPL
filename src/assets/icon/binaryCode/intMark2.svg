@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="13px" viewBox="0 0 28 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53 (72520) - https://sketchapp.com -->
+    <title>Group 26</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dashboard-/-02" transform="translate(-1774.000000, -907.000000)">
+            <g id="Group-31" transform="translate(1726.000000, 906.000000)">
+                <g id="Group-26" transform="translate(48.000000, 1.000000)">
+                    <text id="1" font-family="Helvetica" font-size="10.8" font-weight="normal" fill="#919191">
+                        <tspan x="15.3" y="10">1</tspan>
+                    </text>
+                    <g id="add1" transform="translate(7.200000, 2.700000)" fill="#919191" fill-rule="nonzero">
+                        <path d="M3.16934073,0.430428954 L3.16934073,3.16951238 L0.430572809,3.16951238 C0.194501195,3.16951238 0.00306459826,3.36066305 0.00306459826,3.59689242 C0.00306459826,3.83321052 0.194501195,4.02433161 0.430572809,4.02433161 L3.16934073,4.02433161 L3.16934073,6.76292205 C3.16934073,6.99925002 3.36077732,7.19036125 3.59684894,7.19036125 C3.83279237,7.19036125 4.02422897,6.99925002 4.02422897,6.76292205 L4.02422897,4.02432175 L6.76313493,4.02432175 C6.99903892,4.02432175 7.19049524,3.83320066 7.19049524,3.59688256 C7.19049524,3.36065319 6.99903892,3.16950252 6.76313493,3.16950252 L4.02422897,3.16950252 L4.02422897,0.430419095 C4.02422897,0.194091128 3.83279237,0.00297990226 3.59684894,0.00297990215 C3.36077732,0.00299962154 3.16934073,0.194100988 3.16934073,0.430428954 Z" id="Path"></path>
+                    </g>
+                    <rect id="Rectangle" stroke="#979797" stroke-width="0.5" x="0.25" y="0.25" width="27.4" height="12.1"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

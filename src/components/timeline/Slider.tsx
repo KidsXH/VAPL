@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { signal } from '../emitter';
 import * as d3 from 'd3';
-import { VariableWithSteps, StatementHighlight } from '../../panels/timelinePanel/TimelinePanel';
+import {
+  VariableWithSteps,
+  StatementHighlight,
+} from '../../panels/timelinePanel/TimelinePanel';
+
+import timelineLegend from '../../assets/icon/timelineLegend.svg';
 
 interface Props {
   step: number;
@@ -35,15 +40,15 @@ export default class Slider extends React.Component<Props, State> {
   }
 
   rectScale = () => {
-    const {maxDepth} = this.props;
+    const { maxDepth } = this.props;
     const range = 40;
 
-    if(maxDepth > 20) {
-      return d3.scaleLog().range([0, range]).domain([1e-15, maxDepth])
+    if (maxDepth > 20) {
+      return d3.scaleLog().range([0, range]).domain([1e-15, maxDepth]);
     } else {
-      return d3.scaleLinear().range([0, range]).domain([0, maxDepth])
+      return d3.scaleLinear().range([0, range]).domain([0, maxDepth]);
     }
-  }
+  };
 
   dragStart = (e: any) => {
     e.stopPropagation();
@@ -153,50 +158,54 @@ export default class Slider extends React.Component<Props, State> {
             ry="4"
           />
 
-           <g>
-          {variableHighlights.map((m) => {
-            return (
-              <g key={m.funcName + '_' + m.name}>
-                {m['steps'].map((_step) => {
-                  if (m['visible']) {
-                    return (
-                      <rect
-                        height={30}
-                        x={scale(_step) - 1.5}
-                        y={-30}
-                        width={3}
-                        fill={m['color']}
-                      />
-                    );
-                  }
-                })}
-              </g>
-            );
-          })}
-        </g>
-        <g>
-          {statementHighlights.map((m) => {
-            return (
-              <g key={m.lineNumber}>
-                {m['steps'].map((_step, i) => {
-                  if (m['visible']) {
-                    return (
-                      <rect
-                        height={this.rectScale()(m['depth'][i])}
-                        x={scale(_step) - 1.5}
-                        y={height/2 + 5}
-                        width={3}
-                        fill={m['color']}
-                      ></rect>
-                    );
-                  }
-                })}
-              </g>
-            );
-          })}
-         </g> 
           <g>
-            <text
+            {variableHighlights.map((m) => {
+              return (
+                <g key={m.funcName + '_' + m.name}>
+                  {m['steps'].map((_step, i) => {
+                    if (m['visible']) {
+                      return (
+                        <rect
+                          key={i}
+                          height={30}
+                          x={scale(_step) - 1.5}
+                          y={-30}
+                          width={3}
+                          fill={m['color']}
+                        />
+                      );
+                    }
+                    return null;
+                  })}
+                </g>
+              );
+            })}
+          </g>
+          <g>
+            {statementHighlights.map((m) => {
+              return (
+                <g key={m.lineNumber}>
+                  {m['steps'].map((_step, i) => {
+                    if (m['visible']) {
+                      return (
+                        <rect
+                          height={this.rectScale()(m['depth'][i])}
+                          x={scale(_step) - 1.5}
+                          y={height / 2 + 4}
+                          width={3}
+                          fill={m['color']}
+                        ></rect>
+                      );
+                    }
+                    return null;
+                  })}
+                </g>
+              );
+            })}
+          </g>
+          <g>
+            <image x={width - 80} y={-60} xlinkHref={timelineLegend} />
+            {/* <text
               className="timeline-legend"
               x={contentWidth}
               y={height / 2 - 20}
@@ -211,7 +220,7 @@ export default class Slider extends React.Component<Props, State> {
               fontSize="15"
             >
               Statements
-            </text>
+            </text> */}
           </g>
         </svg>
       </div>
