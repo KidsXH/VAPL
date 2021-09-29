@@ -68,6 +68,13 @@ class CallStackPanel extends React.Component<Props, State> {
             width={this.props.width - 20}
             height={this.props.height * 0.75 - 28 - 39.2}
           >
+            <rect
+              width={this.props.width - 20}
+              height={this.props.height * 0.75 - 28 - 39.2}
+              x={0}
+              y={0}
+              fill={'#ffffff'}
+            ></rect>
             <marker
               id="end"
               viewBox="-10 -10 20 20"
@@ -104,12 +111,13 @@ class CallStackPanel extends React.Component<Props, State> {
             <g id="clone"></g>
             <g id="path"></g>
           </svg>
-          <Animation
-            animationDrawer={
-              new AnimationDrawer(this.props.execState, this.props.lastState)
-            }
-          ></Animation>
         </div>
+        <Animation
+          animationDrawer={
+            new AnimationDrawer(this.props.execState, this.props.lastState)
+          }
+        ></Animation>
+        <div id="image-container" style={{ display: 'none' }}></div>
       </div>
     );
   }
