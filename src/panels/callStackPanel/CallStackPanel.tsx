@@ -2,6 +2,7 @@ import React from 'react';
 import PanelHeader from '../../components/panelHeader/PanelHeader';
 import CallStack from '../../components/callStack/CallStack';
 import Animation from '../../components/callStack/animation/Animation';
+import CallStackHeaderButton from '../../components/callStack/CallStackHeaderButton';
 import { AnimationDrawer } from '../../components/callStack/animation/AnimationDrawer';
 import { slot, remove } from '../../components/emitter';
 import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
@@ -61,6 +62,7 @@ class CallStackPanel extends React.Component<Props, State> {
     return (
       <div id="CallStackPanel" className="panel">
         <PanelHeader title="Call Stack" />
+        <CallStackHeaderButton />
         <div className="callStack-area">
           {/* {console.log('DEBUG|'+this.props.execState)} */}
           <svg

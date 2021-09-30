@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { DEBUG_STATE } from '../server';
 import { showEvents, signal } from '../emitter';
 import * as d3 from 'd3';
-import gifshot from '../../assets/script/gifshot';
 
 import stepLight from '../../assets/icon/stepLight.svg';
 import stepDark from '../../assets/icon/stepDark.svg';
@@ -19,11 +18,7 @@ import backAllDark from '../../assets/icon/backAllDark.svg';
 
 import startLight from '../../assets/icon/kaishi2.svg';
 import startDark from '../../assets/icon/kaishi1.svg';
-import ControlButton from './ControButton';
-
-import playGIF from '../../assets/icon/play.svg';
-import pauseGIF from '../../assets/icon/pause.svg';
-import downloadGIF from '../../assets/icon/download.svg';
+import ControlButton from './ControlButton';
 
 import './style.scss';
 
@@ -34,12 +29,6 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
   const [stepBack, setStepBack] = useState(false);
   const [step, setStep] = useState(true);
   const [stepAll, setStepAll] = useState(false);
-  const [frameInterval, setFrameInterval] = useState(
-    setInterval(() => {}, 1000)
-  );
-  const [isRecording, setIsRecording] = useState(false);
-  const [imageList, setImageList] = useState<Array<String>>([]);
-  const [downloadURL, setDownloadURL] = useState('');
 
   useEffect(() => {
     switch (debugState) {
@@ -143,74 +132,6 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
         onClick={() => {}}
         disabled={!stepAll}
       /> */}
-      <ControlButton
-        iconHrefLight={!isRecording ? playGIF : pauseGIF}
-        iconHrefDark={!isRecording ? playGIF : pauseGIF}
-        onClick={() => {
-          if (!isRecording) {
-            setImageList([]);
-            setIsRecording(true);
-            setFrameInterval(
-              setInterval(() => {
-                let html = (
-                  d3
-                    .select('#svg')
-                    .attr('version', 1.1)
-                    .attr('xmlns', 'http://www.w3.org/2000/svg')
-                    .node() as any
-                ).parentNode.innerHTML;
-                let imgsrc =
-                  'data:image/svg+xml;base64,' +
-                  btoa(unescape(encodeURIComponent(html)));
-                imageList.push(imgsrc);
-                setImageList(imageList);
-                var a = d3
-                  .select('#image-container')
-                  .append('img')
-                  .attr('src', imgsrc);
-                a.remove();
-              }, 100)
-            );
-          } else {
-            let svg = d3.select('#svg');
-            setIsRecording(false);
-            clearInterval(frameInterval);
-            console.log(imageList);
-
-            gifshot.createGIF(
-              {
-                gifWidth: svg.attr('width'),
-                gifHeight: svg.attr('height'),
-                images: imageList,
-                numWorkers: 4,
-                frameDuration: 0.1,
-                numFrames: imageList.length,
-              },
-              function (obj: any) {
-                console.log('finish');
-                if (!obj.error) {
-                  var image = obj.image;
-                  setDownloadURL(image);
-                }
-              }
-            );
-          }
-        }}
-        disabled={false}
-      />
-      <ControlButton
-        iconHrefLight={downloadGIF}
-        iconHrefDark={downloadGIF}
-        onClick={() => {
-          var a = document.createElement('a');
-          a.download = 'action.gif';
-          a.href = downloadURL;
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
-        }}
-        disabled={downloadURL === ''}
-      />
     </div>
   );
 }

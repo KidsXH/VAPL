@@ -1,0 +1,15 @@
+.header-btn {
+  display: flex;
+  position: absolute;
+  top: 0.25rem;
+  right: 0rem;
+  svg {
+    height: 2rem;
+    width: 2rem;
+    margin-right: 0.5rem;
+    image {
+      width: 2rem;
+      height: 2rem;
+    }
+  }
+}
