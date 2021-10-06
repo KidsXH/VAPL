@@ -19,7 +19,7 @@ function App() {
   const [execState, setExecState] = useState<ExecState | undefined>();
   const [lastState, setLastState] = useState<ExecState | undefined>();
   const [variableShowUps, setVariableShowUps] = useState<VariableWithSteps[]>(
-    []
+    [],
   );
   const app = React.createRef<HTMLDivElement>();
 
@@ -31,7 +31,7 @@ function App() {
           setExecState(execState);
           setLastState(lastState);
         });
-      }
+      },
     );
     return () => {
       remove('draw');
@@ -43,7 +43,7 @@ function App() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    console.log('Key: ' + e.key);
+    // console.log('Key: ' + e.key);
     switch (e.key) {
       case 'ArrowRight': {
         e.preventDefault();
@@ -76,16 +76,16 @@ function App() {
   };
 
   return (
-    <div className="App" ref={app} onKeyDown={handleKeyDown} tabIndex={-1}>
-      <div className="Row-1">
+    <div className='App' ref={app} onKeyDown={handleKeyDown} tabIndex={-1}>
+      <div className='Row-1'>
         <AppHeader />
       </div>
-      <div className="Row-2">
-        <div className="Col-1">
+      <div className='Row-2'>
+        <div className='Col-1'>
           <EditorPanel />
           <ConsolePanel />
         </div>
-        <div className="Col-2">
+        <div className='Col-2'>
           <ContainerDimensions>
             {({ width, height }: { width: number; height: number }) => (
               <React.Fragment>
@@ -104,7 +104,7 @@ function App() {
             )}
           </ContainerDimensions>
         </div>
-        <div className="Col-3">
+        <div className='Col-3'>
           <MemoryPanel execState={execState} />
         </div>
       </div>

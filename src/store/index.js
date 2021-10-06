@@ -69,7 +69,7 @@ const reducer = (state = initState, action) => {
       existColor.delete(old);
       return { ...state, statements: rest }
     case REMOVE_ITEMS:
-      console.log(action.data)
+      // console.log(action.data)
       const statements = {};
       Object.keys(state.statements).forEach(id => {
         if ((+id) >= action.data) {

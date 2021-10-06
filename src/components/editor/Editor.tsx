@@ -184,7 +184,7 @@ class Editor extends React.Component<Props, State> {
           .style('background', '#f3f7f9')
           .style('border-left', 'none');
 
-        console.log(row);
+        // console.log(row);
         this.props.removeHighlightStatement(row);
       } else {
         const color = getColor();
@@ -306,6 +306,9 @@ class Editor extends React.Component<Props, State> {
         variableShowUp,
         outputChange,
       } = response;
+
+      // console.log('REC: ', response);
+
       this.isDebugging = debugState !== 'Stop';
       this.sentSourcecode = sourcecode;
       if (debugState === 'Executing') {
@@ -455,7 +458,7 @@ class Editor extends React.Component<Props, State> {
         tabIndex={-1}
         role="dialog"
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>{warning}</Modal.Title>
         </Modal.Header>
         <Alert bsStyle="danger">

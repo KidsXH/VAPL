@@ -80,7 +80,7 @@ export class AnimationDrawer {
           break;
       }
     }
-    console.log(this);
+    // console.log(this);
   }
 
   public binOp(uniBinOp: any) {

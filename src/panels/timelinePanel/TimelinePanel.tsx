@@ -117,7 +117,7 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
           });
           options.push(temp);
         });
-        console.log(options, 'options');
+        // console.log(options, 'options');
         unstable_batchedUpdates(() => {
           setMax(stepCount);
           setVariableHighlights([]);
@@ -140,6 +140,7 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
         setDebugStatus(debugStatus);
         setDebugState(debugState);
       });
+      // console.log('Debug State: ', debugState, ' | Debug Status', debugStatus);
     });
 
     return () => {
@@ -365,7 +366,7 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
 
   useEffect(() => {
     if(variableShowUps.length) {
-      console.log(variableShowUps, 'varib', variables)
+      // console.log(variableShowUps, 'varib', variables)
      
       const highlights = variableShowUps.filter(({funcName, name}) => {
         return variables[funcName+'-'+name]

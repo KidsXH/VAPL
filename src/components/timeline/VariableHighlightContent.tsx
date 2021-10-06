@@ -22,7 +22,7 @@ function VariableHighlightContent({options, variableHighlights}: VariableHighlig
   const addVar = useCallback((value) => dispatch(addVariable(value)), [dispatch])
 
   const onChange = (value: CascaderValueType) => {
-    console.log(value)
+    // console.log(value)
     addVar(value)
   }
 
