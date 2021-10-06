@@ -17,7 +17,7 @@ function MemoryCell({ variable, selectedVar, handleClick }: MemoryCellProps) {
   const getValue = () => {
     const value = variable.getValue();
     if (dataType === 'char') {
-      return "'" + value.toString() + "'";
+      return "'" + String.fromCharCode(value) + "'";
     }
     if (value instanceof Array) {
       const fv = firstVarInArr(value);
