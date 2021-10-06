@@ -92,6 +92,7 @@ function LogicalView({
             {heap.map((variable: Variable) => {
               return (
                 <MemoryCell
+                  key={variable.address}
                   variable={formatHeapVariable(variable)}
                   selectedVar={selectedVar}
                   handleClick={handleClick}
@@ -107,6 +108,7 @@ function LogicalView({
               {global.map((v: Variable) => {
                 return (
                   <MemoryCell
+                    key={v.address}
                     variable={formatGSVariable(v)}
                     selectedVar={selectedVar}
                     handleClick={handleClick}
