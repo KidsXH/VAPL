@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './callstack.scss';
 
 import * as d3 from 'd3';
+import { Select } from 'antd';
 import gifshot from '../../assets/script/gifshot';
 import ControlButton from '../timeline/ControlButton';
 
@@ -10,7 +11,13 @@ import pauseGIF from '../../assets/icon/zanting.svg';
 import downloadGIF from '../../assets/icon/xiazai.svg';
 import loadingGIF from '../../assets/icon/jiazai.svg';
 
-function CallStackHeaderButton() {
+const { Option } = Select;
+
+interface CallStackHeaderButtonProps {
+  handleChange: any;
+}
+
+function CallStackHeaderButton({ handleChange }: CallStackHeaderButtonProps) {
   const [frameInterval, setFrameInterval] = useState(
     setInterval(() => {}, 1000)
   );
@@ -19,8 +26,27 @@ function CallStackHeaderButton() {
   const [downloadURL, setDownloadURL] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  function a(value: string) {
+    console.log(`selected ${value}`);
+  }
+
   return (
     <div className="header-btn">
+      <div className="header-select">
+        <span>Animation speed: </span>
+        <Select
+          defaultValue="1.0"
+          style={{ width: 80 }}
+          onChange={handleChange}
+        >
+          <Option value="2.0">2.0x</Option>
+          <Option value="1.5">1.5x</Option>
+          <Option value="1.25">1.25x</Option>
+          <Option value="1.0">1.0x</Option>
+          <Option value="0.75">0.75x</Option>
+          <Option value="0.5">0.5x</Option>
+        </Select>
+      </div>
       <ControlButton
         iconHrefLight={!isRecording ? playGIF : pauseGIF}
         iconHrefDark={!isRecording ? playGIF : pauseGIF}

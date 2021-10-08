@@ -7,6 +7,7 @@ import 'd3-clone';
 
 interface Props {
   animationDrawer: AnimationDrawer;
+  speed: number;
 }
 
 interface State {}
@@ -87,7 +88,7 @@ export default class Animation extends React.Component<Props, State> {
     stack.attr('tansform', 'matrix(1,0,0,1,0,300)');
     stack
       .transition()
-      .duration(1000)
+      .duration(1000 * this.props.speed)
       .tween('number', function () {
         let i = d3.interpolateNumber(300, 0);
         return function (t) {
@@ -110,8 +111,8 @@ export default class Animation extends React.Component<Props, State> {
     arrow.style('opacity', 0);
     arrow
       .transition()
-      .duration(500)
-      .delay(500)
+      .duration(500 * this.props.speed)
+      .delay(500 * this.props.speed)
       .tween('number', function () {
         let i = d3.interpolateNumber(0, 1);
         return function (t) {
@@ -166,18 +167,18 @@ export default class Animation extends React.Component<Props, State> {
           .select('rect')
           .style('display', 'none')
           .transition()
-          .delay(1000)
+          .delay(1000 * this.props.speed)
           .style('display', 'inline');
         target
           .selectAll('.value')
           .style('display', 'none')
           .transition()
-          .delay(1000)
+          .delay(1000 * this.props.speed)
           .style('display', 'inline');
         cloned
           .select('rect')
           .transition()
-          .duration(1000)
+          .duration(1000 * this.props.speed)
           .attr(
             'x',
             Number(target.select('rect').attr('x')) + Number(targetTransform[4])
@@ -189,7 +190,7 @@ export default class Animation extends React.Component<Props, State> {
         cloned
           .selectAll('.value')
           .transition()
-          .duration(1000)
+          .duration(1000 * this.props.speed)
           .attr(
             'x',
             Number(target.selectAll('.value').attr('x')) +
@@ -200,7 +201,10 @@ export default class Animation extends React.Component<Props, State> {
             Number(target.selectAll('.value').attr('y')) +
               Number(targetTransform[5])
           );
-        cloned.transition().delay(1000).remove();
+        cloned
+          .transition()
+          .delay(1000 * this.props.speed)
+          .remove();
       }
     });
     if (stacks.length > 3) {
@@ -210,8 +214,8 @@ export default class Animation extends React.Component<Props, State> {
       );
       d3.select('#block__cloned')
         .transition()
-        .delay(1000)
-        .duration(1000)
+        .delay(1000 * this.props.speed)
+        .duration(1000 * this.props.speed)
         .tween('number', function () {
           let i = d3.interpolateNumber(0, -height);
           return function (t) {
@@ -229,8 +233,8 @@ export default class Animation extends React.Component<Props, State> {
         });
       svgblock1
         .transition()
-        .delay(1000)
-        .duration(1000)
+        .delay(1000 * this.props.speed)
+        .duration(1000 * this.props.speed)
         .tween('number', function () {
           let i = d3.interpolateNumber(height, 0);
           return function (t) {
@@ -240,8 +244,8 @@ export default class Animation extends React.Component<Props, State> {
         });
       svgblock2
         .transition()
-        .delay(1000)
-        .duration(1000)
+        .delay(1000 * this.props.speed)
+        .duration(1000 * this.props.speed)
         .tween('number', function () {
           let i = d3.interpolateNumber(height, 0);
           return function (t) {
@@ -249,7 +253,10 @@ export default class Animation extends React.Component<Props, State> {
             renderArrow(block2, block2);
           };
         });
-      d3.select('#block__cloned').transition().delay(2000).remove();
+      d3.select('#block__cloned')
+        .transition()
+        .delay(2000 * this.props.speed)
+        .remove();
     }
   }
 
@@ -274,7 +281,7 @@ export default class Animation extends React.Component<Props, State> {
     );
     block
       .transition()
-      .duration(1000)
+      .duration(1000 * this.props.speed)
       .tween('number', function () {
         let i = d3.interpolateNumber(0, 1);
         return function (t) {
@@ -301,13 +308,13 @@ export default class Animation extends React.Component<Props, State> {
       .select('rect')
       .style('display', 'none')
       .transition()
-      .delay(1000)
+      .delay(1000 * this.props.speed)
       .style('display', 'inline');
     target
       .selectAll('.value')
       .style('display', 'none')
       .transition()
-      .delay(1000)
+      .delay(1000 * this.props.speed)
       .style('display', 'inline');
     const cloned = (d3.select('#svg').select('#clone') as any).appendClone(
       d3.select('#cloned-block-' + postArgs[0])
@@ -321,19 +328,31 @@ export default class Animation extends React.Component<Props, State> {
     cloned
       .select('rect')
       .transition()
-      .duration(1000)
+      .duration(1000 * this.props.speed)
       .attr('x', target.select('rect').attr('x'))
       .attr('y', target.select('rect').attr('y'));
     cloned
       .selectAll('.value')
       .transition()
-      .duration(1000)
+      .duration(1000 * this.props.speed)
       .attr('x', target.selectAll('.value').attr('x'))
       .attr('y', target.selectAll('.value').attr('y'));
-    d3.select('#stack__cloned').transition().delay(1000).remove();
-    d3.select('#block__cloned').transition().delay(1000).remove();
-    cloned.transition().delay(1000).remove();
-    d3.select('#arrow__cloned').transition().delay(1000).remove();
+    d3.select('#stack__cloned')
+      .transition()
+      .delay(1000 * this.props.speed)
+      .remove();
+    d3.select('#block__cloned')
+      .transition()
+      .delay(1000 * this.props.speed)
+      .remove();
+    cloned
+      .transition()
+      .delay(1000 * this.props.speed)
+      .remove();
+    d3.select('#arrow__cloned')
+      .transition()
+      .delay(1000 * this.props.speed)
+      .remove();
   }
 
   compareProps(prevProps: Props, newProps: Props) {

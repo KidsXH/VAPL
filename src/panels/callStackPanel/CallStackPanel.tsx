@@ -20,9 +20,16 @@ interface Props {
   lastState?: ExecState;
   variableShowUps: VariableWithSteps[] | undefined;
 }
-interface State {}
+interface State {
+  speed: number;
+}
 
 class CallStackPanel extends React.Component<Props, State> {
+  constructor(prop: Props) {
+    super(prop);
+    this.state = { speed: 1 };
+  }
+
   componentDidUpdate() {
     const variableShowUps = this.props.variableShowUps;
     const execState = this.props.execState;
@@ -51,6 +58,12 @@ class CallStackPanel extends React.Component<Props, State> {
     }
   }
 
+  handleChange = (value: string) => {
+    var animationSpeed = parseFloat(value);
+    sessionStorage.setItem('exec', 'step');
+    this.setState({ speed: animationSpeed });
+  };
+
   render() {
     // console.log('render1');
     const blockDrawer = new BlockDrawer(this.props.execState);
@@ -62,7 +75,7 @@ class CallStackPanel extends React.Component<Props, State> {
     return (
       <div id="CallStackPanel" className="panel">
         <PanelHeader title="Call Stack" />
-        <CallStackHeaderButton />
+        <CallStackHeaderButton handleChange={this.handleChange} />
         <div className="callStack-area">
           {/* {console.log('DEBUG|'+this.props.execState)} */}
           <svg
@@ -118,6 +131,7 @@ class CallStackPanel extends React.Component<Props, State> {
           animationDrawer={
             new AnimationDrawer(this.props.execState, this.props.lastState)
           }
+          speed={this.state.speed}
         ></Animation>
         <div id="image-container" style={{ display: 'none' }}></div>
       </div>
