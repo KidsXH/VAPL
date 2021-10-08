@@ -14,12 +14,6 @@ interface LogicalViewProps {
   handleClick: (variable: Variable) => void;
 }
 
-const example_var0 = new Variable('int', '', -1, 10008, 2);
-const example_var1 = new Variable('int', '', 2100000000, 10000, 2);
-const example_var2 = new Variable('int', 'a', -2, 10004, 2);
-const example_var3 = new Variable('int', 'b', 10, 10006, 2);
-const example_var4 = new Variable('char', 'c', 'c', 10010, 2);
-
 function LogicalView({
   execState,
   selectedVar,
@@ -125,10 +119,10 @@ function LogicalView({
 
 export default LogicalView;
 
-const formatHeapVariable = (variable: Variable) => {
+export const formatHeapVariable = (variable: Variable) => {
   return Object.assign(variable, { name: '', parentName: '"Heap"' });
 };
 
-const formatGSVariable = (variable: Variable) => {
+export const formatGSVariable = (variable: Variable) => {
   return Object.assign(variable, { parentName: '"Global / Static"' });
 };

@@ -41,12 +41,14 @@
   //   grid-template-columns: 0 5.5rem;
   // }
 
+  max-width: 15rem;
+
   font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro,
     monospace;
   color: $text-color;
   font-size: 0.8rem;
 
-  margin-top: -1px;
+  margin-top: 0;
 
   .col-name {
     display: grid;
@@ -88,10 +90,8 @@
     }
     color: black;
   }
-  // &:hover {
-  //   .col-value {
-  //     border: 2px solid black;
-  //   }
-  //   color: black;
-  // }
+
+  &.disabled {
+    cursor: default;
+  }
 }

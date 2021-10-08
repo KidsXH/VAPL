@@ -67,7 +67,7 @@
   color: $text-color;
   font-weight: 500;
   margin-top: -10px;
-  padding: 0px 24px;
+  padding: 0 24px;
   .detail-item {
     display: grid;
     grid-template-columns: 9rem auto;
@@ -124,5 +124,11 @@
 
 #PhysicalView {
   padding-top: 2rem;
+  height: 100%;
   color: $text-color;
+
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }

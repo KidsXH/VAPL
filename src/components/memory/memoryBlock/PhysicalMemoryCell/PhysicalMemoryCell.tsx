@@ -1,15 +1,20 @@
-import classNames from 'classnames';
 import React from 'react';
 import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
+import classNames from 'classnames';
+import { firstVarInArr } from '../MemoryCell';
 import './style.scss';
 
-export interface MemoryCellProps {
+export interface PhysicalMemoryCellProps {
   variable: Variable;
   selectedVar: Variable | undefined;
   handleClick: (variable: Variable) => void;
 }
 
-function MemoryCell({ variable, selectedVar, handleClick }: MemoryCellProps) {
+const PhysicalMemoryCell = ({
+  variable,
+  selectedVar,
+  handleClick,
+}: PhysicalMemoryCellProps) => {
   const varName = variable.name;
   const dataType = variable.type;
   const address = variable.address;
@@ -28,30 +33,29 @@ function MemoryCell({ variable, selectedVar, handleClick }: MemoryCellProps) {
 
   return dataType[-1] !== ']' ? (
     <div
-      className={classNames('memory-cell', {
+      className={classNames('memory-cell', 'memory-cell-physic', {
         active: selectedVar?.address === address,
         'in-heap': varName === '',
+        'disabled': !dataType,
       })}
-      onClick={() => {
-        handleClick(variable);
-      }}
+      onClick={
+        dataType
+          ? () => {
+              handleClick(variable);
+            }
+          : () => {}
+      }
     >
       <div className="col-name variable-name">{varName}</div>
       <div className="col-value">
         <div className="col-1">{dataType}</div>
         <div className="col-2">{getValue()}</div>
       </div>
+      <div className="col-address">{dataType ? address : ''}</div>
     </div>
   ) : (
     <div></div>
   );
-}
+};
 
-export default MemoryCell;
-
-export function firstVarInArr(arr: Array<Variable>) {
-  while (arr[0].getValue() instanceof Array) {
-    arr = arr[0].getValue();
-  }
-  return arr[0];
-}
+export default PhysicalMemoryCell;
