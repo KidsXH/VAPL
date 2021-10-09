@@ -329,10 +329,10 @@ export default class CallStack extends React.Component<Props, State> {
     const blockStacks = blockDrawer.getBlockStacks();
     const blockArrows = blockDrawer.getBlockArrows();
     const list: JSX.Element[] = [];
-    const x = 60;
+    const x = 50;
     let y = 50;
     const offsetY = 60;
-    const width = 192;
+    const width = 202;
     const height = 108;
     blockStacks.forEach((blockStack, i) => {
       const transform = `matrix(1,0,-0.36,1,0,0)`;
@@ -373,7 +373,7 @@ export default class CallStack extends React.Component<Props, State> {
             fontSize="15"
             textAnchor="end"
             className="function-name"
-            fill={'rgb(74, 140, 227)'}
+            fill={'rgb(139, 139, 139)'}
           >
             {`(${blockStack.getIndex()})`}
           </text>

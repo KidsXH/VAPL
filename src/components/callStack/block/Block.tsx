@@ -80,7 +80,7 @@ export default class Block extends React.Component<Props, State> {
           fontSize="15"
           textAnchor="end"
           className="function-name"
-          fill={'rgb(74, 140, 227)'}
+          fill={'rgb(139, 139, 139)'}
         >
           {`(${blockStack.getIndex()})`}
         </text>

@@ -116,6 +116,7 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
           const sourceCode = sessionStorage.getItem('sourceCode');
           sessionStorage.clear();
           if (sourceCode) sessionStorage.setItem('sourceCode', sourceCode);
+          sessionStorage.setItem('exec', 'step');
         }}
         disabled={!start}
       />
@@ -123,7 +124,7 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
         iconHrefLight={stepLight}
         iconHrefDark={stepDark}
         onClick={() => {
-          signal('debug', stop ? 'Step' : 'Start');
+          signal('debug', 'Step');
         }}
         disabled={!step}
       />

@@ -379,7 +379,7 @@ class Server {
       execState,
       output,
       sourcecode,
-      debugState: 'First',
+      debugState: 'Debugging',
       step: this.count,
       errors: [],
       files: this.files,
