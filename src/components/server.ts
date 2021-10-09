@@ -62,6 +62,23 @@ class Server {
   private interpreter: Interpreter | null = null;
   private stateHistory: ExecState[] = [];
   private outputsHistory: string[] = [];
+  private step: number = 0;
+  private linesShowUp: {
+    lineNumber: number;
+    steps: number[];
+    color: string;
+    depth: number[];
+    visible: boolean;
+  }[] = [];
+  private allVariables: { [key: string]: any } = {};
+  private variableShowUp: {
+    funcName: string;
+    name: string;
+    steps: number[];
+    color: string;
+    visible: boolean;
+    variable: Variable;
+  }[] = [];
 
   private async dynamicLoadInterpreter(progLang?: string) {
     if (typeof progLang === 'undefined') {
@@ -304,6 +321,10 @@ class Server {
     res.linesShowUp = linesShowUp;
     res.allVariables = allVariables;
     res.variableShowUp = variableShowUp;
+    this.step = step;
+    this.linesShowUp = linesShowUp;
+    this.allVariables = allVariables;
+    this.variableShowUp = variableShowUp;
     res.outputChange = this.isOutputChange(this.count);
     return res;
   }
@@ -379,10 +400,14 @@ class Server {
       execState,
       output,
       sourcecode,
-      debugState: 'Debugging',
+      debugState: 'First',
       step: this.count,
       errors: [],
       files: this.files,
+      stepCount: this.step,
+      linesShowUp: this.linesShowUp,
+      allVariables: this.allVariables,
+      variableShowUp: this.variableShowUp
     };
     return ret;
   }
