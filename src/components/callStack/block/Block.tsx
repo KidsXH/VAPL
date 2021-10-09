@@ -21,7 +21,8 @@ export function wrapWord(
 ) {
   text.each(function () {
     const text = d3.select(this),
-      words = text.text().split('').reverse();
+      words = text.text().split('').reverse(),
+      content = text.text();
     let word;
     const line = [],
       x = text.attr('x'),
@@ -32,6 +33,7 @@ export function wrapWord(
         .attr('class', className)
         .attr('x', x)
         .attr('y', y);
+    text.append('title').text(content);
     while ((word = words.pop())) {
       line.push(word);
       tspan.text(line.join(''));

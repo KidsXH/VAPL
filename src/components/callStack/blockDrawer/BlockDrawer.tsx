@@ -28,9 +28,14 @@ export function valueToArray(value: number | any[], type: string) {
     });
   } else {
     if (type === 'char' || type === 'unsignedchar') {
-      return typeof value === undefined || value === 0
-        ? ''
-        : String.fromCharCode(value);
+      switch (value) {
+        case undefined:
+          return `''`;
+        case 0:
+          return `'\\0'`;
+        default:
+          return `'${String.fromCharCode(value)}'`;
+      }
     } else {
       return value ? value : 0;
     }
