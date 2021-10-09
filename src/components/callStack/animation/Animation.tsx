@@ -225,9 +225,7 @@ export default class Animation extends React.Component<Props, State> {
             );
             renderArrow(cloned, '_cloned');
             if (t === 1) {
-              d3.select('#svg')
-                .select('#arrow_' + cloned)
-                .remove();
+              d3.select('#svg').select('#arrow__cloned').remove();
             }
           };
         });

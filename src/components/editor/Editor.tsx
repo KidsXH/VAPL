@@ -106,7 +106,11 @@ class Editor extends React.Component<Props, State> {
     const progLang = this.props.progLang;
     slot('debug', (controlEvent: CONTROL_EVENT, stdinText?: string) => {
       this.send(controlEvent, stdinText);
-      if (controlEvent === 'StepBack' || controlEvent === 'BackAll') {
+      if (
+        controlEvent === 'StepBack' ||
+        controlEvent === 'BackAll' ||
+        controlEvent === 'StepAll'
+      ) {
         sessionStorage.setItem('exec', 'step');
       } else {
         sessionStorage.setItem('exec', 'debug');
@@ -321,9 +325,9 @@ class Editor extends React.Component<Props, State> {
       if (debugState === 'Executing') {
         return;
       }
-      if (debugState === 'First') {
-        signal('init', stepCount, linesShowUp, allVariables, variableShowUp);
-      }
+      // if (debugState === 'First') {
+      //   signal('init', stepCount, linesShowUp, allVariables, variableShowUp);
+      // }
       if (this.controlEvent !== 'JumpTo') {
         signal('changeStep', step);
       }

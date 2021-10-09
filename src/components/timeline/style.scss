@@ -2,7 +2,7 @@
 
 .control-btn-group {
   display: grid;
-  grid-template-columns: repeat(3, 50px);
+  grid-template-columns: repeat(5, 50px);
   column-gap: 1px;
 }
 
@@ -29,9 +29,10 @@
   text-anchor: end;
 }
 
-#VariableHighlightContent, #StatementHighlightContent {
+#VariableHighlightContent,
+#StatementHighlightContent {
   .title {
-    padding: .5rem;
+    padding: 0.5rem;
     color: $text-title-color;
     border-bottom: 1px solid $border-line-color;
   }

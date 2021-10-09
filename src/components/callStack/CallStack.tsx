@@ -30,7 +30,7 @@ interface State {
 // }
 
 export function renderArrow(sourceStackName: string, targetStackName: string) {
-  d3.select('#svg').select(`#arrow_${sourceStackName}`).remove();
+  d3.select('#svg').select(`#arrow_${targetStackName}`).remove();
   const source = d3
     .select('#svg')
     .select(`#stack_${sourceStackName}`)
@@ -60,7 +60,7 @@ export function renderArrow(sourceStackName: string, targetStackName: string) {
     .select('#path')
     .append('path')
     .attr('style', 'stroke:#858585; fill:none; stroke-width:2;')
-    .attr('id', `arrow_${sourceStackName}`)
+    .attr('id', `arrow_${targetStackName}`)
     .attr(
       'd',
       'M' +
@@ -179,7 +179,6 @@ export default class CallStack extends React.Component<Props, State> {
           .attr('transform', 'matrix(1,0,0,1,0,0)');
       }
     });
-
     sessionStorage.setItem('arrowList', JSON.stringify(arrowList));
   }
 
