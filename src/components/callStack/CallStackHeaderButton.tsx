@@ -26,10 +26,6 @@ function CallStackHeaderButton({ handleChange }: CallStackHeaderButtonProps) {
   const [downloadURL, setDownloadURL] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  function a(value: string) {
-    console.log(`selected ${value}`);
-  }
-
   return (
     <div className="header-btn">
       <div className="header-select">

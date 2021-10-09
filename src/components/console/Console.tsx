@@ -88,7 +88,7 @@ export default class Console extends React.Component<Props, State> {
         mode="text"
         theme="light"
         value={this.state.output}
-        onChange={this.onChange}
+        // onChange={this.onChange}
         name="IO"
         fontSize={14}
         editorProps={{ $blockScrolling: true }}

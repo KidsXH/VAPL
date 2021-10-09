@@ -26,16 +26,21 @@ import translate from '../../locales/translate';
 import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
 import { LangProps, ProgLangProps, Theme } from '../Props';
 import { SyntaxErrorData } from 'unicoen.ts/dist/interpreter/mapper/SyntaxErrorData';
-import { connect } from 'react-redux'
-import { addHighlightStatement, removeHighlightStatement, removeMultipleHighlight,  } from '../../store';
-import {getColor} from '../../store/index'
+import { connect } from 'react-redux';
+import {
+  addHighlightStatement,
+  removeHighlightStatement,
+  removeMultipleHighlight,
+} from '../../store';
+import { getColor } from '../../store/index';
 import { message } from 'antd';
 
-type Props = LangProps & ProgLangProps & {
-  addHighlightStatement: Function,
-  removeHighlightStatement: Function,
-  removeMultipleHighlight: Function
-};
+type Props = LangProps &
+  ProgLangProps & {
+    addHighlightStatement: Function;
+    removeHighlightStatement: Function;
+    removeMultipleHighlight: Function;
+  };
 interface State {
   fontSize: number;
   showAlert: boolean;
@@ -248,9 +253,11 @@ class Editor extends React.Component<Props, State> {
     const sourcecode = this.sourcecode;
     const lineNumOfBreakpoint = this.lineNumOfBreakpoint;
     const progLang = this.props.progLang;
+    const inputText = 'a\nb\nc\nb\nd\n';
     const request: Request = {
       sourcecode,
       controlEvent,
+      inputText,
       stdinText,
       lineNumOfBreakpoint,
       progLang,
@@ -328,7 +335,7 @@ class Editor extends React.Component<Props, State> {
       // this.lineCnt = linesShowUp.length;
     } catch (e) {
       // alert('recieve: ' + e);
-      console.log(e)
+      console.log(e);
     }
   }
 
@@ -428,7 +435,7 @@ class Editor extends React.Component<Props, State> {
             }
           };
           const cnt = text.split('\n').length;
-          if(cnt < this.lineCnt) {
+          if (cnt < this.lineCnt) {
             this.props.removeMultipleHighlight(cnt);
           }
           this.lineCnt = cnt;
@@ -504,6 +511,6 @@ const mapDispatchToProps = {
   addHighlightStatement: addHighlightStatement,
   removeHighlightStatement: removeHighlightStatement,
   removeMultipleHighlight: removeMultipleHighlight,
-}
+};
 
 export default (connect(null, mapDispatchToProps) as any)(Editor);

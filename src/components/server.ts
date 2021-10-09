@@ -28,6 +28,7 @@ export class Request {
   constructor(
     public controlEvent: CONTROL_EVENT,
     public sourcecode: string,
+    public inputText?: string,
     public stdinText?: string,
     public lineNumOfBreakpoint?: number[],
     public progLang?: string,
@@ -125,6 +126,7 @@ class Server {
     const {
       controlEvent,
       sourcecode,
+      inputText,
       stdinText,
       lineNumOfBreakpoint,
       progLang,
@@ -133,7 +135,7 @@ class Server {
 
     switch (controlEvent) {
       case 'Start': {
-        return this.Start(sourcecode, progLang);
+        return this.Start(sourcecode, inputText, progLang);
       }
       case 'Stop': {
         return this.Stop(sourcecode);
@@ -154,7 +156,7 @@ class Server {
         return this.JumpTo(sourcecode, step);
       }
       case 'Exec': {
-        return this.Exec(sourcecode, progLang, lineNumOfBreakpoint);
+        return this.Exec(sourcecode, inputText, progLang, lineNumOfBreakpoint);
       }
       case 'SyntaxCheck': {
         return this.SyntaxCheck(sourcecode, progLang);
@@ -162,12 +164,15 @@ class Server {
     }
   }
 
-  private async Start(sourcecode: string, progLang?: string) {
+  private async Start(sourcecode: string, inputText: string | undefined, progLang?: string) {
     await this.reset(progLang);
     if (this.interpreter === null) {
       throw new Error('interpreter is not found');
     }
     const lineCount = sourcecode.split(/\r\n|\r|\n/).length;
+    if (inputText) {
+      this.interpreter.stdin(inputText);
+    }
     const state = this.interpreter.startStepExecution(sourcecode);
     const execState = this.recordExecState(state);
     const stdout = this.interpreter.getStdout();
@@ -207,7 +212,7 @@ class Server {
       files: this.files,
     };
     this.isExecuting = true;
-    while (ret.debugState !== 'EOF' && ret.debugState !== 'stdin') {
+    while (ret.debugState !== 'EOF') {
       const currentExpr = this.stateHistory[this.count].getCurrentExpr();
       const nextExpr = this.stateHistory[this.count].getNextExpr();
       const stacks = this.stateHistory[this.count].getStacks();
@@ -287,7 +292,6 @@ class Server {
           }
         }
       }
-
       ret = this.Step(sourcecode);
     }
 
@@ -492,6 +496,8 @@ class Server {
         signal('EOF', ret);
         return;
       } else if (ret.debugState === 'stdin') {
+        console.log(111);
+        
         signal('stdin', ret);
         return;
       } else if (typeof lineNumOfBreakpoint !== 'undefined') {
@@ -546,10 +552,11 @@ class Server {
 
   private async Exec(
     sourcecode: string,
+    inputText: string | undefined,
     progLang?: string,
     lineNumOfBreakpoint?: number[]
   ) {
-    await this.Start(sourcecode, progLang);
+    await this.Start(sourcecode, inputText, progLang);
     return this.StepAll(sourcecode, lineNumOfBreakpoint);
   }
 
