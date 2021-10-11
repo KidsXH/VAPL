@@ -3,7 +3,7 @@ import { VariableWithSteps } from '../../panels/timelinePanel/TimelinePanel';
 import { Popover, Cascader } from 'antd';
 import { CascaderValueType } from 'antd/lib/cascader';
 import { useDispatch } from 'react-redux';
-import { addVariable } from '../../store';
+import { addVariable } from '../../store/reducers/highlight';
 interface VariableHighlightContentProps {
   variableHighlights: VariableWithSteps[]
   // options: any;
@@ -34,7 +34,7 @@ function VariableHighlightContent({options, variableHighlights}: VariableHighlig
   return (
     <div id="VariableHighlightContent">
       <div className="header">
-        <p>Hightlight Variables</p>
+        <p>Highlight Variables</p>
      
         <Popover
           content={

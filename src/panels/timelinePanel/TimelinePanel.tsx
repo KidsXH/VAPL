@@ -61,8 +61,8 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
   const timelineArea = React.createRef<any>();
   const [timelineWidth, setTimelineWidth] = useState(0);
 
-  const statements = useSelector((state) => (state as any).statements);
-  const variables = useSelector((state) => (state as any).variables);
+  const statements = useSelector((state) => (state as any).highlight.statements);
+  const variables = useSelector((state) => (state as any).highlight.variables);
 
   useEffect(() => {
     slot('changeStep', (step: number) => {
@@ -86,7 +86,7 @@ function TimelinePanel({ variableShowUps, updVariableShowUps }: TimelinePanelPro
 
     slot('cancelStatementHighlight', (lineNumber: number) => {
       for (let i = 0; i < statementHighlights.length; i++) {
-        if (statementHighlights[i]['lineNumber'] == lineNumber + 1) {
+        if (statementHighlights[i]['lineNumber'] === lineNumber + 1) {
           statementHighlights.splice(i, 1);
           break;
         }
