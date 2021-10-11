@@ -1,0 +1,32 @@
+@import "src/styles/colors";
+
+#consoleHeader {
+
+  .text-title {
+    display: flex;
+    color: $border-line-color;
+
+    .input-title {
+      padding-right: 1rem;
+    }
+    .output-title {
+      padding-left: 1rem;
+    }
+
+    .clickable {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .active {
+      color: $text-title-color;
+      text-decoration: underline;
+      //border-right: 1px solid $text-title-color;
+    }
+
+    .vertical-line {
+      //border-left: 1px solid $text-title-color;
+      border-right: 1px solid $border-line-color;
+    }
+  }
+}

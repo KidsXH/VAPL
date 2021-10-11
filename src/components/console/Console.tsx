@@ -11,7 +11,12 @@ import './console.scss';
 import { slot, signal, remove } from '../emitter';
 import { LangProps } from '../Props';
 import { DEBUG_STATE } from '../server';
-type Props = LangProps;
+import InputEditor from './inputEditor/InputEditor';
+import OutputEditor from './outputEditor/OutputEditor';
+
+type Props = LangProps & {
+  mode: 'IN' | 'OUT';
+};
 
 interface State {
   output: string;
@@ -22,7 +27,11 @@ interface State {
 export default class Console extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = { output: '', isReadOnly: true, outputChange: false };
+    this.state = {
+      output: '',
+      isReadOnly: true,
+      outputChange: false,
+    };
     this.onChange = this.onChange.bind(this);
   }
 
@@ -83,25 +92,11 @@ export default class Console extends React.Component<Props, State> {
   }
 
   render() {
-    return (
-      <AceEditor
-        mode="text"
-        theme="light"
-        value={this.state.output}
-        // onChange={this.onChange}
-        name="IO"
-        fontSize={14}
-        editorProps={{ $blockScrolling: true }}
-        setOptions={{
-          enableBasicAutocompletion: false,
-          enableLiveAutocompletion: false,
-          showLineNumbers: false,
-          readOnly: this.state.isReadOnly,
-          showGutter: false,
-        }}
-        style={{ height: '100%', width: '100%', marginTop: '.25rem' }}
-        className="console"
-      />
+    const { output } = this.state;
+    return this.props.mode === 'IN' ? (
+      <InputEditor />
+    ) : (
+      <OutputEditor outputText={output} />
     );
   }
 }

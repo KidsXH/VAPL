@@ -31,8 +31,8 @@ import {
   addHighlightStatement,
   removeHighlightStatement,
   removeMultipleHighlight,
-} from '../../store';
-import { getColor } from '../../store/index';
+  getColor,
+} from '../../store/reducers/highlight';
 import { message } from 'antd';
 
 type Props = LangProps &
@@ -40,6 +40,7 @@ type Props = LangProps &
     addHighlightStatement: Function;
     removeHighlightStatement: Function;
     removeMultipleHighlight: Function;
+    inputText: string;
   };
 interface State {
   fontSize: number;
@@ -215,6 +216,7 @@ class Editor extends React.Component<Props, State> {
       }
       e.stop();
     });
+
   }
 
   // componentDidUpdate() {
@@ -257,7 +259,7 @@ class Editor extends React.Component<Props, State> {
     const sourcecode = this.sourcecode;
     const lineNumOfBreakpoint = this.lineNumOfBreakpoint;
     const progLang = this.props.progLang;
-    const inputText = 'a\nb\nc\nb\nd\n';
+    const inputText = this.props.inputText;
     const request: Request = {
       sourcecode,
       controlEvent,
@@ -511,10 +513,14 @@ class Editor extends React.Component<Props, State> {
   }
 }
 
+const mapStateToProps = (state: any) => {
+  return {inputText: state.compiler.inputText}
+}
+
 const mapDispatchToProps = {
   addHighlightStatement: addHighlightStatement,
   removeHighlightStatement: removeHighlightStatement,
   removeMultipleHighlight: removeMultipleHighlight,
 };
 
-export default (connect(null, mapDispatchToProps) as any)(Editor);
+export default (connect(mapStateToProps, mapDispatchToProps) as any)(Editor);
