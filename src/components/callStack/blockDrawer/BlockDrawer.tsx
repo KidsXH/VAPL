@@ -7,11 +7,14 @@ export type BlockCellContainer = BlockCell[];
 export type BlockTable = BlockCellContainer[];
 
 export function arrayToString(value: number | any[], type: string) {
+  console.log(value, type);
+
   const array = valueToArray(value, type);
   if (Array.isArray(value)) {
     if (
-      (type.startsWith('char') || type.startsWith('unsignedchar')) &&
-      type.split('[').length === 2
+      type.startsWith('char') ||
+      type.startsWith('unsignedchar')
+      // type.split('[').length === 2
     ) {
       return '"' + array.toString() + '"';
     }
@@ -30,19 +33,20 @@ export function valueToArray(value: number | any[], type: string) {
     if (type === 'char' || type === 'unsignedchar') {
       switch (value) {
         case undefined:
-          return `''`;
+          return ``;
         case 0:
-          return `'\\0'`;
+          return ``;
         default:
-          return `'${String.fromCharCode(value)}'`;
+          return `${String.fromCharCode(value)}`;
       }
     } else {
       return value ? value : 0;
     }
   }
   if (
-    (type.startsWith('char') || type.startsWith('unsignedchar')) &&
-    type.split('[').length === 2
+    type.startsWith('char') ||
+    type.startsWith('unsignedchar')
+    // type.split('[').length === 2
   ) {
     return [res.join('')];
   }
