@@ -49,6 +49,7 @@ export function wrapWord(
 
 export default class Block extends React.Component<Props, State> {
   componentDidUpdate() {
+    d3.selectAll('.value').select('title').remove();
     wrapWord(d3.selectAll('.value'), BlockCell.WIDTH - 10, 'value');
   }
 
