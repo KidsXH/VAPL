@@ -15,10 +15,6 @@ function MemoryCell({ variable, selectedVar, handleClick }: MemoryCellProps) {
   const dataType = variable.type;
   const address = variable.address;
 
-  if (varName === 'pd_arr') {
-    console.log('TYPE', dataType, dataType[6]);
-  }
-
   return dataType.indexOf('[') === -1 ? (
     <div
       className={classNames('memory-cell', {

@@ -7,8 +7,6 @@ export type BlockCellContainer = BlockCell[];
 export type BlockTable = BlockCellContainer[];
 
 export function arrayToString(value: number | any[], type: string) {
-  console.log(value, type);
-
   const array = valueToArray(value, type);
   if (Array.isArray(value)) {
     if (

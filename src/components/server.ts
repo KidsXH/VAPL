@@ -521,8 +521,6 @@ class Server {
         signal('EOF', ret);
         return;
       } else if (ret.debugState === 'stdin') {
-        console.log(111);
-        
         signal('stdin', ret);
         return;
       } else if (typeof lineNumOfBreakpoint !== 'undefined') {
