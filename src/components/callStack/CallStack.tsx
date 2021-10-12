@@ -340,12 +340,12 @@ export default class CallStack extends React.Component<Props, State> {
         <g
           key={`stack_${blockStack.getName()}`}
           id={`stack_${blockStack.getName()}`}
-          onClick={() => {
-            const res = inArray(blockStack.getName(), blockArrows);
-            if (res < 0) {
-              this.drawOrRemoveBlock(blockStack.getName());
-            }
-          }}
+          // onClick={() => {
+          //   const res = inArray(blockStack.getName(), blockArrows);
+          //   if (res < 0) {
+          //     this.drawOrRemoveBlock(blockStack.getName());
+          //   }
+          // }}
         >
           <rect
             x={x}

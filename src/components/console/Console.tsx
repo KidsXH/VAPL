@@ -74,20 +74,20 @@ export default class Console extends React.Component<Props, State> {
               .style('box-shadow', `0px 0px ${i(t)}px ${j(t)}`);
           };
         });
-      // d3.select('#ConsolePanel')
-      //   // .selectAll('.panel-header')
-      //   .transition()
-      //   .delay(1000)
-      //   .duration(1000)
-      //   .tween('number', function () {
-      //     let i = d3.interpolateNumber(16, 8);
-      //     let j = d3.interpolateRgb('#4A8CE3', '#ffffff');
-      //     return function (t) {
-      //       d3.select('#ConsolePanel')
-      //         // .selectAll('.panel-header')
-      //         .style('box-shadow', `0px 0px ${i(t)}px ${j(t)}`);
-      //     };
-      //   });
+      d3.select('#ConsolePanel')
+        // .selectAll('.panel-header')
+        .transition()
+        .delay(1000)
+        .duration(1000)
+        .tween('number', function () {
+          let i = d3.interpolateNumber(16, 8);
+          let j = d3.interpolateRgb('#4A8CE3', '#ffffff');
+          return function (t) {
+            d3.select('#ConsolePanel')
+              // .selectAll('.panel-header')
+              .style('box-shadow', `0px 0px ${i(t)}px ${j(t)}`);
+          };
+        });
     }
   }
 
