@@ -40,7 +40,7 @@
   // &.in-heap {
   //   grid-template-columns: 0 5.5rem;
   // }
-
+  width: 100%;
   max-width: 15rem;
 
   font-family: Monaco, Menlo, 'Ubuntu Mono', Consolas, source-code-pro,
@@ -55,6 +55,7 @@
     align-items: center;
     text-align: end;
     padding-right: 0.25rem;
+    overflow: hidden;
   }
 
   .col-value {
@@ -81,8 +82,8 @@
       white-space: nowrap;
       text-overflow: ellipsis;
     }
+    cursor: pointer;
   }
-  cursor: pointer;
 
   &.active {
     .col-value {

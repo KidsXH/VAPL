@@ -1,0 +1,13 @@
+
+.memory-cell {
+  display: grid;
+  grid-template-columns: auto 5.5rem 1rem;
+
+  .col-arrow {
+    display: grid;
+    align-content: center;
+
+    cursor: pointer;
+    user-select: none;
+  }
+}
