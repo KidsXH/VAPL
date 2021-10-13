@@ -170,7 +170,7 @@ class Server {
         return this.StepAll(sourcecode, lineNumOfBreakpoint);
       }
       case 'JumpTo': {
-        return this.JumpTo(sourcecode, step);
+        return this.JumpTo(sourcecode, Math.max(step - 1, 0));
       }
       case 'Exec': {
         return this.Exec(sourcecode, inputText, progLang, lineNumOfBreakpoint);
@@ -312,7 +312,7 @@ class Server {
       ret = this.Step(sourcecode);
     }
 
-    // console.log(this.stateHistory);
+    console.log(this.stateHistory);
 
     const step = this.count + 1;
     this.isExecuting = true;
