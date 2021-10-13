@@ -59,7 +59,7 @@ class CallStackPanel extends React.Component<Props, State> {
   }
 
   handleChange = (value: string) => {
-    var animationSpeed = parseFloat(value);
+    var animationSpeed = 1 / parseFloat(value);
     sessionStorage.setItem('exec', 'step');
     this.setState({ speed: animationSpeed });
   };
