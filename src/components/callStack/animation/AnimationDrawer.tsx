@@ -86,6 +86,9 @@ export class AnimationDrawer {
   public binOp(uniBinOp: any) {
     const operator = uniBinOp.operator;
     const right = uniBinOp.right;
+    if (!right) {
+      return;
+    }
     const rightClassName = right.constructor.name;
     switch (rightClassName) {
       case 'UniMethodCall':
