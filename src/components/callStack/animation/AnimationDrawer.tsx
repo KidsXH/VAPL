@@ -21,6 +21,7 @@ export class AnimationDrawer {
     this.reset();
     this.getCurrentStack();
     this.parseExe();
+    console.log(this);
   }
 
   public reset() {
@@ -64,10 +65,21 @@ export class AnimationDrawer {
           break;
       }
       switch (lastClassName) {
+        case 'UniMethodCall':
+          this.methodCall(lastExpr);
+          break;
         case 'UniBinOp':
           this.binOp(lastExpr);
           break;
         case 'UniReturn':
+          if (
+            currentClassName === 'UniMethodCall' &&
+            (currentExpr as any).methodName.name === 'printf' &&
+            (currentExpr as any).args.length > 1 &&
+            (currentExpr as any).args[1].constructor.name === 'UniMethodCall'
+          ) {
+            this.initMethodCall();
+          }
           this.state = 'uniReturn';
           this.uniReturn(lastExpr);
           break;
@@ -112,12 +124,32 @@ export class AnimationDrawer {
     }
   }
 
+  private initMethodCall() {
+    this.postArgs = [];
+    this.variableKeys = [];
+    this.variableTypes = [];
+    this.variableValues = [];
+  }
+
   public methodCall(uniMethodCall: any) {
     const methodName = uniMethodCall.methodName.name;
     this.execState!.getStacks().forEach((stack) => {
       if (methodName === stack.name) {
         this.state = 'methodCall';
-        this.postArgs = [];
+        this.initMethodCall();
+        this.getMethodArgs(uniMethodCall);
+        return;
+      } else if (
+        methodName === 'printf' &&
+        uniMethodCall.args.length > 1 &&
+        uniMethodCall.args[1].constructor.name === 'UniMethodCall'
+      ) {
+        if (this.state === 'uniReturn') {
+          this.initMethodCall();
+          return;
+        }
+        this.state = 'methodCall';
+        this.initMethodCall();
         this.getMethodArgs(uniMethodCall);
         return;
       }
@@ -227,6 +259,8 @@ export class AnimationDrawer {
     } else if (returnValueClass === 'UniBinOp') {
       this.travelArg(arg.left, idx);
       this.travelArg(arg.right, idx);
+    } else if (returnValueClass === 'UniMethodCall') {
+      this.methodCall(arg);
     }
   }
 
