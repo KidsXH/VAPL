@@ -189,7 +189,7 @@ export class AnimationDrawer {
     }
     const variables = this.stack!.getVariables();
     for (let i = 0; i < variables.length; i++) {
-      if (variables[i].getName() === uniVariableDef.name) {
+      if (variables[i].name === uniVariableDef.name) {
         const type = variables[i].type;
         const value = variables[i].getValue();
         this.variableKeys.push(key);
