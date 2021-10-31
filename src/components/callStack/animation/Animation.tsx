@@ -296,9 +296,19 @@ export default class Animation extends React.Component<Props, State> {
   uniReturn() {
     const { animationDrawer } = this.props;
     const postArgs = animationDrawer.getPostArgs();
-    if (postArgs.length < 1) return;
+    if (postArgs.length < 1) {
+      d3.select('#stack__cloned').remove();
+      d3.select('#block__cloned').remove();
+      d3.select('#arrow__cloned').remove();
+      return;
+    }
     const len = animationDrawer.getVariableKeys().length;
-    if (len === 0) return;
+    if (len === 0) {
+      d3.select('#stack__cloned').remove();
+      d3.select('#block__cloned').remove();
+      d3.select('#arrow__cloned').remove();
+      return;
+    }
     const key = animationDrawer.getVariableKeys()[len - 1];
     renderArrow('_cloned', '_cloned');
     const target = d3.select('#block-' + key);
