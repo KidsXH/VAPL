@@ -259,7 +259,7 @@ class Editor extends React.Component<Props, State> {
     const sourcecode = this.sourcecode;
     const lineNumOfBreakpoint = this.lineNumOfBreakpoint;
     const progLang = this.props.progLang;
-    const inputText = this.props.inputText;
+    const inputText = this.props.inputText + '\t';
     const request: Request = {
       sourcecode,
       controlEvent,

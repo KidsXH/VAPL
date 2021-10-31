@@ -294,6 +294,7 @@ export default class Animation extends React.Component<Props, State> {
   }
 
   uniReturn() {
+    console.log("ANIMATION-RETURN");
     const { animationDrawer } = this.props;
     const postArgs = animationDrawer.getPostArgs();
     if (postArgs.length < 1) {

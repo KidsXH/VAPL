@@ -32,7 +32,7 @@ export default class Console extends React.Component<Props, State> {
       isReadOnly: true,
       outputChange: false,
     };
-    this.onChange = this.onChange.bind(this);
+    // this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
@@ -51,13 +51,13 @@ export default class Console extends React.Component<Props, State> {
     remove('changeState');
   }
 
-  onChange(text: string) {
-    if (text.endsWith('\n')) {
-      const sendText = text.slice(0, -1).replace(this.state.output, '');
-      this.setState({ output: text, isReadOnly: true });
-      signal('debug', 'Step', sendText);
-    }
-  }
+  // onChange(text: string) {
+  //   if (text.endsWith('\n')) {
+  //     const sendText = text.slice(0, -1).replace(this.state.output, '');
+  //     this.setState({ output: text, isReadOnly: true });
+  //     signal('debug', 'Step', sendText);
+  //   }
+  // }
 
   componentDidUpdate() {
     if (this.state.outputChange) {
