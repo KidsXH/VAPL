@@ -58,7 +58,7 @@ function CallStackHeaderButton({ handleChange }: CallStackHeaderButtonProps) {
                     .attr('version', 1.1)
                     .attr('xmlns', 'http://www.w3.org/2000/svg')
                     .node() as any
-                ).parentNode.innerHTML;
+                ).parentNode.innerHTML.split('<div')[0];
                 let imgsrc =
                   'data:image/svg+xml;base64,' +
                   btoa(unescape(encodeURIComponent(html)));

@@ -12,6 +12,10 @@ import './style.scss';
 import { VariableWithSteps } from '../timelinePanel/TimelinePanel';
 import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
 import * as d3 from 'd3';
+import {
+  UncontrolledReactSVGPanZoom,
+  ReactSVGPanZoom,
+} from 'react-svg-pan-zoom';
 
 interface Props {
   height: number;
@@ -31,6 +35,7 @@ class CallStackPanel extends React.Component<Props, State> {
   }
 
   componentDidUpdate() {
+    d3.select('.callStack-area').select('svg').attr('id', 'svg');
     const variableShowUps = this.props.variableShowUps;
     const execState = this.props.execState;
     const lastState = this.props.lastState;
@@ -78,54 +83,65 @@ class CallStackPanel extends React.Component<Props, State> {
         <CallStackHeaderButton handleChange={this.handleChange} />
         <div className="callStack-area">
           {/* {console.log('DEBUG|'+this.props.execState)} */}
-          <svg
-            id="svg"
+          <UncontrolledReactSVGPanZoom
             width={this.props.width - 20}
             height={this.props.height * 0.75 - 28 - 39.2}
+            tool="auto"
+            background="#ffffff"
+            detectWheel="false"
+            detectAutoPan="false"
+            detectPinchGesture="false"
+            toolbarProps={{ position: 'none' }}
+            id="svg"
           >
-            <rect
+            <svg
               width={this.props.width - 20}
               height={this.props.height * 0.75 - 28 - 39.2}
-              x={0}
-              y={0}
-              fill={'#ffffff'}
-            ></rect>
-            <marker
-              id="end"
-              viewBox="-10 -10 20 20"
-              refX="0"
-              refY="0"
-              markerWidth="8"
-              markerHeight="8"
-              orient="auto"
             >
-              <circle
-                cx={0}
-                cy={0}
-                style={{ stroke: '#483647', strokeWidth: 2, fill: 'white' }}
-                r={8}
-              ></circle>
-            </marker>
-            <marker
-              id="start"
-              viewBox="-10 -10 20 20"
-              refX="0"
-              refY="0"
-              markerWidth="8"
-              markerHeight="8"
-              orient="auto"
-            >
-              <circle
-                cx={0}
-                cy={0}
-                style={{ stroke: '#979797', strokeWidth: 2, fill: 'white' }}
-                r={8}
-              ></circle>
-            </marker>
-            <CallStack blockDrawer={blockDrawer}></CallStack>
-            <g id="clone"></g>
-            <g id="path"></g>
-          </svg>
+              <rect
+                width={this.props.width - 20}
+                height={this.props.height * 0.75 - 28 - 39.2}
+                x={0}
+                y={0}
+                fill={'#ffffff'}
+              ></rect>
+              <marker
+                id="end"
+                viewBox="-10 -10 20 20"
+                refX="0"
+                refY="0"
+                markerWidth="8"
+                markerHeight="8"
+                orient="auto"
+              >
+                <circle
+                  cx={0}
+                  cy={0}
+                  style={{ stroke: '#483647', strokeWidth: 2, fill: 'white' }}
+                  r={8}
+                ></circle>
+              </marker>
+              <marker
+                id="start"
+                viewBox="-10 -10 20 20"
+                refX="0"
+                refY="0"
+                markerWidth="8"
+                markerHeight="8"
+                orient="auto"
+              >
+                <circle
+                  cx={0}
+                  cy={0}
+                  style={{ stroke: '#979797', strokeWidth: 2, fill: 'white' }}
+                  r={8}
+                ></circle>
+              </marker>
+              <CallStack blockDrawer={blockDrawer}></CallStack>
+              <g id="clone"></g>
+              <g id="path"></g>
+            </svg>
+          </UncontrolledReactSVGPanZoom>
         </div>
         <Animation
           animationDrawer={
