@@ -3,6 +3,23 @@
   position: absolute;
   top: 0.5rem;
   right: 0rem;
+  .variable-select {
+    margin-right: 1rem;
+    margin-top: -0.2rem;
+    .variable-select-select1 {
+      display: inline-block;
+      width: 8rem;
+    }
+    .variable-select-select2 {
+      display: inline-block;
+      width: 5rem;
+    }
+    .variable-select-button {
+      margin-left: 5px;
+      display: inline-block;
+    }
+  }
+
   .header-select {
     margin-right: 1rem;
     margin-top: -0.2rem;

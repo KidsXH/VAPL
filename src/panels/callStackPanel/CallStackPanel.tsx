@@ -4,18 +4,20 @@ import CallStack from '../../components/callStack/CallStack';
 import Animation from '../../components/callStack/animation/Animation';
 import CallStackHeaderButton from '../../components/callStack/CallStackHeaderButton';
 import { AnimationDrawer } from '../../components/callStack/animation/AnimationDrawer';
-import { slot, remove } from '../../components/emitter';
+import { slot, remove, signal } from '../../components/emitter';
 import { ExecState } from 'unicoen.ts/dist/interpreter/Engine/ExecState';
 import { BlockDrawer } from '../../components/callStack/blockDrawer/BlockDrawer';
+import DataStructure from '../../components/callStack/dataStructure/DataStructure';
 
 import './style.scss';
 import { VariableWithSteps } from '../timelinePanel/TimelinePanel';
 import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
 import * as d3 from 'd3';
+import { UncontrolledReactSVGPanZoom } from 'react-svg-pan-zoom';
 import {
-  UncontrolledReactSVGPanZoom,
-  ReactSVGPanZoom,
-} from 'react-svg-pan-zoom';
+  DataStructureDrawer,
+  DataStructureInfo,
+} from '../../components/callStack/dataStructure/DataStructureDrawer';
 
 interface Props {
   height: number;
@@ -26,12 +28,49 @@ interface Props {
 }
 interface State {
   speed: number;
+  options: any;
 }
 
 class CallStackPanel extends React.Component<Props, State> {
   constructor(prop: Props) {
     super(prop);
-    this.state = { speed: 1 };
+    this.state = {
+      speed: 1,
+      options: [],
+    };
+    slot('initAllVariables', (allVariables: any) => {
+      var options: {
+        value: string;
+        label: string;
+        children: Array<{ value: string; label: string }>;
+      }[] = [];
+      Object.keys(allVariables).forEach((funcName: string) => {
+        const temp: {
+          value: string;
+          label: string;
+          children: Array<{ value: string; label: string }>;
+        } = {
+          value: funcName,
+          label: funcName,
+          children: [],
+        };
+        Object.keys(allVariables[funcName]).forEach((varName: string) => {
+          temp.children.push({
+            value: varName,
+            label: varName,
+          });
+        });
+        options.push(temp);
+      });
+
+      this.setState({
+        options: options,
+      });
+    });
+  }
+
+  componentWillUpdate(nextProps: Props) {
+    signal('updateDataStructure', nextProps.execState);
   }
 
   componentDidUpdate() {
@@ -69,6 +108,11 @@ class CallStackPanel extends React.Component<Props, State> {
     this.setState({ speed: animationSpeed });
   };
 
+  addDataStructure = (funcName: string, varName: string, type: string) => {
+    signal('addDataStructure', funcName, varName, type);
+    signal('updateDataStructure', this.props.execState);
+  };
+
   render() {
     // console.log('render1');
     const blockDrawer = new BlockDrawer(this.props.execState);
@@ -80,7 +124,11 @@ class CallStackPanel extends React.Component<Props, State> {
     return (
       <div id="CallStackPanel" className="panel">
         <PanelHeader title="Call Stack" />
-        <CallStackHeaderButton handleChange={this.handleChange} />
+        <CallStackHeaderButton
+          handleChange={this.handleChange}
+          options={this.state.options}
+          addDataStructure={this.addDataStructure}
+        />
         <div className="callStack-area">
           {/* {console.log('DEBUG|'+this.props.execState)} */}
           <UncontrolledReactSVGPanZoom
@@ -140,6 +188,7 @@ class CallStackPanel extends React.Component<Props, State> {
               <CallStack blockDrawer={blockDrawer}></CallStack>
               <g id="clone"></g>
               <g id="path"></g>
+              <DataStructure execState={this.props.execState}></DataStructure>
             </svg>
           </UncontrolledReactSVGPanZoom>
         </div>

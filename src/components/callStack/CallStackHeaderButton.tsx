@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './callstack.scss';
 
 import * as d3 from 'd3';
-import { Select } from 'antd';
+import { Select, Cascader, Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import gifshot from '../../assets/script/gifshot';
 import ControlButton from '../timeline/ControlButton';
 
@@ -15,9 +16,15 @@ const { Option } = Select;
 
 interface CallStackHeaderButtonProps {
   handleChange: any;
+  options: any;
+  addDataStructure: any;
 }
 
-function CallStackHeaderButton({ handleChange }: CallStackHeaderButtonProps) {
+function CallStackHeaderButton({
+  handleChange,
+  options,
+  addDataStructure,
+}: CallStackHeaderButtonProps) {
   const [frameInterval, setFrameInterval] = useState(
     setInterval(() => {}, 1000)
   );
@@ -25,9 +32,48 @@ function CallStackHeaderButton({ handleChange }: CallStackHeaderButtonProps) {
   const [imageList, setImageList] = useState<Array<String>>([]);
   const [downloadURL, setDownloadURL] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [funcName, setFuncName] = useState<string | number>('');
+  const [varName, setVarName] = useState<string | number>('');
+  const [type, setType] = useState<string>('array');
 
   return (
     <div className="header-btn">
+      <div className="variable-select">
+        <span>Add data structure: </span>
+        <div className="variable-select-select1">
+          <Cascader
+            options={options}
+            onChange={(value: Array<string | number>) => {
+              setFuncName(value[0]);
+              setVarName(value[1]);
+            }}
+          ></Cascader>
+        </div>
+        <div className="variable-select-select2">
+          <Select
+            options={[
+              { label: 'Array', value: 'array' },
+              { label: 'String', value: 'string' },
+              { label: 'Variable', value: 'variable' },
+              { label: 'Point', value: 'point' },
+            ]}
+            defaultValue="array"
+            onChange={(value: string) => {
+              setType(value);
+            }}
+          ></Select>
+        </div>
+        <div className="variable-select-button">
+          <Button
+            type="primary"
+            onClick={() => {
+              addDataStructure(funcName, varName, type);
+              // addVariableHighlight(this.state.funcName, this.state.varName);
+            }}
+            icon={<PlusOutlined />}
+          ></Button>
+        </div>
+      </div>
       <div className="header-select">
         <span>Animation speed: </span>
         <Select
