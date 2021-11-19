@@ -39,7 +39,11 @@ function VariableBlock({ info }: VariableBlockProps) {
         width={50}
         height={50}
         fill="white"
-        style={{ stroke: '#979797', strokeWidth: '1.5px' }}
+        style={{
+          stroke: '#979797',
+          strokeWidth: '1.5px',
+          opacity: `${info.getValue() !== null ? 1 : 0.2}`,
+        }}
         className="variable-block-rect"
       ></rect>
       <text
@@ -49,7 +53,7 @@ function VariableBlock({ info }: VariableBlockProps) {
         className="variable-block-text variable-name"
         fill={'rgb(139, 139, 139)'}
       >
-        {info.getValue() === '\0' ? '\\0' : info.getValue()}
+        {info.getValue() === '\0' ? '' : info.getValue()}
       </text>
     </g>
   );

@@ -43,7 +43,6 @@ export class DataStructureDrawer {
                       pos[0] + 60 * (value - lastValue),
                       pos[1]
                     );
-                    console.log(pos, pos[0] + 60 * (value - lastValue), pos[1]);
                   }
                 } else if (dataStructure.getType() === 'variable') {
                   let v = variable.getValue();

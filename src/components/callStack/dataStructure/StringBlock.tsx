@@ -18,6 +18,18 @@ function StringBlock({ info }: StringBlockProps) {
       >
         {info.getVarName()}
       </text>
+      <rect
+        x={info.getPos()[0]}
+        y={info.getPos()[1] + 15}
+        width={60}
+        height={50}
+        fill="white"
+        style={{
+          stroke: '#979797',
+          strokeWidth: '1.5px',
+          opacity: `${info.getValue().length === 0 ? 0.2 : 0}`,
+        }}
+      ></rect>
       {info.getValue().map((v: string, i: number) => {
         return (
           <g key={i}>
@@ -37,7 +49,7 @@ function StringBlock({ info }: StringBlockProps) {
               fill={'rgb(139, 139, 139)'}
               className="variable-name"
             >
-              {v !== '0' ? String.fromCharCode(Number.parseInt(v)) : '\\0'}
+              {v !== '0' ? String.fromCharCode(Number.parseInt(v)) : ' '}
             </text>
           </g>
         );
