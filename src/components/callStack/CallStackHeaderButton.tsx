@@ -3,7 +3,7 @@ import './callstack.scss';
 
 import * as d3 from 'd3';
 import { Select, Cascader, Button } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 import gifshot from '../../assets/script/gifshot';
 import ControlButton from '../timeline/ControlButton';
 
@@ -11,6 +11,7 @@ import playGIF from '../../assets/icon/kaishi.svg';
 import pauseGIF from '../../assets/icon/zanting.svg';
 import downloadGIF from '../../assets/icon/xiazai.svg';
 import loadingGIF from '../../assets/icon/jiazai.svg';
+import { signal } from '../emitter';
 
 const { Option } = Select;
 
@@ -55,7 +56,7 @@ function CallStackHeaderButton({
               { label: 'Array', value: 'array' },
               { label: 'String', value: 'string' },
               { label: 'Variable', value: 'variable' },
-              { label: 'Point', value: 'point' },
+              { label: 'Arrow', value: 'point' },
             ]}
             defaultValue="array"
             onChange={(value: string) => {
@@ -68,9 +69,18 @@ function CallStackHeaderButton({
             type="primary"
             onClick={() => {
               addDataStructure(funcName, varName, type);
-              // addVariableHighlight(this.state.funcName, this.state.varName);
             }}
             icon={<PlusOutlined />}
+          ></Button>
+        </div>
+        <div className="variable-select-button">
+          <Button
+            type="primary"
+            danger
+            onClick={() => {
+              signal('removeAllDataStructure');
+            }}
+            icon={<DeleteOutlined />}
           ></Button>
         </div>
       </div>

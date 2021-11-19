@@ -329,6 +329,7 @@ class Editor extends React.Component<Props, State> {
       if (debugState === 'First') {
         signal('init', stepCount, linesShowUp, allVariables, variableShowUp);
         signal('initAllVariables', allVariables);
+        signal('updateDataStructure', execState);
       }
       if (this.controlEvent !== 'JumpTo') {
         signal('changeStep', step);

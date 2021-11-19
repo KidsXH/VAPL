@@ -24,7 +24,8 @@ export type event =
   | 'dragArrow'
   | 'addDataStructure'
   | 'updateDataStructure'
-  | 'updatePointPos';
+  | 'updatePointPos'
+  | 'removeAllDataStructure';
 export const slot = (
   event: event,
   listener: (...args: any[]) => void

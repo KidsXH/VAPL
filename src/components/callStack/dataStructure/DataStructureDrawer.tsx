@@ -6,7 +6,7 @@ export class DataStructureDrawer {
   private arrayCount: number = 0;
   private pointCount: number = 0;
   private arrayStartPos: Array<number> = [800, 50];
-  private pointStartPos: Array<number> = [924, 46];
+  private pointStartPos: Array<number> = [911.5, 50];
   constructor(execState?: ExecState) {
     if (typeof execState === 'undefined') return;
     this.execState = execState;
@@ -38,7 +38,7 @@ export class DataStructureDrawer {
                   if (lastValue !== null && lastValue !== undefined) {
                     let pos = dataStructure.getPos();
                     dataStructure.setPos(
-                      pos[0] + 50 * (value - lastValue),
+                      pos[0] + 60 * (value - lastValue),
                       pos[1]
                     );
                   }
@@ -62,13 +62,41 @@ export class DataStructureDrawer {
                 break;
               }
             }
+          } else {
+            if (
+              dataStructure.getType() === 'array' ||
+              dataStructure.getType() === 'string'
+            ) {
+              dataStructure.setValue([]);
+            } else if (
+              dataStructure.getType() === 'point' ||
+              dataStructure.getType() === 'variable'
+            ) {
+              dataStructure.setValue(null);
+            }
           }
+        }
+      } else {
+        if (
+          dataStructure.getType() === 'array' ||
+          dataStructure.getType() === 'string'
+        ) {
+          dataStructure.setValue([]);
+        } else if (
+          dataStructure.getType() === 'point' ||
+          dataStructure.getType() === 'variable'
+        ) {
+          dataStructure.setValue(null);
         }
       }
     }
-    console.log(dataStructures);
-
     this.dataStructures = dataStructures;
+  }
+
+  public removeAll() {
+    this.dataStructures = [];
+    this.arrayCount = 0;
+    this.pointCount = 0;
   }
 
   public addDataStructure(funcName: string, varName: string, type: string) {
@@ -82,17 +110,17 @@ export class DataStructureDrawer {
     if (type === 'array' || type === 'string') {
       value = [];
       pos[0] = this.arrayStartPos[0];
-      pos[1] = this.arrayStartPos[1] + this.arrayCount * 80;
+      pos[1] = this.arrayStartPos[1] + this.arrayCount * 85;
       this.arrayCount = this.arrayCount + 1;
     } else if (type === 'point') {
       value = null;
       pos[0] = this.pointStartPos[0];
-      pos[1] = this.pointStartPos[1] + this.pointCount * 80;
+      pos[1] = this.pointStartPos[1] + this.pointCount * 85;
       this.pointCount = this.pointCount + 1;
     } else if (type === 'variable') {
       value = null;
       pos[0] = this.arrayStartPos[0];
-      pos[1] = this.arrayStartPos[1] + this.arrayCount * 80;
+      pos[1] = this.arrayStartPos[1] + this.arrayCount * 85;
       this.arrayCount = this.arrayCount + 1;
     }
     if (this.execState) {

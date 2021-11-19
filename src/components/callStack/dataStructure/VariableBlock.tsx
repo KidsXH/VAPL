@@ -23,7 +23,14 @@ function VariableBlock({ info }: VariableBlockProps) {
   });
   return (
     <g className="variable-block">
-      <text x={info.getPos()[0]} y={info.getPos()[1]} fontSize="15">
+      <text
+        x={info.getPos()[0]}
+        y={info.getPos()[1]}
+        fontSize="20"
+        fill={'rgb(139, 139, 139)'}
+        className="variable-name"
+        fontWeight="blod"
+      >
         {info.getVarName()}
       </text>
       <rect
@@ -40,6 +47,7 @@ function VariableBlock({ info }: VariableBlockProps) {
         y={info.getPos()[1] + 45}
         fontSize="18"
         className="variable-block-text"
+        fill={'rgb(139, 139, 139)'}
       >
         {info.getValue() === '\0' ? '\\0' : info.getValue()}
       </text>

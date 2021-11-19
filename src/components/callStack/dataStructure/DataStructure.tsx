@@ -7,6 +7,7 @@ import { remove, signal, slot } from '../../emitter';
 import { ExecState } from 'unicoen.ts';
 import StringBlock from './StringBlock';
 import VariableBlock from './VariableBlock';
+import { data } from 'jquery';
 
 export function dragged(this: any, d: any) {
   d3.select(this).attr('transform', function () {
@@ -35,28 +36,33 @@ function DataStructure({ execState }: dataStructureProps) {
         dataStructureDrawer.addDataStructure(funcName, varName, type);
         setDataStructureDrawer(dataStructureDrawer);
         setUpdate(update + 1);
-        d3.selectAll('.dragable').call(d3.drag().on('drag', dragged) as any);
       }
     );
     slot('updateDataStructure', (execState: ExecState) => {
-      if (execState) dataStructureDrawer.setExecState(execState);
+      console.log(execState);
+      dataStructureDrawer.setExecState(execState);
       dataStructureDrawer.update();
       setDataStructureDrawer(dataStructureDrawer);
       setUpdate(update + 1);
-      d3.selectAll('.dragable').call(d3.drag().on('drag', dragged) as any);
     });
     slot(
       'updatePointPos',
       (funcName: string, varName: string, posX: number, posY: number) => {
         dataStructureDrawer.updatePointPos(funcName, varName, posX, posY);
         setDataStructureDrawer(dataStructureDrawer);
-        d3.selectAll('.dragable').call(d3.drag().on('drag', dragged) as any);
       }
     );
+    slot('removeAllDataStructure', () => {
+      dataStructureDrawer.removeAll();
+      setDataStructureDrawer(dataStructureDrawer);
+      setUpdate(update + 1);
+    });
     return () => {
       remove('addDataStructure');
       remove('updateDataStructure');
       remove('updatePointPos');
+      remove('removeAllDataStructure');
+      d3.selectAll('.dragable').call(d3.drag().on('drag', dragged) as any);
     };
   }, [dataStructureDrawer, update]);
 
