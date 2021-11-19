@@ -39,6 +39,7 @@ function ArrayBlock({ info }: ArrayBlockProps) {
               y={info.getPos()[1] + 47}
               fontSize="18"
               fill={'rgb(139, 139, 139)'}
+              className="variable-name"
             >
               {v.length > 5 ? v.substring(0, 4) + '...' : v.substring(0, 5)}
             </text>

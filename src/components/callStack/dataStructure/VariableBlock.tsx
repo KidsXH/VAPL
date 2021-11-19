@@ -46,7 +46,7 @@ function VariableBlock({ info }: VariableBlockProps) {
         x={info.getPos()[0] + 20}
         y={info.getPos()[1] + 45}
         fontSize="18"
-        className="variable-block-text"
+        className="variable-block-text variable-name"
         fill={'rgb(139, 139, 139)'}
       >
         {info.getValue() === '\0' ? '\\0' : info.getValue()}

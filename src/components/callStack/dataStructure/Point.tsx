@@ -59,13 +59,9 @@ function Point({ info }: PointProps) {
             if (dx >= x && dx < x + 60 && dy >= y && dy < y + 50) {
               flag = true;
               let [posX, posY] = [x + 30 + offsetX, y + 50 + offsetY];
-              signal(
-                'updatePointPos',
-                info.getFuncName(),
-                info.getVarName(),
-                posX,
-                posY
-              );
+              let id = g.attr('id');
+              let list = id.split('-');
+              signal('updatePointPos', list[2], list[3], posX, posY);
               p.attr('transform', `matrix(1,0,0,1,${posX},${posY})`);
               g.attr('transform', 'matrix(1,0,0,1,0,0)');
               return;
@@ -77,7 +73,11 @@ function Point({ info }: PointProps) {
   }, []);
 
   return (
-    <g className="point-arrow" transform="matrix(1,0,0,1,0,0)">
+    <g
+      className="point-arrow"
+      transform="matrix(1,0,0,1,0,0)"
+      id={`point-arrow-${info.getFuncName()}-${info.getVarName()}`}
+    >
       <text
         x={5}
         y={45}

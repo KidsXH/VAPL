@@ -18,11 +18,13 @@ export class DataStructureDrawer {
       let value = dataStructure.getValue();
       if (this.execState) {
         let stacks = this.execState.getStacks();
+        let flag = false;
         for (let stack of stacks) {
           if (stack.name === dataStructure.getFuncName()) {
             let variables = stack.getVariables();
             for (let variable of variables) {
               if (variable.name === dataStructure.getVarName()) {
+                flag = true;
                 if (
                   dataStructure.getType() === 'array' ||
                   dataStructure.getType() === 'string'
@@ -41,6 +43,7 @@ export class DataStructureDrawer {
                       pos[0] + 60 * (value - lastValue),
                       pos[1]
                     );
+                    console.log(pos, pos[0] + 60 * (value - lastValue), pos[1]);
                   }
                 } else if (dataStructure.getType() === 'variable') {
                   let v = variable.getValue();
@@ -62,18 +65,19 @@ export class DataStructureDrawer {
                 break;
               }
             }
-          } else {
-            if (
-              dataStructure.getType() === 'array' ||
-              dataStructure.getType() === 'string'
-            ) {
-              dataStructure.setValue([]);
-            } else if (
-              dataStructure.getType() === 'point' ||
-              dataStructure.getType() === 'variable'
-            ) {
-              dataStructure.setValue(null);
-            }
+          }
+        }
+        if (!flag) {
+          if (
+            dataStructure.getType() === 'array' ||
+            dataStructure.getType() === 'string'
+          ) {
+            dataStructure.setValue([]);
+          } else if (
+            dataStructure.getType() === 'point' ||
+            dataStructure.getType() === 'variable'
+          ) {
+            dataStructure.setValue(null);
           }
         }
       } else {
@@ -205,7 +209,6 @@ export class DataStructureInfo {
   private varName: string = '';
   private value: any;
   private type: string = '';
-  private lastValue: any;
   private pos: Array<number> = [0, 0];
   constructor(funcName: string, varName: string, type: string, value: any) {
     this.funcName = funcName;
@@ -230,20 +233,12 @@ export class DataStructureInfo {
     return this.type;
   }
 
-  public getLastValue() {
-    return this.lastValue;
-  }
-
   public getPos() {
     return this.pos;
   }
 
   public setValue(value: any) {
     this.value = value;
-  }
-
-  public setLastValue(value: any) {
-    this.lastValue = value;
   }
 
   public setPos(posX: number, posY: number) {

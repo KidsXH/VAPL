@@ -138,6 +138,8 @@ class CallStackPanel extends React.Component<Props, State> {
             background="#ffffff"
             detectWheel="false"
             detectAutoPan="false"
+            scaleFactorMin={0.2}
+            scaleFactorMax={5}
             detectPinchGesture="false"
             toolbarProps={{ position: 'none' }}
             id="svg"

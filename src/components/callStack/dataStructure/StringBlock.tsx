@@ -22,19 +22,20 @@ function StringBlock({ info }: StringBlockProps) {
         return (
           <g key={i}>
             <rect
-              x={info.getPos()[0] + 50 * i}
+              x={info.getPos()[0] + 60 * i}
               y={info.getPos()[1] + 15}
-              width={50}
+              width={60}
               height={50}
               fill="white"
               style={{ stroke: '#979797', strokeWidth: '1.5px' }}
               className="data_structure"
             ></rect>
             <text
-              x={info.getPos()[0] + 20 + 50 * i}
+              x={info.getPos()[0] + 28 + 60 * i}
               y={info.getPos()[1] + 45}
               fontSize="15"
               fill={'rgb(139, 139, 139)'}
+              className="variable-name"
             >
               {v !== '0' ? String.fromCharCode(Number.parseInt(v)) : '\\0'}
             </text>
