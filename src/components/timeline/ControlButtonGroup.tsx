@@ -117,6 +117,7 @@ function ControlButtonGroup({ debugState }: { debugState: DEBUG_STATE }) {
           sessionStorage.clear();
           if (sourceCode) sessionStorage.setItem('sourceCode', sourceCode);
           sessionStorage.setItem('exec', 'step');
+          signal('updateDataStructure', null);
         }}
         disabled={!start}
       />

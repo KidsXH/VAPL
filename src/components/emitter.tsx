@@ -1,4 +1,4 @@
-import {EventEmitter} from 'events';
+import { EventEmitter } from 'events';
 export const emitter = new EventEmitter();
 emitter.setMaxListeners(20);
 export type event =
@@ -19,7 +19,13 @@ export type event =
   | 'jumpTo'
   | 'init'
   | 'statementHighlight'
-  | 'cancelStatementHighlight';
+  | 'initAllVariables'
+  | 'cancelStatementHighlight'
+  | 'dragArrow'
+  | 'addDataStructure'
+  | 'updateDataStructure'
+  | 'updatePointPos'
+  | 'removeAllDataStructure';
 export const slot = (
   event: event,
   listener: (...args: any[]) => void

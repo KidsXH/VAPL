@@ -216,7 +216,6 @@ class Editor extends React.Component<Props, State> {
       }
       e.stop();
     });
-
   }
 
   // componentDidUpdate() {
@@ -329,6 +328,8 @@ class Editor extends React.Component<Props, State> {
       }
       if (debugState === 'First') {
         signal('init', stepCount, linesShowUp, allVariables, variableShowUp);
+        signal('initAllVariables', allVariables);
+        signal('updateDataStructure', execState);
       }
       if (this.controlEvent !== 'JumpTo') {
         signal('changeStep', step);
@@ -514,8 +515,8 @@ class Editor extends React.Component<Props, State> {
 }
 
 const mapStateToProps = (state: any) => {
-  return {inputText: state.compiler.inputText}
-}
+  return { inputText: state.compiler.inputText };
+};
 
 const mapDispatchToProps = {
   addHighlightStatement: addHighlightStatement,
