@@ -4,7 +4,7 @@ import { signal } from './emitter';
 import { Interpreter } from 'unicoen.ts/dist/interpreter/Interpreter';
 import { inArray } from 'jquery';
 import { UniBinOp } from 'unicoen.ts/dist/node/UniBinOp';
-import { UniExpr, UniMethodCall, UniIdent, UniUnaryOp } from 'unicoen.ts';
+import { UniExpr, UniMethodCall, UniIdent, UniUnaryOp, UniVariableDec, UniReturn } from 'unicoen.ts';
 import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
 
 export type CONTROL_EVENT =
@@ -263,7 +263,6 @@ class Server {
           }
         });
       });
-      const currentClassName = currentExpr.constructor.name;
       if (currentExpr instanceof UniBinOp) {
         const res = this.binOp(currentExpr);
         if (res) {
@@ -277,8 +276,7 @@ class Server {
       let lastExpr = null;
       if (this.count > 0) {
         lastExpr = this.stateHistory[this.count - 1].getNextExpr();
-        const nextClassName = lastExpr.constructor.name;
-        if (lastExpr instanceof UniBinOp && currentClassName !== 'UniBinOp') {
+        if (lastExpr instanceof UniBinOp && currentExpr instanceof UniBinOp) {
           const res = this.binOp(lastExpr);
           if (res) {
             const stack = stacks[stacks.length - 1];
@@ -288,15 +286,15 @@ class Server {
             ]['steps'].push(this.count + 1);
           }
         } else if (
-          nextClassName === 'UniReturn' &&
-          currentClassName === 'UniVariableDec'
+          nextExpr instanceof UniReturn &&
+          currentExpr instanceof UniVariableDec
         ) {
           const stack = stacks[stacks.length - 1];
           variableShowUp[
             allVariables[stack.name.split('.')[0]][this.uniReturn(currentExpr)]
           ]['steps'].push(this.count);
         } else if (
-          nextClassName === 'UniReturn' &&
+          nextExpr instanceof UniReturn &&
           currentExpr instanceof UniBinOp
         ) {
           const res = this.returnBinOp(currentExpr);

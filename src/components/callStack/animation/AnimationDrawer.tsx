@@ -3,6 +3,14 @@ import { Stack } from 'unicoen.ts/dist/interpreter/Engine/Stack';
 import { UniVariableDef } from 'unicoen.ts/dist/node/UniVariableDef';
 import { arrayToString } from '../blockDrawer/BlockDrawer';
 import { inArray } from 'jquery';
+import {
+  UniBinOp,
+  UniIdent,
+  UniMethodCall,
+  UniProgram,
+  UniReturn,
+  UniVariableDec,
+} from 'unicoen.ts';
 
 export class AnimationDrawer {
   private execState: ExecState | undefined = undefined;
@@ -35,8 +43,6 @@ export class AnimationDrawer {
 
   private parseExe() {
     const currentExpr = this.execState!.getCurrentExpr();
-    const currentClassName = currentExpr.constructor.name;
-    let lastClassName = '';
     let lastExpr = undefined;
     let flag = true;
     if (this.lastState) {
@@ -46,50 +52,39 @@ export class AnimationDrawer {
         // flag = false;
       }
       lastExpr = this.lastState.getNextExpr();
-      lastClassName = lastExpr.constructor.name;
     }
     if (flag) {
-      switch (currentClassName) {
-        case 'UniProgram':
-          this.state = 'programInit';
-          break;
-        case 'UniVariableDec':
-          this.state = 'variablesInit';
-          this.variableDec(currentExpr);
-          break;
-        case 'UniMethodCall':
-          this.methodCall(currentExpr);
-          break;
-        case 'UniBinOp':
-          this.binOp(currentExpr);
-          break;
+      if (currentExpr instanceof UniProgram) {
+        this.state = 'programInit';
+      } else if (currentExpr instanceof UniVariableDec) {
+        this.state = 'variablesInit';
+        this.variableDec(currentExpr);
+      } else if (currentExpr instanceof UniMethodCall) {
+        this.methodCall(currentExpr);
+      } else if (currentExpr instanceof UniBinOp) {
+        this.binOp(currentExpr);
       }
-      switch (lastClassName) {
-        case 'UniMethodCall':
-          this.methodCall(lastExpr);
-          break;
-        case 'UniBinOp':
-          this.binOp(lastExpr);
-          break;
-        case 'UniReturn':
-          if (
-            currentClassName === 'UniMethodCall' &&
-            (currentExpr as any).methodName.name === 'printf' &&
-            (currentExpr as any).args.length > 1 &&
-            (currentExpr as any).args[1].constructor.name === 'UniMethodCall'
-          ) {
-            this.initMethodCall();
-          }
-          this.state = 'uniReturn';
-          this.uniReturn(lastExpr);
-          break;
-        case 'UniVariableDec':
-          this.variableKeys = [];
-          this.variableTypes = [];
-          this.variableValues = [];
-          this.state = 'variablesInit';
-          this.variableDec(lastExpr);
-          break;
+      if (lastExpr instanceof UniMethodCall) {
+        this.methodCall(lastExpr);
+      } else if (lastExpr instanceof UniBinOp) {
+        this.binOp(lastExpr);
+      } else if (lastExpr instanceof UniReturn) {
+        if (
+          currentExpr instanceof UniMethodCall &&
+          (currentExpr as any).methodName.name === 'printf' &&
+          (currentExpr as any).args.length > 1 &&
+          (currentExpr as any).args[1] instanceof UniMethodCall
+        ) {
+          this.initMethodCall();
+        }
+        this.state = 'uniReturn';
+        this.uniReturn(lastExpr);
+      } else if (lastExpr instanceof UniVariableDec) {
+        this.variableKeys = [];
+        this.variableTypes = [];
+        this.variableValues = [];
+        this.state = 'variablesInit';
+        this.variableDec(lastExpr);
       }
     }
     // console.log(this);
@@ -101,25 +96,17 @@ export class AnimationDrawer {
     if (!right) {
       return;
     }
-    const rightClassName = right.constructor.name;
-    switch (rightClassName) {
-      case 'UniMethodCall':
-        this.methodCall(right);
-        break;
-      case 'UniBinOp':
-        this.binOp(right);
-        break;
+    if (right instanceof UniMethodCall) {
+      this.methodCall(right);
+    } else if (right instanceof UniBinOp) {
+      this.binOp(right);
     }
     if (operator !== '=') {
       const left = uniBinOp.left;
-      const leftClassName = left.constructor.name;
-      switch (leftClassName) {
-        case 'UniMethodCall':
-          this.methodCall(left);
-          break;
-        case 'UniBinOp':
-          this.binOp(left);
-          break;
+      if (left instanceof UniMethodCall) {
+        this.methodCall(left);
+      } else if (left instanceof UniBinOp) {
+        this.binOp(left);
       }
     }
   }
@@ -142,7 +129,7 @@ export class AnimationDrawer {
       } else if (
         methodName === 'printf' &&
         uniMethodCall.args.length > 1 &&
-        uniMethodCall.args[1].constructor.name === 'UniMethodCall'
+        uniMethodCall.args[1] instanceof UniMethodCall
       ) {
         if (this.state === 'uniReturn') {
           this.initMethodCall();
@@ -178,14 +165,10 @@ export class AnimationDrawer {
     key = key.replace(/[&\|\\\*:^%$@()\[\].]/g, '_');
     const variableValue = uniVariableDef.value;
     if (!variableValue) return;
-    const valueClass = variableValue.constructor.name;
-    switch (valueClass) {
-      case 'UniMethodCall':
-        this.methodCall(variableValue);
-        break;
-      case 'UniBinOp':
-        this.binOp(variableValue);
-        break;
+    if (variableValue instanceof UniMethodCall) {
+      this.methodCall(variableValue);
+    } else if (variableValue instanceof UniBinOp) {
+      this.binOp(variableValue);
     }
     const variables = this.stack!.getVariables();
     for (let i = 0; i < variables.length; i++) {
@@ -210,7 +193,6 @@ export class AnimationDrawer {
 
   public uniReturn(uniReturn: any) {
     const currentExpr = this.execState!.getCurrentExpr();
-    const currentClassName = currentExpr.constructor.name;
     // if (currentClassName !== 'UniVariableDec') {
     //   return;
     // }
@@ -224,8 +206,7 @@ export class AnimationDrawer {
   }
 
   private travelValue(returnValue: any) {
-    let returnValueClass = returnValue.constructor.name;
-    if (returnValueClass === 'UniIdent') {
+    if (returnValue instanceof UniIdent) {
       this.postArgs.push(
         (
           this.lastState!.getStacks()[this.lastState!.getStacks().length - 1]
@@ -235,18 +216,17 @@ export class AnimationDrawer {
         ).replace(/[&\|\\\*:^%$@()\[\].]/g, '_')
       );
       return;
-    } else if (returnValueClass === 'UniBinOp') {
+    } else if (returnValue instanceof UniBinOp) {
       this.travelValue(returnValue.left);
       this.travelValue(returnValue.right);
     }
   }
 
   private travelArg(arg: any, idx: number) {
-    let returnValueClass = arg.constructor.name;
     if (this.postArgs.length === idx) {
       this.postArgs.push(undefined);
     }
-    if (returnValueClass === 'UniIdent') {
+    if (arg instanceof UniIdent) {
       if (this.postArgs[idx] === undefined) {
         this.postArgs[idx] = (
           this.lastState!.getStacks()[this.lastState!.getStacks().length - 1]
@@ -256,10 +236,10 @@ export class AnimationDrawer {
         ).replace(/[&\|\\\*:^%$@()\[\].]/g, '_');
       }
       return;
-    } else if (returnValueClass === 'UniBinOp') {
+    } else if (arg instanceof UniBinOp) {
       this.travelArg(arg.left, idx);
       this.travelArg(arg.right, idx);
-    } else if (returnValueClass === 'UniMethodCall') {
+    } else if (arg instanceof UniMethodCall) {
       this.methodCall(arg);
     }
   }
