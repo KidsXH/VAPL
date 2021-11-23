@@ -29,43 +29,84 @@ However, the highlight of the code may be out of place.`,
   continueDebug: 'Continue',
   restart: 'Restart',
   rememberCommand: 'Remember this choice',
-  sourceCodeCcpp: String.raw`#include<stdio.h>
-int recursiveToThree(int n){
-  printf("%d th\n", n + 1);
-  if(n < 3){
-      int r = recursiveToThree(n + 1);
-      n = r;
-  }
-  return n;
+  sourceCodeCcpp: String.raw`#include <stdio.h>
+
+int gcd(int x, int y) {
+  int t;
+  while((x % y) != 0) {  
+  t = y;
+  y = x % y;
+  x = t;
+ }
+ return y;
 }
 
-static int a = 1;
-int b = 2;
+int lcm(int x, int y) {
+  int z = x * y / gcd(x, y);
+  return z;
+}
 
-int main(){
-  int n = 0;//variable declaration
-
-  n = recursiveToThree(0);//recursive function
-
-  int arr[5] = {1, 2, 3};//array variable
-
-  int* ptr = &arr[2];//pointer variable
-  *ptr = 5;
-
-  //dynamic memory allocation
-  int* d_arry = malloc(sizeof(int) * 3);
-
-  //two-dimensional dynamic array
-  int* pd_arr[2];
-  pd_arr[0] = malloc(sizeof(int) * 2);
-  pd_arr[1] = malloc(sizeof(int) * 2);
-
-  printf("Hello,world!\n");//standard output
-
-  free(pd_arr[0]);//memory leak
-
-  return 0;
-}`,
+main(){
+ int x, y;
+ printf("Input two numbers:");
+ scanf("%d", &x);
+ scanf("%d", &y);
+  
+ printf("The greatest common divisor is:%d\\n", lcm(x, y));
+ 
+ return 0;
+}
+`,
+//   sourceCodeCcpp: String.raw`#include<stdio.h>
+//
+// int main() {
+//
+//   int x;
+//
+//   while (scanf("%d", &x) && x == x) {
+//
+//   }
+//
+//   return 0;
+// }
+// `,
+//   sourceCodeCcpp: String.raw`#include<stdio.h>
+// int recursiveToThree(int n){
+//   printf("%d th\n", n + 1);
+//   if(n < 3){
+//       int r = recursiveToThree(n + 1);
+//       n = r;
+//   }
+//   return n;
+// }
+//
+// static int a = 1;
+// int b = 2;
+//
+// int main(){
+//   int n = 0;//variable declaration
+//
+//   n = recursiveToThree(0);//recursive function
+//
+//   int arr[5] = {1, 2, 3};//array variable
+//
+//   int* ptr = &arr[2];//pointer variable
+//   *ptr = 5;
+//
+//   //dynamic memory allocation
+//   int* d_arry = malloc(sizeof(int) * 3);
+//
+//   //two-dimensional dynamic array
+//   int* pd_arr[2];
+//   pd_arr[0] = malloc(sizeof(int) * 2);
+//   pd_arr[1] = malloc(sizeof(int) * 2);
+//
+//   printf("Hello,world!\n");//standard output
+//
+//   free(pd_arr[0]);//memory leak
+//
+//   return 0;
+// }`,
 // sourceCodeCcpp: String.raw`#include<stdio.h>
 
 // int main() {
