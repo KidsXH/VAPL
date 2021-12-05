@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
-import classNames from 'classnames';
 import { useState } from 'react';
-import HeaderCell from './HeaderCell';
-import MemoryCell from '../MemoryCell';
+import PhysicalMemoryCell from '../PhysicalMemoryCell/PhysicalMemoryCell';
 
 type Props = {
   variable: Variable;
@@ -11,12 +9,8 @@ type Props = {
   handleClick: (variable: Variable) => void;
 };
 
-export const ArrayMemoryCell = ({
-  variable,
-  selectedVar,
-  handleClick,
-}: Props) => {
-  const [isFolded, setIsFolded] = useState(true);
+export const PhysicArrayMemoryCell = ({ variable, selectedVar, handleClick }: Props) => {
+  const [isFolded, setIsFolded] = useState(false);
   const arr = variable.getValue();
 
   const foldArray = () => {
@@ -25,20 +19,20 @@ export const ArrayMemoryCell = ({
 
   return (
     <>
-      <HeaderCell
-        variable={variable}
-        selectedVar={selectedVar}
-        handleClick={handleClick}
-        isFolded={isFolded}
-        foldArray={foldArray}
-        showAddress={false}
-      />
+      {/*<HeaderCell*/}
+      {/*  variable={variable}*/}
+      {/*  selectedVar={selectedVar}*/}
+      {/*  handleClick={handleClick}*/}
+      {/*  isFolded={false}*/}
+      {/*  foldArray={foldArray}*/}
+      {/*  showAddress={true}*/}
+      {/*/>*/}
       {isFolded ? (
         <></>
       ) : (
         arr.map((v: Variable) => {
           return (
-            <MemoryCell
+            <PhysicalMemoryCell
               key={v.address}
               variable={v}
               selectedVar={selectedVar}
@@ -51,4 +45,4 @@ export const ArrayMemoryCell = ({
   );
 };
 
-export default ArrayMemoryCell;
+export default PhysicArrayMemoryCell;

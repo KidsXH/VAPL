@@ -1,8 +1,9 @@
 import React from 'react';
 import { Variable } from 'unicoen.ts/dist/interpreter/Engine/Variable';
 import classNames from 'classnames';
-import { firstVarInArr } from '../MemoryCell';
+import { getValue } from '../MemoryCell';
 import './style.scss';
+import PhysicArrayMemoryCell from '../PhysicArrayMemoryCell';
 
 export interface PhysicalMemoryCellProps {
   variable: Variable;
@@ -19,19 +20,7 @@ const PhysicalMemoryCell = ({
   const dataType = variable.type;
   const address = variable.address;
 
-  const getValue = () => {
-    const value = variable.getValue();
-    if (dataType === 'char') {
-      return "'" + String.fromCharCode(value) + "'";
-    }
-    if (value instanceof Array) {
-      const fv = firstVarInArr(value);
-      return '0x' + fv.address.toString(16);
-    }
-    return value.toString();
-  };
-
-  return dataType[-1] !== ']' ? (
+  return dataType.indexOf('[') === -1 ? (
     <div
       className={classNames('memory-cell', 'memory-cell-physic', {
         active: selectedVar?.address === address,
@@ -49,12 +38,16 @@ const PhysicalMemoryCell = ({
       <div className="col-name variable-name">{varName}</div>
       <div className="col-value">
         <div className="col-1">{dataType}</div>
-        <div className="col-2">{getValue()}</div>
+        <div className="col-2">{getValue(variable)}</div>
       </div>
       <div className="col-address">{dataType ? address : ''}</div>
     </div>
   ) : (
-    <div></div>
+    <PhysicArrayMemoryCell
+      variable={variable}
+      selectedVar={selectedVar}
+      handleClick={handleClick}
+    />
   );
 };
 

@@ -9,38 +9,41 @@ import './style.scss';
 type Props = MemoryCellProps & {
   isFolded: boolean;
   foldArray: () => void;
+  showAddress: boolean;
 };
 
 export const HeaderCell = ({
-  variable,
-  selectedVar,
-  handleClick,
-  isFolded,
-  foldArray,
-}: Props) => {
+                             variable,
+                             selectedVar,
+                             handleClick,
+                             isFolded,
+                             foldArray,
+                             showAddress,
+                           }: Props) => {
   const address = variable.address;
   const varName = variable.name;
   const dataType = variable.type;
 
   return (
+    showAddress ? <></> :
     <div
       className={classNames('memory-cell', {
         active: selectedVar?.address === address,
         'in-heap': varName === '',
       })}
     >
-      <div className="col-name variable-name">{varName}</div>
+      <div className='col-name variable-name'>{varName}</div>
       <div
-        className="col-value"
+        className='col-value'
         onClick={() => {
           handleClick(variable);
         }}
       >
-        <div className="col-1">{dataType}</div>
-        <div className="col-2">{getValue(variable)}</div>
+        <div className='col-1'>{dataType}</div>
+        <div className='col-2'>{getValue(variable)}</div>
       </div>
       <div
-        className="col-arrow"
+        className='col-arrow'
         onClick={() => {
           foldArray();
         }}
